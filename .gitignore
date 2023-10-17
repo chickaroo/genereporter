@@ -22,3 +22,5 @@ data/CID008474-1/filtered/matrix.mtx
 output/scvi_models/model.pt
 data/output/adata_integrated.h5ad
 data/output/adata_raw.h5ad
+data/output/adata_preprocessed_samplebatch.h5ad
+data/output/adata_preprocessed.h5ad
