@@ -19,3 +19,6 @@ data/CID007827-1/filtered/matrix.mtx
 data/CID008474-1/filtered/barcodes.tsv
 data/CID008474-1/filtered/features.tsv
 data/CID008474-1/filtered/matrix.mtx
+output/scvi_models/model.pt
+data/output/adata_integrated.h5ad
+data/output/adata_raw.h5ad
