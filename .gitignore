@@ -24,3 +24,4 @@ data/output/adata_integrated.h5ad
 data/output/adata_raw.h5ad
 data/output/adata_preprocessed_samplebatch.h5ad
 data/output/adata_preprocessed.h5ad
+data/output/adata_norms.h5ad
