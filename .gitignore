@@ -26,3 +26,4 @@ data/output/adata_preprocessed_samplebatch.h5ad
 data/output/adata_preprocessed.h5ad
 data/output/adata_norms.h5ad
 data/output/adata.h5ad
+data/output/adata.csv
