@@ -9,33 +9,37 @@
 #SBATCH --nice=10000
  
 # Run your job commands
-# ./my_program input.dat   # Lets simplfy your job script as following:
  
 echo "Starting SCENIC Pipeline"
 
 # Load modules
 conda activate bachelor_env
 
-# make f_db_names list
+# test first 
 
-pyscenic ctx adj.tsv \ # TODO
-    {f_db_names} \
-    --annotations_fname {f_motif_path} \
-    --expression_mtx_fname {f_loom_path_scenic} \
-    --output SCENICfiles/reg.csv \
-    --mask_dropouts \
-    --num_workers 20
+pyscenic -h
+
+conda deactivate
+
+# # make f_db_names list
+# pyscenic ctx adj.tsv \ 
+#     $(ls SCENICfiles/mc_v10_clust/gene_based/*.feather) \
+#     --annotations_fname SCENICfiles/motifs-v10nr_clust-nr.hgnc-m0.001-o0.0.tb \
+#     --expression_mtx_fname SCENICfiles/data_filtered_scenic.loom \
+#     --output SCENICfiles/reg.csv \
+#     --mask_dropouts \
+#     --num_workers 20
 
  
-echo "Done with Steps 2-3"
+# echo "Done with Steps 2-3"
 
-pyscenic aucell \ #TODO
-    {f_loom_path_scenic} \
-    reg.csv \
-    --output {f_pyscenic_output} \
-    --num_workers 20
+# pyscenic aucell \ 
+#     SCENICfiles/data_filtered_scenic.loom \
+#     reg.csv \
+#     --output SCENICfiles/pyscenic_output.loom \
+#     --num_workers 20
 
 
-echo "Done with Step 4"
+# echo "Done with Step 4"
 
 # TODO: Vizualize results in python script!! 
