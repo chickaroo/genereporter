@@ -29,3 +29,6 @@ data/output/adata.csv
 data/output/adata.h5ad
 data/adata.h5ad
 
+SCENICfiles/scenic_umap.txt
+SCENICfiles/scenic_tsne.txt
+SCENICfiles/pyscenic_output.loom
