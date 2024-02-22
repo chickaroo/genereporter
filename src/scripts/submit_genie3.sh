@@ -4,7 +4,7 @@
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=30
 #SBATCH --mem=120GB
-#SBATCH --time=24:00:00
+#SBATCH --time=48:00:00
 #SBATCH -o genie3_%j.log
 #SBATCH -e genie3_%j.err
 #SBATCH --partition=cpu_p
