@@ -17,7 +17,7 @@ mamba activate pyscenic
 
 cd /lustre/groups/ml01/workspace/samantha.bening/Bachelor/
 
-pyscenic grn SCENICfiles/data_filtered_scenic.loom SCENICfiles/genes.txt -o SCENICfiles/gene_gene_adj.csv --num_workers 30
+python run_genie3.py
 
 echo "Done!"
 
