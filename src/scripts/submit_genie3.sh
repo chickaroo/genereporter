@@ -2,7 +2,7 @@
 
 #SBATCH --job-name=genie3
 #SBATCH --nodes=1
-#SBATCH --cpus-per-task=30
+#SBATCH --cpus-per-task=20
 #SBATCH --mem=120GB
 #SBATCH --time=48:00:00
 #SBATCH -o genie3_%j.log
