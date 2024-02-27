@@ -33,3 +33,4 @@ SCENICfiles/scenic_umap.txt
 SCENICfiles/scenic_tsne.txt
 SCENICfiles/pyscenic_output.loom
 data/c2.cp.reactome.v2023.2.Hs.symbols.gmt
+data/output/adata_aucell.h5ad
