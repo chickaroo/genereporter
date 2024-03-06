@@ -1,5 +1,5 @@
 import subprocess
-import scanpy as sc
+#import scanpy as sc
 import argparse
 
 parser = argparse.ArgumentParser(description='Run GRN inference')
@@ -8,7 +8,7 @@ parser.add_argument('--input_TFs', type=str, help='Input TF/gene file')
 parser.add_argument('--output', type=str, help='Output adjacencies .csv file')
 
 # Set maximum number of jobs for Scanpy.
-sc.settings.njobs = -1
+#sc.settings.njobs = -1
 
 args = parser.parse_args()
 
