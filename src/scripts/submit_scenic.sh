@@ -17,7 +17,7 @@ mamba activate pyscenic
 
 cd /lustre/groups/ml01/workspace/samantha.bening/Bachelor/
 
-pyscenic grn SCENICfiles/data_filtered_scenic.loom SCENICfiles/allTFs_hg38.txt -o SCENICfiles/adj2.csv -m genie3 --num_workers 20
+pyscenic grn SCENICfiles/data_filtered_scenic.loom SCENICfiles/allTFs_hg38.txt -o SCENICfiles/adj2.csv --num_workers 20
 
 echo "GRN done!"
 
