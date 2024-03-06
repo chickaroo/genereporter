@@ -12,4 +12,4 @@ sc.settings.njobs = -1
 
 args = parser.parse_args()
 
-subprocess.call(f"pyscenic grn {args.input_loom} {args.input_TFs} -o {args.output_adj} --num_workers 20", shell=True)
+subprocess.call(f"pyscenic grn {args.input_loom} {args.input_TFs} -o {args.output_adj} --num_workers 15", shell=True)
