@@ -17,7 +17,7 @@ mamba activate pyscenic
 
 cd /lustre/groups/ml01/workspace/samantha.bening/Bachelor/
 
-python src/scripts/run_grn_inference.py --input_loom SCENICfiles/data_filtered_scenic.loom --input_TFs SCENICfiles/allTFs_hg38.txt --output_file SCENICfiles/adj2.csv
+python src/scripts/run_grn_inference.py --input_loom SCENICfiles/data_filtered_scenic.loom --input_TFs SCENICfiles/allTFs_hg38.txt --output SCENICfiles/adj2.csv
 
 echo "GRN done!"
 
