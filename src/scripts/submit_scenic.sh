@@ -13,7 +13,7 @@
 
 source $HOME/.bashrc
 
-mamba activate pyscenic
+mamba activate pyscenic2
 
 cd /lustre/groups/ml01/workspace/samantha.bening/Bachelor/
 
