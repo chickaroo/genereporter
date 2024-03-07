@@ -35,3 +35,5 @@ SCENICfiles/pyscenic_output.loom
 data/c2.cp.reactome.v2023.2.Hs.symbols.gmt
 data/output/adata_aucell.h5ad
 src/gene_report/__pycache__/*.pyc
+.DS_Store
+data/output/adata.h5

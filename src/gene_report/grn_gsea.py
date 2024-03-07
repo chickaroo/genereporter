@@ -13,6 +13,7 @@ from Bio import Entrez
 from pathlib import Path
 import requests
 import plotly.express as px
+from IPython.display import display, HTML
 
 # set a working directory
 wdir = "/Users/samibening/Projects/Bachelor/"
@@ -136,10 +137,13 @@ def format_gene_summary(df, GOI):
         text = summary
         # split gene summary text into separate strings after each 10th white space
         n = 12
-        groups = text.split(' ')
-        text = [' '.join(groups[i:i+n]) for i in range(0, len(groups), n)]
-        for t in text:
-            print(f"\t{t}")
+        try:
+            groups = text.split(' ')
+            text = [' '.join(groups[i:i+n]) for i in range(0, len(groups), n)]
+            for t in text:
+                print(f"\t{t}")
+        except:
+            print(f"\tNo summary available for {gene_name}.")
 
 def get_gene_summary(df, GOI, email='samantha.bening@helmholtz-munich.de'):
     gene_summaries = {'Gene': 'Summary'}
@@ -197,9 +201,11 @@ def plot_regulon_expression(df, GOI, adata=adata):
         wspace=0.4,
     )
 
-def make_network(df):
-    net = Network(notebook=True, select_menu=True, cdn_resources='remote', height='750px', width='100%', bgcolor="#222222", font_color="white")
-    net.barnes_hut(gravity=-4000, central_gravity=1)
+def make_network(df, GOI, out_file='src/gene_report/goi_network.html'):
+    net = Network(notebook=True, height='500px', width='400px', bgcolor="#222222", font_color="white", cdn_resources='remote')
+
+    # filter for only direct neighbors of GOI
+    df = df[df['target'] == GOI]
 
     # assign colors to regulons
     groups = {}
@@ -234,8 +240,19 @@ def make_network(df):
                     node["value"] = len(neighbor_map[node["id"]])
                     node['label'] = node['id']
 
-    net.show_buttons(filter_=['physics'])
-    net.show("src/goi_network.html")
+    net.toggle_physics(False)
+    net.save_graph(out_file)
+
+
+def show_network(out_file='src/gene_report/goi_network.html'):
+    # Read the contents of the HTML file
+    with open(out_file, 'r') as file:
+        html_content = file.read()
+
+    # Display the HTML content
+    display(HTML(html_content))
+
+
 
 
 ### GSEA stuff here ###
