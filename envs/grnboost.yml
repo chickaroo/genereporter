@@ -1,0 +1,12 @@
+name: grnboost
+channels:
+  - conda-forge
+  - defaults
+  - bioconda
+dependencies:
+  - python
+  - numpy
+  - pandas
+  - arboreto
+  - distributed
+prefix: /home/icb/samantha.bening/tools/apps/mamba/envs/grnboost
