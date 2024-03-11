@@ -2,6 +2,7 @@ import warnings
 warnings.filterwarnings('ignore')
 import os
 import pandas as pd
+pd.options.mode.chained_assignment = None  # default='warn'
 from pyvis.network import Network
 import seaborn as sns
 import scanpy as sc
@@ -30,6 +31,8 @@ def read_grn(f_adj='SCENICfiles/adj.csv', f_reg='SCENICfiles/reg.csv'):
     regulon.apply(clean_target_genes, axis=1)
     return adjacencies, regulon
 
+adj_df, reg_df = read_grn()
+
 # find all regulons that have GOI (CASP8) in their target genes
 def find_TFs(df, GOI):
     goi_regulons = df[df['TargetGenes'].str.contains(str(GOI+'\''))]
@@ -56,7 +59,7 @@ def make_adj_df(adj_df, GOI): # question is if we even want the adjacencies in t
     adj_interest['group'] = 'adjacencies'
     return adj_interest
 
-def make_goi_grn(df, GOI):
+def make_goi_grn(GOI, df=reg_df):
     goi_regulons = find_TFs(df, GOI)
     goi_grn = pd.DataFrame()
     for i in goi_regulons:
@@ -201,11 +204,21 @@ def plot_regulon_expression(df, GOI, adata=adata):
         wspace=0.4,
     )
 
-def make_network(df, GOI, out_file='src/gene_report/goi_network.html'):
-    net = Network(notebook=True, height='500px', width='400px', bgcolor="#222222", font_color="white", cdn_resources='remote')
+def make_network(df, GOI, direct_TF = True, top_n = None, out_file='src/gene_report/goi_network.html'):
+    net = Network(notebook=True, height='600px', width='700px', bgcolor="#FFFFFF", 
+                  font_color="black", cdn_resources='remote')
 
     # filter for only direct neighbors of GOI
-    df = df[df['target'] == GOI]
+    if direct_TF and top_n == None:
+        df = df[df['target'] == GOI]
+
+    if direct_TF and top_n != None:
+        temp = df.groupby('TF').head(top_n)
+        df = pd.concat([temp, df[df['target'] == GOI]], axis=0)
+    
+    if not direct_TF and top_n != None:
+        df = df.groupby('TF').head(top_n)
+
 
     # assign colors to regulons
     groups = {}
@@ -285,6 +298,7 @@ def get_reactome():
     reactome = reactome[reactome.geneset.isin(gsea_genesets)]
     return reactome
 
+reactome = get_reactome()
 
 def get_regulon_genes(reg_df, TF): # give TF name as string, e.g. 'KLF5'
 
@@ -300,7 +314,7 @@ def get_regulon_genes(reg_df, TF): # give TF name as string, e.g. 'KLF5'
     df['TF'] = TF + "_REGULON"
     return df # returns a dataframe with all target genes and importance scores for a given TF
 
-def get_regulon_genesets(reg_df):
+def get_regulon_genesets(reg_df=reg_df):
     df = pd.DataFrame()
     for TF in reg_df['TF'].unique():
         df = pd.concat([df, get_regulon_genes(reg_df, TF)], axis=0)
@@ -309,13 +323,16 @@ def get_regulon_genesets(reg_df):
     df = df.reset_index(drop=True)
     return df
 
+regulon_geneset = get_regulon_genesets()
 
-def get_genesets(reactome, reg_df):
+def get_genesets(reactome=reactome, reg_df=regulon_geneset):
     geneset_df = pd.concat([reactome, reg_df], axis=0)
     geneset_df = geneset_df.reset_index(drop=True)
     return geneset_df
 
-def get_goi_pathways(geneset_df, GOI, adata=adata, method='spearman'):
+geneset_df = get_genesets()
+
+def get_goi_pathways(GOI, geneset_df=geneset_df, adata=adata, method='spearman'):
     # correlation between each pathways AUCell score and CASP8 expression (ONLY GENESETS AFTER FILTERING!!)
     pathways_goi = geneset_df[(geneset_df['genesymbol'] == GOI)]
 
@@ -331,7 +348,7 @@ def get_goi_pathways(geneset_df, GOI, adata=adata, method='spearman'):
     return pathways_goi
 
 # find gene set of specific regulon (for now automatically set to the first regulon in the list)
-def get_regulon_geneset(df, regulon=None):
+def get_regulon_geneset(df=geneset_df, regulon=None):
     if regulon == None:
         regulon = df[df['geneset'].str.match(r'(.*)_REGULON')].iloc[0]['geneset']
     
@@ -351,7 +368,8 @@ def plot_pathways(df, GOI, adata=adata):
     )
 
 
-def gGOSt(reg_geneset, GOI):
+def gGOSt(regulon):
+    reg_geneset = get_regulon_geneset(regulon=regulon)
     r = requests.post(
         url='https://biit.cs.ut.ee/gprofiler/api/gost/profile/',
         json={
@@ -370,7 +388,7 @@ def gGOSt(reg_geneset, GOI):
         result = result[result['term_size'] < 500] # filter out large pathways in databases
         # visualize p-values in dot plot nicely
         fig = px.scatter(result, x=result.index, y="nlog(p)", color="source", hover_name='name', hover_data={'source': False, 'native': True})
-        fig.update_layout(title=f"g:Profiler g:GOSt analysis for {GOI} pathways", xaxis_title="Pathway", yaxis_title="-log10(p-value)")
+        fig.update_layout(title=f"g:Profiler g:GOSt analysis for pathways in {regulon}", xaxis_title="Pathway", yaxis_title="-log10(p-value)")
         fig.update_xaxes(ticktext=result[result['source'].duplicated() == False]['source'], tickvals=result[result['source'].duplicated() == False].index)
         fig.update_traces(marker=dict(size=11, opacity=0.8), showlegend=False )
         fig.show()
