@@ -38,5 +38,5 @@ src/gene_report/__pycache__/*.pyc
 .DS_Store
 data/output/adata.h5
 lib/*
-src/.ipynb_checkpoints/*
-src/.ipynb_checkpoints/gsea-checkpoint.ipynb
+src/.ipynb_checkpoints/*.ipynb
+

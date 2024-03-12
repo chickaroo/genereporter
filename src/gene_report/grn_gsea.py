@@ -14,18 +14,44 @@ from Bio import Entrez
 from pathlib import Path
 import requests
 import plotly.express as px
+from itertools import chain, repeat
 from IPython.display import display, HTML
+from typing import Tuple, Union, List
+import warnings
+warnings.filterwarnings('ignore')
 
 # set a working directory
 wdir = "/Users/samibening/Projects/Bachelor/"
 os.chdir( wdir )
 
+# load the adata object
 adata = sc.read_h5ad('data/output/adata_aucell.h5ad')
 
-def clean_target_genes(row):
+
+
+def clean_target_genes(row: pd.Series) -> list:
+    """
+    This function cleans the 'TargetGenes' column in a given row by evaluating the string representation of the list.
+
+    :param row: A row of data, expected to have a 'TargetGenes' column containing a string representation of a list.
+    :type row: pandas.Series
+    :return: The evaluated list of target genes.
+    :rtype: list
+    """
     return eval(row['TargetGenes'])
 
-def read_grn(f_adj='SCENICfiles/adj.csv', f_reg='SCENICfiles/reg.csv'):
+
+def read_grn(f_adj: str = 'SCENICfiles/adj.csv', f_reg: str = 'SCENICfiles/reg.csv') -> Tuple[pd.DataFrame, pd.DataFrame]:
+    """
+    This function reads the adjacency and regulon data from the specified files, and cleans the 'TargetGenes' column in the regulon data.
+
+    :param f_adj: The file path to the adjacency data. Default is 'SCENICfiles/adj.csv'.
+    :type f_adj: str, optional
+    :param f_reg: The file path to the regulon data. Default is 'SCENICfiles/reg.csv'.
+    :type f_reg: str, optional
+    :return: A tuple containing the adjacency and regulon data as pandas DataFrames.
+    :rtype: Tuple[pandas.DataFrame, pandas.DataFrame]
+    """
     adjacencies = pd.read_csv(f_adj)
     regulon = pd.read_csv(f_reg)
     regulon.apply(clean_target_genes, axis=1)
@@ -34,11 +60,31 @@ def read_grn(f_adj='SCENICfiles/adj.csv', f_reg='SCENICfiles/reg.csv'):
 adj_df, reg_df = read_grn()
 
 # find all regulons that have GOI (CASP8) in their target genes
-def find_TFs(df, GOI):
+def find_TFs(df: pd.DataFrame, GOI: str) -> np.array:
+    """
+    This function finds the transcription factors (TFs) that regulate a given gene of interest (GOI).
+
+    :param df: The DataFrame containing the regulon data.
+    :type df: pandas.DataFrame
+    :param GOI: The gene of interest.
+    :type GOI: str
+    :return: An array of TFs that regulate the GOI.
+    :rtype: numpy.array
+    """
     goi_regulons = df[df['TargetGenes'].str.contains(str(GOI+'\''))]
     return goi_regulons['TF'].values
 
-def make_regulon_dataframe(df, TF):
+def make_regulon_dataframe(df: pd.DataFrame, TF: str) -> pd.DataFrame:
+    """
+    This function creates a DataFrame for a given transcription factor (TF) with its target genes and their importance.
+
+    :param df: The DataFrame containing the regulon data.
+    :type df: pandas.DataFrame
+    :param TF: The transcription factor.
+    :type TF: str
+    :return: A DataFrame with the target genes of the TF, their importance, the TF, and the group (TF_regulon).
+    :rtype: pandas.DataFrame
+    """
     reg_df = pd.DataFrame()
     for i in df[df['TF'] == TF]['TargetGenes']:
         temp = eval(i)
@@ -52,14 +98,34 @@ def make_regulon_dataframe(df, TF):
     reg_df['group'] = str(TF + "_regulon")
     return reg_df
 
-def make_adj_df(adj_df, GOI): # question is if we even want the adjacencies in the netowork? 
+def make_adj_df(adj_df: pd.DataFrame, GOI: str) -> pd.DataFrame:
+    """
+    This function creates a DataFrame for a given gene of interest (GOI) with its adjacencies sorted by importance.
+
+    :param adj_df: The DataFrame containing the adjacency data.
+    :type adj_df: pandas.DataFrame
+    :param GOI: The gene of interest.
+    :type GOI: str
+    :return: A DataFrame with the adjacencies of the GOI, sorted by importance, and a group column set to 'adjacencies'.
+    :rtype: pandas.DataFrame
+    """
     adj_interest = adj_df[adj_df['target'] == GOI]
     adj_interest = adj_interest.sort_values(by='importance', ascending=False)
     #adj_interest = adj_interest.head(15) # select top n 'important' TFs, threshold can be adjusted
     adj_interest['group'] = 'adjacencies'
     return adj_interest
 
-def make_goi_grn(GOI, df=reg_df):
+def make_goi_grn(GOI: str, df: pd.DataFrame = reg_df) -> pd.DataFrame:
+    """
+    This function creates a gene regulatory network (GRN) for a given gene of interest (GOI).
+
+    :param GOI: The gene of interest.
+    :type GOI: str
+    :param df: The DataFrame containing the regulon data. Default is reg_df.
+    :type df: pandas.DataFrame, optional
+    :return: A DataFrame representing the GRN of the GOI, sorted by importance and only including target genes that appear more than once.
+    :rtype: pandas.DataFrame
+    """
     goi_regulons = find_TFs(df, GOI)
     goi_grn = pd.DataFrame()
     for i in goi_regulons:
@@ -70,26 +136,20 @@ def make_goi_grn(GOI, df=reg_df):
     return goi_grn
 
 
-def get_entrez_gene_summary(
-    gene_name, email, organism="human", max_gene_ids=100
-):
-    """Returns the 'Summary' contents for provided input
-    gene from the Entrez Gene database. 
-    
-    Args:
-        gene_name (string): Official (HGNC) gene name 
-           (e.g., 'KAT2A')
-        email (string): Required email for making requests
-        organism (string, optional): defaults to human. 
-           Filters results only to match organism. Set to None
-           to return all organism unfiltered.
-        max_gene_ids (int, optional): Sets the number of Gene
-           ID results to return (absolute max allowed is 10K).
-        
-    Returns:
-        dict: Summaries for all gene IDs associated with 
-           gene_name (where: keys → [orgn][gene name],
-                      values → gene summary)
+def get_entrez_gene_summary(gene_name: str, email: str, organism: str = "human", max_gene_ids: int = 10) -> dict:
+    """
+    Returns the 'Summary' contents for provided input gene from the Entrez Gene database.
+
+    :param gene_name: Official (HGNC) gene name (e.g., 'KAT2A')
+    :type gene_name: str
+    :param email: Required email for making requests
+    :type email: str
+    :param organism: Filters results only to match organism. Set to None to return all organism unfiltered. Default is 'human'.
+    :type organism: str, optional
+    :param max_gene_ids: Sets the number of Gene ID results to return (absolute max allowed is 10K). Default is 100.
+    :type max_gene_ids: int, optional
+    :return: Summaries for all gene IDs associated with gene_name (where: keys → [orgn][gene name], values → gene summary)
+    :rtype: dict
     """
     Entrez.email = email
 
@@ -128,7 +188,15 @@ def get_entrez_gene_summary(
 
 
 # method to format gene summary from NCBI to print readably
-def format_gene_summary(df, GOI):
+def format_gene_summary(df: pd.DataFrame, GOI: str) -> None:
+    """
+    This function formats and prints the gene summary from NCBI in a readable way.
+
+    :param df: The DataFrame containing the gene data.
+    :type df: pandas.DataFrame
+    :param GOI: The gene of interest.
+    :type GOI: str
+    """
     gene_summary = get_gene_summary(df, GOI)
     i = 0
     for gene_name, summary in gene_summary.items():
@@ -148,15 +216,37 @@ def format_gene_summary(df, GOI):
         except:
             print(f"\tNo summary available for {gene_name}.")
 
-def get_gene_summary(df, GOI, email='samantha.bening@helmholtz-munich.de'):
+
+def get_gene_summary(df: pd.DataFrame, GOI: str, email: str = 'samantha.bening@helmholtz-munich.de') -> dict:
+    """
+    This function gets the gene summary from NCBI for a given gene of interest (GOI) and its transcription factors (TFs).
+
+    :param df: The DataFrame containing the gene data.
+    :type df: pandas.DataFrame
+    :param GOI: The gene of interest.
+    :type GOI: str
+    :param email: The email to use for making requests to NCBI. Default is 'samantha.bening@helmholtz-munich.de'.
+    :type email: str, optional
+    :return: A dictionary with the gene summaries, where the keys are the gene names and the values are the summaries.
+    :rtype: dict
+    """
     gene_summaries = {'Gene': 'Summary'}
 
     for gene in ([GOI] + df[df['target'] == GOI]['TF'].unique().tolist()):
         gene_summaries[gene] = get_entrez_gene_summary(gene, email)['human'][gene]
     return gene_summaries
 
+
 # summary of GOI and its regulons
-def GOI_network_stats(df, GOI):
+def GOI_network_stats(df: pd.DataFrame, GOI: str) -> None:
+    """
+    This function prints a summary of a given gene of interest (GOI) and its regulons.
+
+    :param df: The DataFrame containing the gene data.
+    :type df: pandas.DataFrame
+    :param GOI: The gene of interest.
+    :type GOI: str
+    """
     df = df[df['target'] == GOI]
     print(f"Summary of {GOI}:\n")
     print(f"There are {len(df)} regulons that have {GOI} in their target genes.\n")
@@ -181,7 +271,17 @@ def GOI_network_stats(df, GOI):
 
 
 # cell-type specific analysis of TFs and regulons
-def plot_regulon_expression(df, GOI, adata=adata):
+def plot_regulon_expression(df: pd.DataFrame, GOI: str, adata=adata) -> None:
+    """
+    This function plots the expression of a given gene of interest (GOI) and its regulons.
+
+    :param df: The DataFrame containing the gene data.
+    :type df: pandas.DataFrame
+    :param GOI: The gene of interest.
+    :type GOI: str
+    :param adata: The AnnData object containing the single-cell data. Default is adata.
+    :type adata: anndata.AnnData, optional
+    """
     genesets = adata.obsm['aucell_estimate'].columns
     # find any genesets that are regulons for GOI
     regulons_in_genesets = []
@@ -204,7 +304,22 @@ def plot_regulon_expression(df, GOI, adata=adata):
         wspace=0.4,
     )
 
-def make_network(df, GOI, direct_TF = True, top_n = None, out_file='src/gene_report/goi_network.html'):
+
+def make_network(df: pd.DataFrame, GOI: str, direct_TF: bool = True, top_n: int = None, out_file: str = 'src/gene_report/goi_network.html') -> None:
+    """
+    This function creates a network visualization of a given gene of interest (GOI) and its regulons.
+
+    :param df: The DataFrame containing the gene data.
+    :type df: pandas.DataFrame
+    :param GOI: The gene of interest.
+    :type GOI: str
+    :param direct_TF: If True, only direct neighbors of the GOI are included. If False, all neighbors are included. Default is True.
+    :type direct_TF: bool, optional
+    :param top_n: The number of top neighbors of each regulon (other than GOI) to include. If None, no regulon neighbors (other than GOI) are included. Default is None.
+    :type top_n: int, optional
+    :param out_file: The path to the output file where the network visualization will be saved. Default is 'src/gene_report/goi_network.html'.
+    :type out_file: str, optional
+    """
     net = Network(notebook=True, height='600px', width='700px', bgcolor="#FFFFFF", 
                   font_color="black", cdn_resources='remote')
 
@@ -218,7 +333,6 @@ def make_network(df, GOI, direct_TF = True, top_n = None, out_file='src/gene_rep
     
     if not direct_TF and top_n != None:
         df = df.groupby('TF').head(top_n)
-
 
     # assign colors to regulons
     groups = {}
@@ -257,14 +371,19 @@ def make_network(df, GOI, direct_TF = True, top_n = None, out_file='src/gene_rep
     net.save_graph(out_file)
 
 
-def show_network(out_file='src/gene_report/goi_network.html'):
+def show_network(out_file: str = 'src/gene_report/goi_network.html') -> None:
+    """
+    This function displays the HTML content of a given file.
+
+    :param out_file: The path to the HTML file to display. Default is 'src/gene_report/goi_network.html'.
+    :type out_file: str, optional
+    """
     # Read the contents of the HTML file
     with open(out_file, 'r') as file:
         html_content = file.read()
 
     # Display the HTML content
     display(HTML(html_content))
-
 
 
 
@@ -275,11 +394,13 @@ def show_network(out_file='src/gene_report/goi_network.html'):
 def gmt_to_decoupler(pth: Path) -> pd.DataFrame:
     """
     Parse a gmt file to a decoupler pathway dataframe.
+
+    :param pth: The path to the gmt file.
+    :type pth: Path
+    :return: A DataFrame with the geneset and genesymbol from the gmt file.
+    :rtype: pandas.DataFrame
     """
-    from itertools import chain, repeat
-
     pathways = {}
-
     with Path(pth).open("r") as f:
         for line in f:
             name, _, *genes = line.strip().split("\t")
@@ -290,7 +411,13 @@ def gmt_to_decoupler(pth: Path) -> pd.DataFrame:
         columns=["geneset", "genesymbol"],
     )
 
-def get_reactome():
+def get_reactome() -> pd.DataFrame:
+    """
+    This function retrieves the reactome data, filters it based on geneset size, and returns it as a DataFrame.
+
+    :return: A DataFrame with the filtered reactome data.
+    :rtype: pandas.DataFrame
+    """
     reactome = gmt_to_decoupler("data/c2.cp.reactome.v2023.2.Hs.symbols.gmt")
     # Filtering genesets to match behaviour of fgsea
     geneset_size = reactome.groupby("geneset").size()
@@ -300,8 +427,17 @@ def get_reactome():
 
 reactome = get_reactome()
 
-def get_regulon_genes(reg_df, TF): # give TF name as string, e.g. 'KLF5'
+def get_regulon_genes(reg_df: pd.DataFrame, TF: str) -> pd.DataFrame:
+    """
+    Returns a DataFrame with all target genes and importance scores for a given transcription factor (TF).
 
+    :param reg_df: The DataFrame containing the regulon data.
+    :type reg_df: pandas.DataFrame
+    :param TF: The name of the transcription factor.
+    :type TF: str
+    :return: A DataFrame with all target genes and importance scores for the given TF.
+    :rtype: pandas.DataFrame
+    """
     all_targets = reg_df[reg_df['TF'] == TF]['TargetGenes']
     df = pd.DataFrame()
     for i in all_targets:
@@ -314,7 +450,15 @@ def get_regulon_genes(reg_df, TF): # give TF name as string, e.g. 'KLF5'
     df['TF'] = TF + "_REGULON"
     return df # returns a dataframe with all target genes and importance scores for a given TF
 
-def get_regulon_genesets(reg_df=reg_df):
+def get_regulon_genesets(reg_df: pd.DataFrame=reg_df) -> pd.DataFrame:
+    """
+    Returns a DataFrame with all genesets for each unique transcription factor (TF) in the given regulon data.
+
+    :param reg_df: The DataFrame containing the regulon data.
+    :type reg_df: pandas.DataFrame
+    :return: A DataFrame with all genesets for each unique TF.
+    :rtype: pandas.DataFrame
+    """
     df = pd.DataFrame()
     for TF in reg_df['TF'].unique():
         df = pd.concat([df, get_regulon_genes(reg_df, TF)], axis=0)
@@ -325,7 +469,17 @@ def get_regulon_genesets(reg_df=reg_df):
 
 regulon_geneset = get_regulon_genesets()
 
-def get_genesets(reactome=reactome, reg_df=regulon_geneset):
+def get_genesets(reactome=reactome, reg_df=regulon_geneset) -> pd.DataFrame:
+    """
+    This function concatenates the reactome and regulon dataframes, resets the index, and returns the result.
+
+    :param reactome: The DataFrame containing the reactome data. Default is reactome.
+    :type reactome: pandas.DataFrame, optional
+    :param reg_df: The DataFrame containing the regulon data. Default is regulon_geneset.
+    :type reg_df: pandas.DataFrame, optional
+    :return: A DataFrame with the concatenated reactome and regulon data.
+    :rtype: pandas.DataFrame
+    """
     geneset_df = pd.concat([reactome, reg_df], axis=0)
     geneset_df = geneset_df.reset_index(drop=True)
     return geneset_df
@@ -333,7 +487,21 @@ def get_genesets(reactome=reactome, reg_df=regulon_geneset):
 geneset_df = get_genesets()
 
 def get_goi_pathways(GOI, geneset_df=geneset_df, adata=adata, method='spearman'):
-    # correlation between each pathways AUCell score and CASP8 expression (ONLY GENESETS AFTER FILTERING!!)
+    """
+    This function calculates and ranks the correlation between each pathway's AUCell score and the expression of the gene of interest (GOI).
+
+    :param GOI: The gene of interest.
+    :type GOI: str
+    :param geneset_df: The DataFrame containing the geneset data. Default is geneset_df.
+    :type geneset_df: pandas.DataFrame, optional
+    :param adata: The AnnData object containing the single-cell data. Default is adata.
+    :type adata: anndata.AnnData, optional
+    :param method: The method to use for calculating correlation. Default is 'spearman'.
+    :type method: str, optional
+    :return: A DataFrame with the pathways for the GOI, sorted by absolute correlation value.
+    :rtype: pandas.DataFrame
+    """
+    # correlation between each pathways AUCell score and GOI expression (ONLY GENESETS AFTER FILTERING)
     pathways_goi = geneset_df[(geneset_df['genesymbol'] == GOI)]
 
     # get the AUCell scores for the genes in the pathway
@@ -348,14 +516,35 @@ def get_goi_pathways(GOI, geneset_df=geneset_df, adata=adata, method='spearman')
     return pathways_goi
 
 # find gene set of specific regulon (for now automatically set to the first regulon in the list)
-def get_regulon_geneset(df=geneset_df, regulon=None):
+def get_regulon_geneset(df=geneset_df, regulon=None) -> List[str]:
+    """
+    This function returns the gene set of a specific regulon. If no regulon is specified, it defaults to the first regulon in the list.
+
+    :param df: The DataFrame containing the geneset data. Default is geneset_df.
+    :type df: pandas.DataFrame, optional
+    :param regulon: The name of the regulon. If None, the first regulon in the list is used. Default is None.
+    :type regulon: str, optional
+    :return: A list of genes in the specified regulon.
+    :rtype: List[str]
+    """
     if regulon == None:
         regulon = df[df['geneset'].str.match(r'(.*)_REGULON')].iloc[0]['geneset']
     
     return list(df[df['geneset'] == regulon]['genesymbol'].values)
 
 
-def plot_pathways(df, GOI, adata=adata):
+def plot_pathways(df: pd.DataFrame, GOI: str, adata=adata) -> None:
+    """
+    This function plots the UMAP of the top 5 pathways along with the cell type and the gene of interest (GOI).
+
+    :param df: The DataFrame containing the pathway data.
+    :type df: pandas.DataFrame
+    :param GOI: The gene of interest.
+    :type GOI: str
+    :param adata: The AnnData object containing the single-cell data. Default is adata.
+    :type adata: anndata.AnnData, optional
+    """
+    # TODO: sort types of pathways (e.g. Reactome vs regulon) in columns under cell type and GOI expression reference
     top_pathways = list(df['geneset'].values[:5])
     adata.obs[top_pathways] = adata.obsm["aucell_estimate"][top_pathways]
 
@@ -368,7 +557,17 @@ def plot_pathways(df, GOI, adata=adata):
     )
 
 
-def gGOSt(regulon):
+def gGOSt(regulon: str) -> pd.DataFrame:
+    """
+    This function performs g:Profiler g:GOSt analysis for pathways in a given regulon, plots the results, and returns the result DataFrame.
+    Currently only searching in the REAC, KEGG, and GO:BP databases.
+    Some regulons may not have significant pathways, in which case the function will return a message.
+
+    :param regulon: The name of the regulon.
+    :type regulon: str
+    :return: A DataFrame with the g:Profiler g:GOSt analysis results for the given regulon.
+    :rtype: pandas.DataFrame
+    """
     reg_geneset = get_regulon_geneset(regulon=regulon)
     r = requests.post(
         url='https://biit.cs.ut.ee/gprofiler/api/gost/profile/',
