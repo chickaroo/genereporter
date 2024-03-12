@@ -279,7 +279,7 @@ def plot_expressions(GOI: str, cell_type: str = 'T cell', show_summary: bool = F
 
 # standard scanpy GOI expression plotting 
         
-def dotplot(GOI: str, cell_type: str = None, adata: anndata.AnnData = adata) -> None:
+def dotplot(GOI: str, cell_type: str = None, adata: anndata.AnnData = adata, **kwargs) -> None:
     """
     This function creates a dot plot of the expression of a given gene of interest (GOI) across all cell types or a specific cell type.
 
@@ -289,16 +289,17 @@ def dotplot(GOI: str, cell_type: str = None, adata: anndata.AnnData = adata) -> 
     :type cell_type: str, optional
     :param adata: The input AnnData object containing the gene expression data. Default is the global adata object.
     :type adata: anndata.AnnData, optional
+    :param kwargs: Additional keyword arguments to be passed to the sc.pl.dotplot function.
     :return: None
     """
     if cell_type == None:
         fig = sc.pl.dotplot(adata, var_names=GOI, groupby='celltypist_cell_label_coarse', 
-                        return_fig=True, standard_scale='var', title="Coarse Cell Types", figsize=(3.5,8))
+                        return_fig=True, standard_scale='var', title="Coarse Cell Types", figsize=(3.5,8), **kwargs)
         fig.add_totals().show()
     else:
         fig = sc.pl.dotplot(adata[adata.obs['celltypist_cell_label_coarse'] == cell_type], 
                             var_names=GOI, groupby='celltypist_cell_label', return_fig=True,
-                            standard_scale='var', title=str('Fine Cell Types: ' + cell_type), figsize=(4,3))
+                            standard_scale='var', title=str('Fine Cell Types: ' + cell_type), figsize=(4,3), **kwargs)
         fig.add_totals().show()
 
     plt.show()

@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Usage &mdash; genereporter 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2709fde1"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to genereporter’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            genereporter
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-gene_report.cell_pipeline">cell_pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gene_report.cell_pipeline.calc_distance"><code class="docutils literal notranslate"><span class="pre">calc_distance()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gene_report.cell_pipeline.calc_distance_point"><code class="docutils literal notranslate"><span class="pre">calc_distance_point()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gene_report.cell_pipeline.classify_exp_level"><code class="docutils literal notranslate"><span class="pre">classify_exp_level()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gene_report.cell_pipeline.clean_data"><code class="docutils literal notranslate"><span class="pre">clean_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gene_report.cell_pipeline.detect_outliers"><code class="docutils literal notranslate"><span class="pre">detect_outliers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gene_report.cell_pipeline.dotplot"><code class="docutils literal notranslate"><span class="pre">dotplot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gene_report.cell_pipeline.explain_expr_celltypes"><code class="docutils literal notranslate"><span class="pre">explain_expr_celltypes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gene_report.cell_pipeline.expression_vs_detection"><code class="docutils literal notranslate"><span class="pre">expression_vs_detection()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gene_report.cell_pipeline.find_thresholds"><code class="docutils literal notranslate"><span class="pre">find_thresholds()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gene_report.cell_pipeline.fit_spline"><code class="docutils literal notranslate"><span class="pre">fit_spline()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gene_report.cell_pipeline.get_adata"><code class="docutils literal notranslate"><span class="pre">get_adata()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gene_report.cell_pipeline.heatmap"><code class="docutils literal notranslate"><span class="pre">heatmap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gene_report.cell_pipeline.list_outliers"><code class="docutils literal notranslate"><span class="pre">list_outliers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gene_report.cell_pipeline.make_df"><code class="docutils literal notranslate"><span class="pre">make_df()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gene_report.cell_pipeline.matrixplot"><code class="docutils literal notranslate"><span class="pre">matrixplot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gene_report.cell_pipeline.plot_expr_class"><code class="docutils literal notranslate"><span class="pre">plot_expr_class()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gene_report.cell_pipeline.plot_expressions"><code class="docutils literal notranslate"><span class="pre">plot_expressions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gene_report.cell_pipeline.plot_outliers"><code class="docutils literal notranslate"><span class="pre">plot_outliers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gene_report.cell_pipeline.plot_umap"><code class="docutils literal notranslate"><span class="pre">plot_umap()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#grn">grn</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">genereporter</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Usage</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/usage.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h1>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p>To use genereporter, first install it by cloning the github repository.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/chickaroo/Bachelor
+</pre></div>
+</div>
+</section>
+<section id="module-gene_report.cell_pipeline">
+<span id="cell-pipeline"></span><h2>cell_pipeline<a class="headerlink" href="#module-gene_report.cell_pipeline" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="gene_report.cell_pipeline.calc_distance">
+<span class="sig-prename descclassname"><span class="pre">gene_report.cell_pipeline.</span></span><span class="sig-name descname"><span class="pre">calc_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Series</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#gene_report.cell_pipeline.calc_distance" title="Link to this definition"></a></dt>
+<dd><p>This function calculates the orthogonal distance of each point in the given x and y series from the spline fitted to the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>pandas.Series</em>) – The x-coordinates of the points.</p></li>
+<li><p><strong>y</strong> (<em>pandas.Series</em>) – The y-coordinates of the points.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of the orthogonal distances of each point from the spline.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[float]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gene_report.cell_pipeline.calc_distance_point">
+<span class="sig-prename descclassname"><span class="pre">gene_report.cell_pipeline.</span></span><span class="sig-name descname"><span class="pre">calc_distance_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#gene_report.cell_pipeline.calc_distance_point" title="Link to this definition"></a></dt>
+<dd><p>This function calculates the orthogonal distance of a point from the line defined by two other points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>point</strong> (<em>Tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – The point for which the distance is to be calculated.</p></li>
+<li><p><strong>p1</strong> (<em>Tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – The first point defining the line.</p></li>
+<li><p><strong>p2</strong> (<em>Tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – The second point defining the line.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The orthogonal distance of the point from the line.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gene_report.cell_pipeline.classify_exp_level">
+<span class="sig-prename descclassname"><span class="pre">gene_report.cell_pipeline.</span></span><span class="sig-name descname"><span class="pre">classify_exp_level</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filtered</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#gene_report.cell_pipeline.classify_exp_level" title="Link to this definition"></a></dt>
+<dd><p>This function classifies the expression level of genes into five categories: very low, low, middle, high, very high.
+It also generates a summary of the quantile thresholds and the number of genes in each category.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The input DataFrame containing the gene expression data.</p></li>
+<li><p><strong>filtered</strong> (<em>list</em><em> or </em><em>numpy.ndarray</em>) – The filtered gene expression data for which to calculate the thresholds.</p></li>
+<li><p><strong>col</strong> (<em>str</em>) – The column in df containing the gene expression data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The DataFrame with an additional column for the expression level category, and the summary string.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple(pandas.DataFrame, str)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gene_report.cell_pipeline.clean_data">
+<span class="sig-prename descclassname"><span class="pre">gene_report.cell_pipeline.</span></span><span class="sig-name descname"><span class="pre">clean_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">99.75</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#gene_report.cell_pipeline.clean_data" title="Link to this definition"></a></dt>
+<dd><p>This function cleans the data by removing outliers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The DataFrame containing the data to be cleaned.</p></li>
+<li><p><strong>col</strong> (<em>str</em>) – The column in the DataFrame to be cleaned.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – The percentile above which data points are considered outliers. Default is 99.75.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The cleaned data as a 1D numpy array.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gene_report.cell_pipeline.detect_outliers">
+<span class="sig-prename descclassname"><span class="pre">gene_report.cell_pipeline.</span></span><span class="sig-name descname"><span class="pre">detect_outliers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_type:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outlier_threshold:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">0.15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata:</span> <span class="pre">~anndata._core.anndata.AnnData</span> <span class="pre">=</span> <span class="pre">AnnData</span> <span class="pre">object</span> <span class="pre">with</span> <span class="pre">n_obs</span> <span class="pre">×</span> <span class="pre">n_vars</span> <span class="pre">=</span> <span class="pre">5397</span> <span class="pre">×</span> <span class="pre">16719</span>&#160;&#160;&#160;&#160; <span class="pre">obs:</span> <span class="pre">'sampleID'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'barcode'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'n_genes_by_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_n_genes_by_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_in_top_20_genes'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'outlier'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'mt_outlier'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_batch'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_labels'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden_res0_6'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'manual_celltype_annotation'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_conf_score'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_coarse'</span>&#160;&#160;&#160;&#160; <span class="pre">var:</span> <span class="pre">'n_cells'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'highly_variable'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'means'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'dispersions'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'dispersions_norm'</span>&#160;&#160;&#160;&#160; <span class="pre">uns:</span> <span class="pre">'_scvi_manager_uuid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_uuid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_coarse_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'hvg'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden_res0_6_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'neighbors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pca'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'sampleID_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'umap'</span>&#160;&#160;&#160;&#160; <span class="pre">obsm:</span> <span class="pre">'X_pca'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'X_scVI'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'X_umap'</span>&#160;&#160;&#160;&#160; <span class="pre">varm:</span> <span class="pre">'PCs'</span>&#160;&#160;&#160;&#160; <span class="pre">layers:</span> <span class="pre">'int_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log_int_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'raw'</span>&#160;&#160;&#160;&#160; <span class="pre">obsp:</span> <span class="pre">'connectivities'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'distances'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#gene_report.cell_pipeline.detect_outliers" title="Link to this definition"></a></dt>
+<dd><p>This function detects outliers in the expression versus detection data of a given cell type. 
+It calculates the orthogonal distance of each point from the spline fitted to the data, 
+and marks points with a distance greater than the specified outlier threshold as outliers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cell_type</strong> (<em>str</em><em>, </em><em>optional</em>) – The specific cell type to plot. If None, all cell types are plotted. Default is None.</p></li>
+<li><p><strong>outlier_threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – The threshold for marking a point as an outlier. If the orthogonal distance of a point from the spline is greater than this threshold, it is marked as an outlier. Default is 0.15.</p></li>
+<li><p><strong>adata</strong> (<em>anndata.AnnData</em><em>, </em><em>optional</em>) – The input AnnData object containing the gene expression data. Default is the global adata object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame with the mean expression, percentage detection, orthogonal distance from the spline, and outlier status of each gene for the given cell type.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gene_report.cell_pipeline.dotplot">
+<span class="sig-prename descclassname"><span class="pre">gene_report.cell_pipeline.</span></span><span class="sig-name descname"><span class="pre">dotplot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">GOI:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_type:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata:</span> <span class="pre">~anndata._core.anndata.AnnData</span> <span class="pre">=</span> <span class="pre">AnnData</span> <span class="pre">object</span> <span class="pre">with</span> <span class="pre">n_obs</span> <span class="pre">×</span> <span class="pre">n_vars</span> <span class="pre">=</span> <span class="pre">5397</span> <span class="pre">×</span> <span class="pre">16719</span>&#160;&#160;&#160;&#160; <span class="pre">obs:</span> <span class="pre">'sampleID'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'barcode'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'n_genes_by_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_n_genes_by_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_in_top_20_genes'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'outlier'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'mt_outlier'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_batch'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_labels'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden_res0_6'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'manual_celltype_annotation'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_conf_score'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_coarse'</span>&#160;&#160;&#160;&#160; <span class="pre">var:</span> <span class="pre">'n_cells'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'highly_variable'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'means'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'dispersions'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'dispersions_norm'</span>&#160;&#160;&#160;&#160; <span class="pre">uns:</span> <span class="pre">'_scvi_manager_uuid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_uuid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_coarse_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'hvg'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden_res0_6_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'neighbors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pca'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'sampleID_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'umap'</span>&#160;&#160;&#160;&#160; <span class="pre">obsm:</span> <span class="pre">'X_pca'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'X_scVI'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'X_umap'</span>&#160;&#160;&#160;&#160; <span class="pre">varm:</span> <span class="pre">'PCs'</span>&#160;&#160;&#160;&#160; <span class="pre">layers:</span> <span class="pre">'int_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log_int_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'raw'</span>&#160;&#160;&#160;&#160; <span class="pre">obsp:</span> <span class="pre">'connectivities'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'distances'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#gene_report.cell_pipeline.dotplot" title="Link to this definition"></a></dt>
+<dd><p>This function creates a dot plot of the expression of a given gene of interest (GOI) across all cell types or a specific cell type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>GOI</strong> (<em>str</em>) – The gene of interest.</p></li>
+<li><p><strong>cell_type</strong> (<em>str</em><em>, </em><em>optional</em>) – The specific cell type to plot. If None, all cell types are plotted. Default is None.</p></li>
+<li><p><strong>adata</strong> (<em>anndata.AnnData</em><em>, </em><em>optional</em>) – The input AnnData object containing the gene expression data. Default is the global adata object.</p></li>
+<li><p><strong>kwargs</strong> – Additional keyword arguments to be passed to the sc.pl.dotplot function.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gene_report.cell_pipeline.explain_expr_celltypes">
+<span class="sig-prename descclassname"><span class="pre">gene_report.cell_pipeline.</span></span><span class="sig-name descname"><span class="pre">explain_expr_celltypes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">GOI:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata:</span> <span class="pre">~anndata._core.anndata.AnnData</span> <span class="pre">=</span> <span class="pre">AnnData</span> <span class="pre">object</span> <span class="pre">with</span> <span class="pre">n_obs</span> <span class="pre">×</span> <span class="pre">n_vars</span> <span class="pre">=</span> <span class="pre">5397</span> <span class="pre">×</span> <span class="pre">16719</span>&#160;&#160;&#160;&#160; <span class="pre">obs:</span> <span class="pre">'sampleID'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'barcode'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'n_genes_by_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_n_genes_by_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_in_top_20_genes'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'outlier'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'mt_outlier'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_batch'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_labels'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden_res0_6'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'manual_celltype_annotation'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_conf_score'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_coarse'</span>&#160;&#160;&#160;&#160; <span class="pre">var:</span> <span class="pre">'n_cells'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'highly_variable'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'means'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'dispersions'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'dispersions_norm'</span>&#160;&#160;&#160;&#160; <span class="pre">uns:</span> <span class="pre">'_scvi_manager_uuid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_uuid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_coarse_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'hvg'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden_res0_6_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'neighbors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pca'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'sampleID_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'umap'</span>&#160;&#160;&#160;&#160; <span class="pre">obsm:</span> <span class="pre">'X_pca'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'X_scVI'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'X_umap'</span>&#160;&#160;&#160;&#160; <span class="pre">varm:</span> <span class="pre">'PCs'</span>&#160;&#160;&#160;&#160; <span class="pre">layers:</span> <span class="pre">'int_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log_int_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'raw'</span>&#160;&#160;&#160;&#160; <span class="pre">obsp:</span> <span class="pre">'connectivities'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'distances'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'log1p(means)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer='log_norm'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#gene_report.cell_pipeline.explain_expr_celltypes" title="Link to this definition"></a></dt>
+<dd><p>This function explains the expression of cell types for a given gene of interest (GOI).
+It creates a DataFrame for each cell type, calculates the expression level of the GOI, and concatenates the results.
+The resulting DataFrame is then formatted for output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>GOI</strong> (<em>str</em>) – The gene of interest.</p></li>
+<li><p><strong>adata</strong> (<em>anndata.AnnData</em>) – The input AnnData object containing the gene expression data.</p></li>
+<li><p><strong>col</strong> (<em>str</em><em>, </em><em>optional</em>) – The column in the DataFrame to be used for the expression level calculation. Default is ‘log1p(means)’.</p></li>
+<li><p><strong>layer</strong> (<em>str</em><em>, </em><em>optional</em>) – The layer of the AnnData object to be used for calculating highly variable genes. Default is ‘log_norm’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The DataFrame with the expression level of the GOI for each cell type.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gene_report.cell_pipeline.expression_vs_detection">
+<span class="sig-prename descclassname"><span class="pre">gene_report.cell_pipeline.</span></span><span class="sig-name descname"><span class="pre">expression_vs_detection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">GOI:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata:</span> <span class="pre">~anndata._core.anndata.AnnData</span> <span class="pre">=</span> <span class="pre">AnnData</span> <span class="pre">object</span> <span class="pre">with</span> <span class="pre">n_obs</span> <span class="pre">×</span> <span class="pre">n_vars</span> <span class="pre">=</span> <span class="pre">5397</span> <span class="pre">×</span> <span class="pre">16719</span>&#160;&#160;&#160;&#160; <span class="pre">obs:</span> <span class="pre">'sampleID'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'barcode'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'n_genes_by_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_n_genes_by_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_in_top_20_genes'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'outlier'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'mt_outlier'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_batch'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_labels'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden_res0_6'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'manual_celltype_annotation'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_conf_score'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_coarse'</span>&#160;&#160;&#160;&#160; <span class="pre">var:</span> <span class="pre">'n_cells'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'highly_variable'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'means'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'dispersions'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'dispersions_norm'</span>&#160;&#160;&#160;&#160; <span class="pre">uns:</span> <span class="pre">'_scvi_manager_uuid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_uuid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_coarse_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'hvg'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden_res0_6_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'neighbors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pca'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'sampleID_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'umap'</span>&#160;&#160;&#160;&#160; <span class="pre">obsm:</span> <span class="pre">'X_pca'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'X_scVI'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'X_umap'</span>&#160;&#160;&#160;&#160; <span class="pre">varm:</span> <span class="pre">'PCs'</span>&#160;&#160;&#160;&#160; <span class="pre">layers:</span> <span class="pre">'int_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log_int_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'raw'</span>&#160;&#160;&#160;&#160; <span class="pre">obsp:</span> <span class="pre">'connectivities'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'distances'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_type:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'log_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'log1p(means)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_df:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#gene_report.cell_pipeline.expression_vs_detection" title="Link to this definition"></a></dt>
+<dd><p>This function creates a DataFrame, calculates the percentage of cells where each gene is detected, and optionally returns the DataFrame.
+If return_df=False, the function plots the mean expression of a given gene of interest (GOI) versus the percentage of cells where this gene is detected, either across all cell types or a specific cell type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>GOI</strong> (<em>str</em>) – The gene of interest.</p></li>
+<li><p><strong>adata</strong> (<em>anndata.AnnData</em><em>, </em><em>optional</em>) – The input AnnData object containing the gene expression data. Default is the global adata object.</p></li>
+<li><p><strong>cell_type</strong> (<em>str</em><em>, </em><em>optional</em>) – The specific cell type to plot. If None, all cell types are plotted. Default is None.</p></li>
+<li><p><strong>layer</strong> (<em>str</em><em>, </em><em>optional</em>) – The layer of the AnnData object to be used for calculating highly variable genes. Default is ‘log_norm’.</p></li>
+<li><p><strong>col</strong> (<em>str</em><em>, </em><em>optional</em>) – The column in the DataFrame to be used for the x-axis. Default is ‘log1p(means)’.</p></li>
+<li><p><strong>return_df</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to return the DataFrame. If False, the function will plot the data and return None. Default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>If return_df is True, the DataFrame with the mean expression and percentage detection of the GOI for each cell type. Otherwise, None.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[None, pandas.DataFrame]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gene_report.cell_pipeline.find_thresholds">
+<span class="sig-prename descclassname"><span class="pre">gene_report.cell_pipeline.</span></span><span class="sig-name descname"><span class="pre">find_thresholds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filtered</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gene_report.cell_pipeline.find_thresholds" title="Link to this definition"></a></dt>
+<dd><p>This function calculates and returns four thresholds (very low, low, middle, high) based on the range of the input data.
+The very_high threshold is set to the 99.75th percentile of the input data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filtered</strong> (<em>list</em><em> or </em><em>numpy.ndarray</em>) – The input data for which to calculate the thresholds.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The calculated thresholds (very low, low, middle, high).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gene_report.cell_pipeline.fit_spline">
+<span class="sig-prename descclassname"><span class="pre">gene_report.cell_pipeline.</span></span><span class="sig-name descname"><span class="pre">fit_spline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_type:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata:</span> <span class="pre">~anndata._core.anndata.AnnData</span> <span class="pre">=</span> <span class="pre">AnnData</span> <span class="pre">object</span> <span class="pre">with</span> <span class="pre">n_obs</span> <span class="pre">×</span> <span class="pre">n_vars</span> <span class="pre">=</span> <span class="pre">5397</span> <span class="pre">×</span> <span class="pre">16719</span>&#160;&#160;&#160;&#160; <span class="pre">obs:</span> <span class="pre">'sampleID'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'barcode'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'n_genes_by_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_n_genes_by_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_in_top_20_genes'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'outlier'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'mt_outlier'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_batch'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_labels'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden_res0_6'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'manual_celltype_annotation'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_conf_score'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_coarse'</span>&#160;&#160;&#160;&#160; <span class="pre">var:</span> <span class="pre">'n_cells'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'highly_variable'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'means'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'dispersions'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'dispersions_norm'</span>&#160;&#160;&#160;&#160; <span class="pre">uns:</span> <span class="pre">'_scvi_manager_uuid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_uuid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_coarse_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'hvg'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden_res0_6_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'neighbors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pca'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'sampleID_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'umap'</span>&#160;&#160;&#160;&#160; <span class="pre">obsm:</span> <span class="pre">'X_pca'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'X_scVI'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'X_umap'</span>&#160;&#160;&#160;&#160; <span class="pre">varm:</span> <span class="pre">'PCs'</span>&#160;&#160;&#160;&#160; <span class="pre">layers:</span> <span class="pre">'int_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log_int_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'raw'</span>&#160;&#160;&#160;&#160; <span class="pre">obsp:</span> <span class="pre">'connectivities'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'distances'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#gene_report.cell_pipeline.fit_spline" title="Link to this definition"></a></dt>
+<dd><p>This function fits a spline to the expression versus detection data of a given cell type, and optionally plots the data and the fitted spline.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cell_type</strong> (<em>str</em><em>, </em><em>optional</em>) – The specific cell type to plot. If None, all cell types are plotted. Default is None.</p></li>
+<li><p><strong>adata</strong> (<em>anndata.AnnData</em><em>, </em><em>optional</em>) – The input AnnData object containing the gene expression data. Default is the global adata object.</p></li>
+<li><p><strong>plot</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to plot the data and the fitted spline. If False, the function will return the spline parameters and inflection points. Default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>If plot is False, a tuple containing the spline parameters and the inflection points. Otherwise, None.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[None, Tuple[numpy.ndarray, numpy.ndarray]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gene_report.cell_pipeline.get_adata">
+<span class="sig-prename descclassname"><span class="pre">gene_report.cell_pipeline.</span></span><span class="sig-name descname"><span class="pre">get_adata</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">AnnData</span></span></span><a class="headerlink" href="#gene_report.cell_pipeline.get_adata" title="Link to this definition"></a></dt>
+<dd><p>This function returns the AnnData object loaded in this module.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The AnnData object loaded in this module.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>anndata.AnnData</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gene_report.cell_pipeline.heatmap">
+<span class="sig-prename descclassname"><span class="pre">gene_report.cell_pipeline.</span></span><span class="sig-name descname"><span class="pre">heatmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">GOI:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'log_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata:</span> <span class="pre">~anndata._core.anndata.AnnData</span> <span class="pre">=</span> <span class="pre">AnnData</span> <span class="pre">object</span> <span class="pre">with</span> <span class="pre">n_obs</span> <span class="pre">×</span> <span class="pre">n_vars</span> <span class="pre">=</span> <span class="pre">5397</span> <span class="pre">×</span> <span class="pre">16719</span>&#160;&#160;&#160;&#160; <span class="pre">obs:</span> <span class="pre">'sampleID'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'barcode'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'n_genes_by_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_n_genes_by_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_in_top_20_genes'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'outlier'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'mt_outlier'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_batch'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_labels'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden_res0_6'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'manual_celltype_annotation'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_conf_score'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_coarse'</span>&#160;&#160;&#160;&#160; <span class="pre">var:</span> <span class="pre">'n_cells'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'highly_variable'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'means'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'dispersions'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'dispersions_norm'</span>&#160;&#160;&#160;&#160; <span class="pre">uns:</span> <span class="pre">'_scvi_manager_uuid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_uuid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_coarse_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'hvg'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden_res0_6_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'neighbors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pca'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'sampleID_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'umap'</span>&#160;&#160;&#160;&#160; <span class="pre">obsm:</span> <span class="pre">'X_pca'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'X_scVI'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'X_umap'</span>&#160;&#160;&#160;&#160; <span class="pre">varm:</span> <span class="pre">'PCs'</span>&#160;&#160;&#160;&#160; <span class="pre">layers:</span> <span class="pre">'int_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log_int_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'raw'</span>&#160;&#160;&#160;&#160; <span class="pre">obsp:</span> <span class="pre">'connectivities'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'distances'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#gene_report.cell_pipeline.heatmap" title="Link to this definition"></a></dt>
+<dd><p>This function creates a heatmap of the expression of a given gene of interest (GOI) across all cell types.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>GOI</strong> (<em>str</em>) – The gene of interest.</p></li>
+<li><p><strong>layer</strong> (<em>str</em><em>, </em><em>optional</em>) – The layer of the AnnData object to be used for calculating highly variable genes. Default is ‘log_norm’.</p></li>
+<li><p><strong>adata</strong> (<em>anndata.AnnData</em><em>, </em><em>optional</em>) – The input AnnData object containing the gene expression data. Default is the global adata object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gene_report.cell_pipeline.list_outliers">
+<span class="sig-prename descclassname"><span class="pre">gene_report.cell_pipeline.</span></span><span class="sig-name descname"><span class="pre">list_outliers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cell_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">head</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#gene_report.cell_pipeline.list_outliers" title="Link to this definition"></a></dt>
+<dd><p>This function lists the top outliers in the expression versus detection data for a given cell type. 
+It sorts the data by the orthogonal distance from the spline, in descending order, and returns the top ‘head’ number of outliers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cell_type</strong> (<em>str</em><em>, </em><em>optional</em>) – The specific cell type to plot. If None, all cell types are plotted. Default is None.</p></li>
+<li><p><strong>head</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of top outliers to return. Default is 5.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame with the top ‘head’ number of outliers, sorted by the orthogonal distance from the spline in descending order.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gene_report.cell_pipeline.make_df">
+<span class="sig-prename descclassname"><span class="pre">gene_report.cell_pipeline.</span></span><span class="sig-name descname"><span class="pre">make_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AnnData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">99.75</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'log1p(means)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'log_norm'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#gene_report.cell_pipeline.make_df" title="Link to this definition"></a></dt>
+<dd><p>This function creates a DataFrame from the given AnnData object, where the genes’ expression level
+is calculated and classified into five categories: very low, low, middle, high, very high.
+It also generates a summary of the quantile thresholds and the number of genes in each category.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> (<em>anndata.AnnData</em>) – The input AnnData object containing the gene expression data.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – The percentile above which data points are considered outliers (i.e. very_high class). Default is 99.75.</p></li>
+<li><p><strong>col</strong> (<em>str</em><em>, </em><em>optional</em>) – The column in the DataFrame to be used for the expression level classification. Default is ‘log1p(means)’.</p></li>
+<li><p><strong>layer</strong> (<em>str</em><em>, </em><em>optional</em>) – The layer of the AnnData object to be used for calculating highly variable genes. Default is ‘log_norm’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The DataFrame with additional columns for the gene number and expression level category, and the summary string.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple(pandas.DataFrame, str)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gene_report.cell_pipeline.matrixplot">
+<span class="sig-prename descclassname"><span class="pre">gene_report.cell_pipeline.</span></span><span class="sig-name descname"><span class="pre">matrixplot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">GOI:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_type:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata:</span> <span class="pre">~anndata._core.anndata.AnnData</span> <span class="pre">=</span> <span class="pre">AnnData</span> <span class="pre">object</span> <span class="pre">with</span> <span class="pre">n_obs</span> <span class="pre">×</span> <span class="pre">n_vars</span> <span class="pre">=</span> <span class="pre">5397</span> <span class="pre">×</span> <span class="pre">16719</span>&#160;&#160;&#160;&#160; <span class="pre">obs:</span> <span class="pre">'sampleID'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'barcode'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'n_genes_by_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_n_genes_by_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_in_top_20_genes'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'outlier'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'mt_outlier'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_batch'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_labels'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden_res0_6'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'manual_celltype_annotation'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_conf_score'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_coarse'</span>&#160;&#160;&#160;&#160; <span class="pre">var:</span> <span class="pre">'n_cells'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'highly_variable'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'means'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'dispersions'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'dispersions_norm'</span>&#160;&#160;&#160;&#160; <span class="pre">uns:</span> <span class="pre">'_scvi_manager_uuid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_uuid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_coarse_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'hvg'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden_res0_6_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'neighbors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pca'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'sampleID_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'umap'</span>&#160;&#160;&#160;&#160; <span class="pre">obsm:</span> <span class="pre">'X_pca'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'X_scVI'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'X_umap'</span>&#160;&#160;&#160;&#160; <span class="pre">varm:</span> <span class="pre">'PCs'</span>&#160;&#160;&#160;&#160; <span class="pre">layers:</span> <span class="pre">'int_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log_int_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'raw'</span>&#160;&#160;&#160;&#160; <span class="pre">obsp:</span> <span class="pre">'connectivities'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'distances'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#gene_report.cell_pipeline.matrixplot" title="Link to this definition"></a></dt>
+<dd><p>This function creates a matrix plot of the expression of a given gene of interest (GOI) across all cell types or a specific cell type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>GOI</strong> (<em>str</em>) – The gene of interest.</p></li>
+<li><p><strong>cell_type</strong> (<em>str</em><em>, </em><em>optional</em>) – The specific cell type to plot. If None, all cell types are plotted. Default is None.</p></li>
+<li><p><strong>adata</strong> (<em>anndata.AnnData</em><em>, </em><em>optional</em>) – The input AnnData object containing the gene expression data. Default is the global adata object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gene_report.cell_pipeline.plot_expr_class">
+<span class="sig-prename descclassname"><span class="pre">gene_report.cell_pipeline.</span></span><span class="sig-name descname"><span class="pre">plot_expr_class</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">GOI:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata:</span> <span class="pre">~anndata._core.anndata.AnnData</span> <span class="pre">=</span> <span class="pre">AnnData</span> <span class="pre">object</span> <span class="pre">with</span> <span class="pre">n_obs</span> <span class="pre">×</span> <span class="pre">n_vars</span> <span class="pre">=</span> <span class="pre">5397</span> <span class="pre">×</span> <span class="pre">16719</span>&#160;&#160;&#160;&#160; <span class="pre">obs:</span> <span class="pre">'sampleID'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'barcode'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'n_genes_by_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_n_genes_by_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_in_top_20_genes'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'outlier'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'mt_outlier'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_batch'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_labels'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden_res0_6'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'manual_celltype_annotation'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_conf_score'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_coarse'</span>&#160;&#160;&#160;&#160; <span class="pre">var:</span> <span class="pre">'n_cells'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'highly_variable'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'means'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'dispersions'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'dispersions_norm'</span>&#160;&#160;&#160;&#160; <span class="pre">uns:</span> <span class="pre">'_scvi_manager_uuid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_uuid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_coarse_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'hvg'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden_res0_6_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'neighbors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pca'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'sampleID_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'umap'</span>&#160;&#160;&#160;&#160; <span class="pre">obsm:</span> <span class="pre">'X_pca'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'X_scVI'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'X_umap'</span>&#160;&#160;&#160;&#160; <span class="pre">varm:</span> <span class="pre">'PCs'</span>&#160;&#160;&#160;&#160; <span class="pre">layers:</span> <span class="pre">'int_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log_int_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'raw'</span>&#160;&#160;&#160;&#160; <span class="pre">obsp:</span> <span class="pre">'connectivities'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'distances'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_type:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'log1p(means)'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#gene_report.cell_pipeline.plot_expr_class" title="Link to this definition"></a></dt>
+<dd><p>This function plots the expression class of a given gene of interest (GOI) across all cell types or a specific cell type.
+It creates a DataFrame, highlights the GOI on the plot, and annotates it with its expression class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>GOI</strong> (<em>str</em>) – The gene of interest.</p></li>
+<li><p><strong>ax</strong> (<em>matplotlib.axes.Axes</em>) – The axes object to draw the plot onto.</p></li>
+<li><p><strong>adata</strong> (<em>anndata.AnnData</em><em>, </em><em>optional</em>) – The input AnnData object containing the gene expression data. Default is the global adata object.</p></li>
+<li><p><strong>cell_type</strong> (<em>str</em><em>, </em><em>optional</em>) – The specific cell type to plot. If None, all cell types are plotted. Default is None.</p></li>
+<li><p><strong>col</strong> (<em>str</em><em>, </em><em>optional</em>) – The column in the DataFrame to be used for the y-axis. Default is ‘log1p(means)’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The DataFrame with the expression level of the GOI for each cell type, and the summary string.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple(pandas.DataFrame, str)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gene_report.cell_pipeline.plot_expressions">
+<span class="sig-prename descclassname"><span class="pre">gene_report.cell_pipeline.</span></span><span class="sig-name descname"><span class="pre">plot_expressions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">GOI:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_type:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'T</span> <span class="pre">cell'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_summary:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata:</span> <span class="pre">~anndata._core.anndata.AnnData</span> <span class="pre">=</span> <span class="pre">AnnData</span> <span class="pre">object</span> <span class="pre">with</span> <span class="pre">n_obs</span> <span class="pre">×</span> <span class="pre">n_vars</span> <span class="pre">=</span> <span class="pre">5397</span> <span class="pre">×</span> <span class="pre">16719</span>&#160;&#160;&#160;&#160; <span class="pre">obs:</span> <span class="pre">'sampleID'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'barcode'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'n_genes_by_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_n_genes_by_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_in_top_20_genes'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'outlier'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'mt_outlier'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_batch'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_labels'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden_res0_6'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'manual_celltype_annotation'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_conf_score'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_coarse'</span>&#160;&#160;&#160;&#160; <span class="pre">var:</span> <span class="pre">'n_cells'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'highly_variable'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'means'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'dispersions'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'dispersions_norm'</span>&#160;&#160;&#160;&#160; <span class="pre">uns:</span> <span class="pre">'_scvi_manager_uuid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_uuid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_coarse_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'hvg'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden_res0_6_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'neighbors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pca'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'sampleID_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'umap'</span>&#160;&#160;&#160;&#160; <span class="pre">obsm:</span> <span class="pre">'X_pca'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'X_scVI'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'X_umap'</span>&#160;&#160;&#160;&#160; <span class="pre">varm:</span> <span class="pre">'PCs'</span>&#160;&#160;&#160;&#160; <span class="pre">layers:</span> <span class="pre">'int_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log_int_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'raw'</span>&#160;&#160;&#160;&#160; <span class="pre">obsp:</span> <span class="pre">'connectivities'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'distances'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#gene_report.cell_pipeline.plot_expressions" title="Link to this definition"></a></dt>
+<dd><p>This function plots the expression class of a given gene of interest (GOI) across all cell types and a specific cell type.
+It creates two subplots, one for all cell types and one for the specific cell type, and optionally prints a summary of the expression class for each plot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>GOI</strong> (<em>str</em>) – The gene of interest.</p></li>
+<li><p><strong>cell_type</strong> (<em>str</em><em>, </em><em>optional</em>) – The specific cell type to plot. Default is ‘T cell’.</p></li>
+<li><p><strong>show_summary</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to print a summary of the expression class for each plot. Default is False.</p></li>
+<li><p><strong>adata</strong> (<em>anndata.AnnData</em><em>, </em><em>optional</em>) – The input AnnData object containing the gene expression data. Default is the global adata object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gene_report.cell_pipeline.plot_outliers">
+<span class="sig-prename descclassname"><span class="pre">gene_report.cell_pipeline.</span></span><span class="sig-name descname"><span class="pre">plot_outliers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outlier_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.15</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#gene_report.cell_pipeline.plot_outliers" title="Link to this definition"></a></dt>
+<dd><p>This function plots the expression versus detection data for a given cell type, with outliers highlighted. 
+It also highlights a gene of interest (GOI) in the plot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>GOI</strong> (<em>str</em>) – The gene of interest to be highlighted in the plot.</p></li>
+<li><p><strong>cell_type</strong> (<em>str</em><em>, </em><em>optional</em>) – The specific cell type to plot. If None, all cell types are plotted. Default is None.</p></li>
+<li><p><strong>outlier_threshold</strong> (<em>float</em><em>, </em><em>optional</em>) – The threshold for marking a point as an outlier. If the orthogonal distance of a point from the spline is greater than this threshold, it is marked as an outlier. Default is 0.15.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gene_report.cell_pipeline.plot_umap">
+<span class="sig-prename descclassname"><span class="pre">gene_report.cell_pipeline.</span></span><span class="sig-name descname"><span class="pre">plot_umap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adata:</span> <span class="pre">~anndata._core.anndata.AnnData</span> <span class="pre">=</span> <span class="pre">AnnData</span> <span class="pre">object</span> <span class="pre">with</span> <span class="pre">n_obs</span> <span class="pre">×</span> <span class="pre">n_vars</span> <span class="pre">=</span> <span class="pre">5397</span> <span class="pre">×</span> <span class="pre">16719</span>&#160;&#160;&#160;&#160; <span class="pre">obs:</span> <span class="pre">'sampleID'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'barcode'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'n_genes_by_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_n_genes_by_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_in_top_20_genes'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_mt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_ribo'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'total_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log1p_total_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pct_counts_hb'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'outlier'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'mt_outlier'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_batch'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_labels'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden_res0_6'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'manual_celltype_annotation'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_conf_score'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_coarse'</span>&#160;&#160;&#160;&#160; <span class="pre">var:</span> <span class="pre">'n_cells'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'highly_variable'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'means'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'dispersions'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'dispersions_norm'</span>&#160;&#160;&#160;&#160; <span class="pre">uns:</span> <span class="pre">'_scvi_manager_uuid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'_scvi_uuid'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_coarse_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'celltypist_cell_label_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'hvg'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'leiden_res0_6_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'neighbors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'pca'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'sampleID_colors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'umap'</span>&#160;&#160;&#160;&#160; <span class="pre">obsm:</span> <span class="pre">'X_pca'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'X_scVI'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'X_umap'</span>&#160;&#160;&#160;&#160; <span class="pre">varm:</span> <span class="pre">'PCs'</span>&#160;&#160;&#160;&#160; <span class="pre">layers:</span> <span class="pre">'int_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log_int_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'log_norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'norm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'raw'</span>&#160;&#160;&#160;&#160; <span class="pre">obsp:</span> <span class="pre">'connectivities'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'distances'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'celltypist_cell_label_coarse'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#gene_report.cell_pipeline.plot_umap" title="Link to this definition"></a></dt>
+<dd><p>This function plots a UMAP of the given AnnData object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adata</strong> (<em>anndata.AnnData</em>) – The AnnData object to plot. Default is the AnnData object loaded in this module.</p></li>
+<li><p><strong>color</strong> (<em>str</em>) – The color to use for the plot. Default is “celltypist_cell_label_coarse”.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="grn">
+<h2>grn<a class="headerlink" href="#grn" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to genereporter’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, sami.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
