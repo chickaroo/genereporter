@@ -17,6 +17,9 @@ Check out the :doc:`usage` section for further information.
    usage
    cellpipeline
    grnpipeline
+   Cell_Example
+   GRN_Example
+
 
 
 

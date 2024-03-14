@@ -1,7 +1,7 @@
-Gene Regulatory Network Analysis and Visualization
---------------------------------------------------
+Gene Regulatory Network Analysis
+--------------------------------
 
-GRNPipeline is a pipeline for gene regulatory network analysis and visualization. 
+GRNPipeline is a pipeline for gene regulatory network analysis and visualization, specifically for the gene of interest. 
 It is designed to be used with the output of the SCENIC package, specifically with the adjacencies and regulons files.
 The SCENIC analysis is already implemented and the output is automatically processed by the pipeline.
 More gene sets are also implemented, specifically the ones from the Reactome database.

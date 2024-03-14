@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="CellPipeline" href="cellpipeline.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Using CellPipeline" href="Cell_Example.html" /><link rel="prev" title="Cell Type Specific Analysis" href="cellpipeline.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
-        <title>Gene Regulatory Network Analysis and Visualization - genereporter 0.1 documentation</title>
+        <title>Gene Regulatory Network Analysis - genereporter 0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
@@ -149,7 +149,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -171,8 +171,10 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cellpipeline.html">CellPipeline</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Gene Regulatory Network Analysis and Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cellpipeline.html">Cell Type Specific Analysis</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Gene Regulatory Network Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Cell_Example.html">Using CellPipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GRN_Example.html">Using GRNPipeline</a></li>
 </ul>
 
 </div>
@@ -201,18 +203,386 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
-          <section id="gene-regulatory-network-analysis-and-visualization">
-<h1>Gene Regulatory Network Analysis and Visualization<a class="headerlink" href="#gene-regulatory-network-analysis-and-visualization" title="Link to this heading">#</a></h1>
-<p>GRNPipeline is a pipeline for gene regulatory network analysis and visualization.
+          <section id="gene-regulatory-network-analysis">
+<h1>Gene Regulatory Network Analysis<a class="headerlink" href="#gene-regulatory-network-analysis" title="Link to this heading">#</a></h1>
+<p>GRNPipeline is a pipeline for gene regulatory network analysis and visualization, specifically for the gene of interest.
 It is designed to be used with the output of the SCENIC package, specifically with the adjacencies and regulons files.
 The SCENIC analysis is already implemented and the output is automatically processed by the pipeline.
 More gene sets are also implemented, specifically the ones from the Reactome database.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gene_report.grn_pipeline.</span></span><span class="sig-name descname"><span class="pre">GRNPipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_adj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_reg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline" title="Link to this definition">#</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.GOI_network_stats">
+<span class="sig-name descname"><span class="pre">GOI_network_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.GOI_network_stats" title="Link to this definition">#</a></dt>
+<dd><p>This function prints a summary of a given gene of interest (GOI) and its regulons.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The DataFrame containing the gene data.</p></li>
+<li><p><strong>GOI</strong> (<em>str</em>) – The gene of interest.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_adj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_reg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.__init__" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.find_TFs">
+<span class="sig-name descname"><span class="pre">find_TFs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">array</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.find_TFs" title="Link to this definition">#</a></dt>
+<dd><p>This function finds the transcription factors (TFs) that regulate a given gene of interest (GOI).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The DataFrame containing the regulon data.</p></li>
+<li><p><strong>GOI</strong> (<em>str</em>) – The gene of interest.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An array of TFs that regulate the GOI.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.format_gene_summary">
+<span class="sig-name descname"><span class="pre">format_gene_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.format_gene_summary" title="Link to this definition">#</a></dt>
+<dd><p>This function formats and prints the gene summary from NCBI in a readable way.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The DataFrame containing the gene data.</p></li>
+<li><p><strong>GOI</strong> (<em>str</em>) – The gene of interest.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.gGOSt">
+<span class="sig-name descname"><span class="pre">gGOSt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regulon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.gGOSt" title="Link to this definition">#</a></dt>
+<dd><p>This function performs g:Profiler g:GOSt analysis for pathways in a given regulon, plots the results, and returns the result DataFrame.
+Currently only searching in the REAC, KEGG, and GO:BP databases.
+Some regulons may not have significant pathways, in which case the function will return a message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>regulon</strong> (<em>str</em>) – The name of the regulon.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame with the g:Profiler g:GOSt analysis results for the given regulon.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.get_entrez_gene_summary">
+<span class="sig-name descname"><span class="pre">get_entrez_gene_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gene_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">organism</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'human'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_gene_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.get_entrez_gene_summary" title="Link to this definition">#</a></dt>
+<dd><p>Returns the ‘Summary’ contents for provided input gene from the Entrez Gene database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gene_name</strong> (<em>str</em>) – Official (HGNC) gene name (e.g., ‘KAT2A’)</p></li>
+<li><p><strong>email</strong> (<em>str</em>) – Required email for making requests</p></li>
+<li><p><strong>organism</strong> (<em>str</em><em>, </em><em>optional</em>) – Filters results only to match organism. Set to None to return all organism unfiltered. Default is ‘human’.</p></li>
+<li><p><strong>max_gene_ids</strong> (<em>int</em><em>, </em><em>optional</em>) – Sets the number of Gene ID results to return (absolute max allowed is 10K). Default is 100.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Summaries for all gene IDs associated with gene_name (where: keys → [orgn][gene name], values → gene summary)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.get_gene_summary">
+<span class="sig-name descname"><span class="pre">get_gene_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'samantha.bening&#64;helmholtz-munich.de'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.get_gene_summary" title="Link to this definition">#</a></dt>
+<dd><p>This function gets the gene summary from NCBI for a given gene of interest (GOI) and its transcription factors (TFs).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The DataFrame containing the gene data.</p></li>
+<li><p><strong>GOI</strong> (<em>str</em>) – The gene of interest.</p></li>
+<li><p><strong>email</strong> (<em>str</em><em>, </em><em>optional</em>) – The email to use for making requests to NCBI. Default is <a class="reference external" href="mailto:'samantha&#46;bening&#37;&#52;&#48;helmholtz-munich&#46;de">‘samantha<span>&#46;</span>bening<span>&#64;</span>helmholtz-munich<span>&#46;</span>de</a>’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary with the gene summaries, where the keys are the gene names and the values are the summaries.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.get_genesets">
+<span class="sig-name descname"><span class="pre">get_genesets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.get_genesets" title="Link to this definition">#</a></dt>
+<dd><p>This function concatenates the reactome and regulon dataframes, resets the index, and returns the result.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reactome</strong> (<em>pandas.DataFrame</em><em>, </em><em>optional</em>) – The DataFrame containing the reactome data. Default is reactome.</p></li>
+<li><p><strong>reg_df</strong> (<em>pandas.DataFrame</em><em>, </em><em>optional</em>) – The DataFrame containing the regulon data. Default is regulon_geneset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame with the concatenated reactome and regulon data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.get_goi_pathways">
+<span class="sig-name descname"><span class="pre">get_goi_pathways</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">GOI</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'spearman'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.get_goi_pathways" title="Link to this definition">#</a></dt>
+<dd><p>This function calculates and ranks the correlation between each pathway’s AUCell score and the expression of the gene of interest (GOI).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>GOI</strong> (<em>str</em>) – The gene of interest.</p></li>
+<li><p><strong>geneset_df</strong> (<em>pandas.DataFrame</em><em>, </em><em>optional</em>) – The DataFrame containing the geneset data. Default is geneset_df.</p></li>
+<li><p><strong>adata</strong> (<em>anndata.AnnData</em><em>, </em><em>optional</em>) – The AnnData object containing the single-cell data. Default is adata.</p></li>
+<li><p><strong>method</strong> (<em>str</em><em>, </em><em>optional</em>) – The method to use for calculating correlation. Default is ‘spearman’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame with the pathways for the GOI, sorted by absolute correlation value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.get_reactome">
+<span class="sig-name descname"><span class="pre">get_reactome</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.get_reactome" title="Link to this definition">#</a></dt>
+<dd><p>This function retrieves the reactome data, filters it based on geneset size, and returns it as a DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A DataFrame with the filtered reactome data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.get_regulon_genes">
+<span class="sig-name descname"><span class="pre">get_regulon_genes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reg_df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">TF</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.get_regulon_genes" title="Link to this definition">#</a></dt>
+<dd><p>Returns a DataFrame with all target genes and importance scores for a given transcription factor (TF).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reg_df</strong> (<em>pandas.DataFrame</em>) – The DataFrame containing the regulon data.</p></li>
+<li><p><strong>TF</strong> (<em>str</em>) – The name of the transcription factor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame with all target genes and importance scores for the given TF.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.get_regulon_geneset">
+<span class="sig-name descname"><span class="pre">get_regulon_geneset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regulon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.get_regulon_geneset" title="Link to this definition">#</a></dt>
+<dd><p>This function returns the gene set of a specific regulon. If no regulon is specified, it defaults to the first regulon in the list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em><em>, </em><em>optional</em>) – The DataFrame containing the geneset data. Default is geneset_df.</p></li>
+<li><p><strong>regulon</strong> (<em>str</em><em>, </em><em>optional</em>) – The name of the regulon. If None, the first regulon in the list is used. Default is None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of genes in the specified regulon.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.get_regulon_genesets">
+<span class="sig-name descname"><span class="pre">get_regulon_genesets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.get_regulon_genesets" title="Link to this definition">#</a></dt>
+<dd><p>Returns a DataFrame with all genesets for each unique transcription factor (TF) in the given regulon data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>reg_df</strong> (<em>pandas.DataFrame</em>) – The DataFrame containing the regulon data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame with all genesets for each unique TF.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.gmt_to_decoupler">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">gmt_to_decoupler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.gmt_to_decoupler" title="Link to this definition">#</a></dt>
+<dd><p>Parse a gmt file to a decoupler pathway dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pth</strong> (<em>Path</em>) – The path to the gmt file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame with the geneset and genesymbol from the gmt file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.make_adj_df">
+<span class="sig-name descname"><span class="pre">make_adj_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adj_df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.make_adj_df" title="Link to this definition">#</a></dt>
+<dd><p>This function creates a DataFrame for a given gene of interest (GOI) with its adjacencies sorted by importance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>adj_df</strong> (<em>pandas.DataFrame</em>) – The DataFrame containing the adjacency data.</p></li>
+<li><p><strong>GOI</strong> (<em>str</em>) – The gene of interest.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame with the adjacencies of the GOI, sorted by importance, and a group column set to ‘adjacencies’.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.make_goi_grn">
+<span class="sig-name descname"><span class="pre">make_goi_grn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.make_goi_grn" title="Link to this definition">#</a></dt>
+<dd><p>This function creates a gene regulatory network (GRN) for a given gene of interest (GOI).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>GOI</strong> (<em>str</em>) – The gene of interest.</p></li>
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em><em>, </em><em>optional</em>) – The DataFrame containing the regulon data. Default is reg_df.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame representing the GRN of the GOI, sorted by importance and only including target genes that appear more than once.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.make_network">
+<span class="sig-name descname"><span class="pre">make_network</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direct_TF</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'src/gene_report/goi_network.html'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.make_network" title="Link to this definition">#</a></dt>
+<dd><p>This function creates a network visualization of a given gene of interest (GOI) and its regulons.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The DataFrame containing the gene data.</p></li>
+<li><p><strong>GOI</strong> (<em>str</em>) – The gene of interest.</p></li>
+<li><p><strong>direct_TF</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, only direct neighbors of the GOI are included. If False, all neighbors are included. Default is True.</p></li>
+<li><p><strong>top_n</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of top neighbors of each regulon (other than GOI) to include. If None, no regulon neighbors (other than GOI) are included. Default is None.</p></li>
+<li><p><strong>out_file</strong> (<em>str</em><em>, </em><em>optional</em>) – The path to the output file where the network visualization will be saved. Default is ‘src/gene_report/goi_network.html’.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.make_regulon_dataframe">
+<span class="sig-name descname"><span class="pre">make_regulon_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">TF</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.make_regulon_dataframe" title="Link to this definition">#</a></dt>
+<dd><p>This function creates a DataFrame for a given transcription factor (TF) with its target genes and their importance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The DataFrame containing the regulon data.</p></li>
+<li><p><strong>TF</strong> (<em>str</em>) – The transcription factor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame with the target genes of the TF, their importance, the TF, and the group (TF_regulon).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.plot_pathways">
+<span class="sig-name descname"><span class="pre">plot_pathways</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.plot_pathways" title="Link to this definition">#</a></dt>
+<dd><p>This function plots the UMAP of the top 5 pathways along with the cell type and the gene of interest (GOI).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The DataFrame containing the pathway data.</p></li>
+<li><p><strong>GOI</strong> (<em>str</em>) – The gene of interest.</p></li>
+<li><p><strong>adata</strong> (<em>anndata.AnnData</em><em>, </em><em>optional</em>) – The AnnData object containing the single-cell data. Default is adata.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.plot_regulon_expression">
+<span class="sig-name descname"><span class="pre">plot_regulon_expression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.plot_regulon_expression" title="Link to this definition">#</a></dt>
+<dd><p>This function plots the expression of a given gene of interest (GOI) and its regulons.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The DataFrame containing the gene data.</p></li>
+<li><p><strong>GOI</strong> (<em>str</em>) – The gene of interest.</p></li>
+<li><p><strong>adata</strong> (<em>anndata.AnnData</em><em>, </em><em>optional</em>) – The AnnData object containing the single-cell data. Default is adata.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.show_network">
+<span class="sig-name descname"><span class="pre">show_network</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">out_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'src/gene_report/goi_network.html'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.show_network" title="Link to this definition">#</a></dt>
+<dd><p>This function displays the HTML content of a given file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>out_file</strong> (<em>str</em><em>, </em><em>optional</em>) – The path to the HTML file to display. Default is ‘src/gene_report/goi_network.html’.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
         </article>
@@ -220,7 +590,15 @@ More gene sets are also implemented, specifically the ones from the Reactome dat
       <footer>
         
         <div class="related-pages">
-          
+          <a class="next-page" href="Cell_Example.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Using CellPipeline</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
           <a class="prev-page" href="cellpipeline.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
@@ -228,7 +606,7 @@ More gene sets are also implemented, specifically the ones from the Reactome dat
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">CellPipeline</div>
+                <div class="title">Cell Type Specific Analysis</div>
                 
               </div>
             </a>
@@ -250,8 +628,50 @@ More gene sets are also implemented, specifically the ones from the Reactome dat
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Gene Regulatory Network Analysis</a><ul>
+<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline"><code class="docutils literal notranslate"><span class="pre">GRNPipeline</span></code></a><ul>
+<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.GOI_network_stats"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.GOI_network_stats()</span></code></a></li>
+<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.__init__"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.find_TFs"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.find_TFs()</span></code></a></li>
+<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.format_gene_summary"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.format_gene_summary()</span></code></a></li>
+<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.gGOSt"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.gGOSt()</span></code></a></li>
+<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.get_entrez_gene_summary"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.get_entrez_gene_summary()</span></code></a></li>
+<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.get_gene_summary"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.get_gene_summary()</span></code></a></li>
+<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.get_genesets"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.get_genesets()</span></code></a></li>
+<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.get_goi_pathways"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.get_goi_pathways()</span></code></a></li>
+<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.get_reactome"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.get_reactome()</span></code></a></li>
+<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.get_regulon_genes"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.get_regulon_genes()</span></code></a></li>
+<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.get_regulon_geneset"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.get_regulon_geneset()</span></code></a></li>
+<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.get_regulon_genesets"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.get_regulon_genesets()</span></code></a></li>
+<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.gmt_to_decoupler"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.gmt_to_decoupler()</span></code></a></li>
+<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.make_adj_df"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.make_adj_df()</span></code></a></li>
+<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.make_goi_grn"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.make_goi_grn()</span></code></a></li>
+<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.make_network"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.make_network()</span></code></a></li>
+<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.make_regulon_dataframe"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.make_regulon_dataframe()</span></code></a></li>
+<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.plot_pathways"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.plot_pathways()</span></code></a></li>
+<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.plot_regulon_expression"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.plot_regulon_expression()</span></code></a></li>
+<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.show_network"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.show_network()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
@@ -260,5 +680,6 @@ More gene sets are also implemented, specifically the ones from the Reactome dat
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=32e29ea5"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>
 </html>

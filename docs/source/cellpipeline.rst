@@ -1,8 +1,8 @@
-CellPipeline
--------------
+Cell Type Specific Analysis
+---------------------------
 
-CellPipeline is a class focused in cell type specific analysis. 
-See the pipeline notebook for a detailed example of how to use it.
+CellPipeline is a pipeline focused on cell type specific analysis over all cells and specific cell types, with respect to the gene of interest.  
+See the :doc:`Cell_Example` for a detailed example of how to use it.
 
 
 .. autoclass:: gene_report.cell_pipeline.CellPipeline

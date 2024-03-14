@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Gene Regulatory Network Analysis and Visualization" href="grnpipeline.html" /><link rel="prev" title="Usage" href="usage.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Gene Regulatory Network Analysis" href="grnpipeline.html" /><link rel="prev" title="Usage" href="usage.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
-        <title>CellPipeline - genereporter 0.1 documentation</title>
+        <title>Cell Type Specific Analysis - genereporter 0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
@@ -171,8 +171,10 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">CellPipeline</a></li>
-<li class="toctree-l1"><a class="reference internal" href="grnpipeline.html">Gene Regulatory Network Analysis and Visualization</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Cell Type Specific Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grnpipeline.html">Gene Regulatory Network Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Cell_Example.html">Using CellPipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GRN_Example.html">Using GRNPipeline</a></li>
 </ul>
 
 </div>
@@ -207,10 +209,10 @@
           </label>
         </div>
         <article role="main">
-          <section id="cellpipeline">
-<h1>CellPipeline<a class="headerlink" href="#cellpipeline" title="Link to this heading">#</a></h1>
-<p>CellPipeline is a class focused in cell type specific analysis.
-See the pipeline notebook for a detailed example of how to use it.</p>
+          <section id="cell-type-specific-analysis">
+<h1>Cell Type Specific Analysis<a class="headerlink" href="#cell-type-specific-analysis" title="Link to this heading">#</a></h1>
+<p>CellPipeline is a pipeline focused on cell type specific analysis over all cells and specific cell types, with respect to the gene of interest.
+See the <a class="reference internal" href="Cell_Example.html"><span class="doc">Using CellPipeline</span></a> for a detailed example of how to use it.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="gene_report.cell_pipeline.CellPipeline">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gene_report.cell_pipeline.</span></span><span class="sig-name descname"><span class="pre">CellPipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wdir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gene_report.cell_pipeline.CellPipeline" title="Link to this definition">#</a></dt>
@@ -626,7 +628,7 @@ It also highlights a gene of interest (GOI) in the plot.</p>
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Gene Regulatory Network Analysis and Visualization</div>
+                <div class="title">Gene Regulatory Network Analysis</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -671,7 +673,7 @@ It also highlights a gene of interest (GOI) in the plot.</p>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">CellPipeline</a><ul>
+<li><a class="reference internal" href="#">Cell Type Specific Analysis</a><ul>
 <li><a class="reference internal" href="#gene_report.cell_pipeline.CellPipeline"><code class="docutils literal notranslate"><span class="pre">CellPipeline</span></code></a><ul>
 <li><a class="reference internal" href="#gene_report.cell_pipeline.CellPipeline.__init__"><code class="docutils literal notranslate"><span class="pre">CellPipeline.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#gene_report.cell_pipeline.CellPipeline.calc_distance"><code class="docutils literal notranslate"><span class="pre">CellPipeline.calc_distance()</span></code></a></li>
@@ -710,5 +712,6 @@ It also highlights a gene of interest (GOI) in the plot.</p>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=32e29ea5"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>
 </html>
