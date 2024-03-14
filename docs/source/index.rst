@@ -15,4 +15,8 @@ Check out the :doc:`usage` section for further information.
    :maxdepth: 2
    
    usage
+   cellpipeline
+   grnpipeline
+
+
 
