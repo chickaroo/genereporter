@@ -215,19 +215,21 @@
 <section id="A-cell-type-specific-analysis-and-visualization-tool-for-the-gene-of-interest">
 <h2>A cell type specific analysis and visualization tool for the gene of interest<a class="headerlink" href="#A-cell-type-specific-analysis-and-visualization-tool-for-the-gene-of-interest" title="Link to this heading">#</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">gene_report.cell_pipeline</span> <span class="kn">import</span> <span class="n">CellPipeline</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;/Users/samibening/Projects/genereporter/&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">genereporter.cell_pipeline</span> <span class="kn">import</span> <span class="n">CellPipeline</span>
 
-<span class="n">cp</span> <span class="o">=</span> <span class="n">CellPipeline</span><span class="p">(</span><span class="s2">&quot;/Users/samibening/Projects/Bachelor/&quot;</span><span class="p">,</span> <span class="s2">&quot;data/output/adata.h5ad&quot;</span><span class="p">)</span>
+<span class="n">cp</span> <span class="o">=</span> <span class="n">CellPipeline</span><span class="p">(</span><span class="s2">&quot;/Users/samibening/Projects/genereporter/&quot;</span><span class="p">,</span> <span class="s2">&quot;data/output/adata.h5ad&quot;</span><span class="p">)</span>
 <span class="n">adata</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get_adata</span><span class="p">()</span>
 <span class="n">adata</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="output_area docutils container">

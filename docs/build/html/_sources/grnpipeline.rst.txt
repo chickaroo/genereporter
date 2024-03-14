@@ -7,7 +7,7 @@ The SCENIC analysis is already implemented and the output is automatically proce
 More gene sets are also implemented, specifically the ones from the Reactome database.
 
 
-.. autoclass:: gene_report.grn_pipeline.GRNPipeline
+.. autoclass:: grn_pipeline.GRNPipeline
     :members:
     :special-members: __init__
     :no-undoc-members:

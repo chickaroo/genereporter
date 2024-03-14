@@ -216,11 +216,11 @@ It is designed to be used with the output of the SCENIC package, specifically wi
 The SCENIC analysis is already implemented and the output is automatically processed by the pipeline.
 More gene sets are also implemented, specifically the ones from the Reactome database.</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gene_report.grn_pipeline.</span></span><span class="sig-name descname"><span class="pre">GRNPipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_adj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_reg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="grn_pipeline.GRNPipeline">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">grn_pipeline.</span></span><span class="sig-name descname"><span class="pre">GRNPipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_adj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_reg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grn_pipeline.GRNPipeline" title="Link to this definition">#</a></dt>
 <dd><dl class="py method">
-<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.GOI_network_stats">
-<span class="sig-name descname"><span class="pre">GOI_network_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.GOI_network_stats" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="grn_pipeline.GRNPipeline.GOI_network_stats">
+<span class="sig-name descname"><span class="pre">GOI_network_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#grn_pipeline.GRNPipeline.GOI_network_stats" title="Link to this definition">#</a></dt>
 <dd><p>This function prints a summary of a given gene of interest (GOI) and its regulons.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -233,13 +233,13 @@ More gene sets are also implemented, specifically the ones from the Reactome dat
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_adj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_reg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.__init__" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="grn_pipeline.GRNPipeline.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adata</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_adj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_reg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grn_pipeline.GRNPipeline.__init__" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.find_TFs">
-<span class="sig-name descname"><span class="pre">find_TFs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">array</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.find_TFs" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="grn_pipeline.GRNPipeline.find_TFs">
+<span class="sig-name descname"><span class="pre">find_TFs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">array</span></span></span><a class="headerlink" href="#grn_pipeline.GRNPipeline.find_TFs" title="Link to this definition">#</a></dt>
 <dd><p>This function finds the transcription factors (TFs) that regulate a given gene of interest (GOI).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -258,8 +258,8 @@ More gene sets are also implemented, specifically the ones from the Reactome dat
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.format_gene_summary">
-<span class="sig-name descname"><span class="pre">format_gene_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.format_gene_summary" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="grn_pipeline.GRNPipeline.format_gene_summary">
+<span class="sig-name descname"><span class="pre">format_gene_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#grn_pipeline.GRNPipeline.format_gene_summary" title="Link to this definition">#</a></dt>
 <dd><p>This function formats and prints the gene summary from NCBI in a readable way.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -272,8 +272,8 @@ More gene sets are also implemented, specifically the ones from the Reactome dat
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.gGOSt">
-<span class="sig-name descname"><span class="pre">gGOSt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regulon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.gGOSt" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="grn_pipeline.GRNPipeline.gGOSt">
+<span class="sig-name descname"><span class="pre">gGOSt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regulon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#grn_pipeline.GRNPipeline.gGOSt" title="Link to this definition">#</a></dt>
 <dd><p>This function performs g:Profiler g:GOSt analysis for pathways in a given regulon, plots the results, and returns the result DataFrame.
 Currently only searching in the REAC, KEGG, and GO:BP databases.
 Some regulons may not have significant pathways, in which case the function will return a message.</p>
@@ -291,8 +291,8 @@ Some regulons may not have significant pathways, in which case the function will
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.get_entrez_gene_summary">
-<span class="sig-name descname"><span class="pre">get_entrez_gene_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gene_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">organism</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'human'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_gene_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.get_entrez_gene_summary" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="grn_pipeline.GRNPipeline.get_entrez_gene_summary">
+<span class="sig-name descname"><span class="pre">get_entrez_gene_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gene_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">organism</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'human'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_gene_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#grn_pipeline.GRNPipeline.get_entrez_gene_summary" title="Link to this definition">#</a></dt>
 <dd><p>Returns the ‘Summary’ contents for provided input gene from the Entrez Gene database.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -313,8 +313,8 @@ Some regulons may not have significant pathways, in which case the function will
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.get_gene_summary">
-<span class="sig-name descname"><span class="pre">get_gene_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'samantha.bening&#64;helmholtz-munich.de'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.get_gene_summary" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="grn_pipeline.GRNPipeline.get_gene_summary">
+<span class="sig-name descname"><span class="pre">get_gene_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'samantha.bening&#64;helmholtz-munich.de'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#grn_pipeline.GRNPipeline.get_gene_summary" title="Link to this definition">#</a></dt>
 <dd><p>This function gets the gene summary from NCBI for a given gene of interest (GOI) and its transcription factors (TFs).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -334,8 +334,8 @@ Some regulons may not have significant pathways, in which case the function will
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.get_genesets">
-<span class="sig-name descname"><span class="pre">get_genesets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.get_genesets" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="grn_pipeline.GRNPipeline.get_genesets">
+<span class="sig-name descname"><span class="pre">get_genesets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#grn_pipeline.GRNPipeline.get_genesets" title="Link to this definition">#</a></dt>
 <dd><p>This function concatenates the reactome and regulon dataframes, resets the index, and returns the result.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -354,8 +354,8 @@ Some regulons may not have significant pathways, in which case the function will
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.get_goi_pathways">
-<span class="sig-name descname"><span class="pre">get_goi_pathways</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">GOI</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'spearman'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.get_goi_pathways" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="grn_pipeline.GRNPipeline.get_goi_pathways">
+<span class="sig-name descname"><span class="pre">get_goi_pathways</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">GOI</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'spearman'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#grn_pipeline.GRNPipeline.get_goi_pathways" title="Link to this definition">#</a></dt>
 <dd><p>This function calculates and ranks the correlation between each pathway’s AUCell score and the expression of the gene of interest (GOI).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -376,8 +376,8 @@ Some regulons may not have significant pathways, in which case the function will
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.get_reactome">
-<span class="sig-name descname"><span class="pre">get_reactome</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.get_reactome" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="grn_pipeline.GRNPipeline.get_reactome">
+<span class="sig-name descname"><span class="pre">get_reactome</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#grn_pipeline.GRNPipeline.get_reactome" title="Link to this definition">#</a></dt>
 <dd><p>This function retrieves the reactome data, filters it based on geneset size, and returns it as a DataFrame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -390,8 +390,8 @@ Some regulons may not have significant pathways, in which case the function will
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.get_regulon_genes">
-<span class="sig-name descname"><span class="pre">get_regulon_genes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reg_df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">TF</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.get_regulon_genes" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="grn_pipeline.GRNPipeline.get_regulon_genes">
+<span class="sig-name descname"><span class="pre">get_regulon_genes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reg_df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">TF</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#grn_pipeline.GRNPipeline.get_regulon_genes" title="Link to this definition">#</a></dt>
 <dd><p>Returns a DataFrame with all target genes and importance scores for a given transcription factor (TF).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -410,8 +410,8 @@ Some regulons may not have significant pathways, in which case the function will
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.get_regulon_geneset">
-<span class="sig-name descname"><span class="pre">get_regulon_geneset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regulon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.get_regulon_geneset" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="grn_pipeline.GRNPipeline.get_regulon_geneset">
+<span class="sig-name descname"><span class="pre">get_regulon_geneset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regulon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#grn_pipeline.GRNPipeline.get_regulon_geneset" title="Link to this definition">#</a></dt>
 <dd><p>This function returns the gene set of a specific regulon. If no regulon is specified, it defaults to the first regulon in the list.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -430,8 +430,8 @@ Some regulons may not have significant pathways, in which case the function will
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.get_regulon_genesets">
-<span class="sig-name descname"><span class="pre">get_regulon_genesets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.get_regulon_genesets" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="grn_pipeline.GRNPipeline.get_regulon_genesets">
+<span class="sig-name descname"><span class="pre">get_regulon_genesets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#grn_pipeline.GRNPipeline.get_regulon_genesets" title="Link to this definition">#</a></dt>
 <dd><p>Returns a DataFrame with all genesets for each unique transcription factor (TF) in the given regulon data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -447,8 +447,8 @@ Some regulons may not have significant pathways, in which case the function will
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.gmt_to_decoupler">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">gmt_to_decoupler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.gmt_to_decoupler" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="grn_pipeline.GRNPipeline.gmt_to_decoupler">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">gmt_to_decoupler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#grn_pipeline.GRNPipeline.gmt_to_decoupler" title="Link to this definition">#</a></dt>
 <dd><p>Parse a gmt file to a decoupler pathway dataframe.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -464,8 +464,8 @@ Some regulons may not have significant pathways, in which case the function will
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.make_adj_df">
-<span class="sig-name descname"><span class="pre">make_adj_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adj_df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.make_adj_df" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="grn_pipeline.GRNPipeline.make_adj_df">
+<span class="sig-name descname"><span class="pre">make_adj_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adj_df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#grn_pipeline.GRNPipeline.make_adj_df" title="Link to this definition">#</a></dt>
 <dd><p>This function creates a DataFrame for a given gene of interest (GOI) with its adjacencies sorted by importance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -484,8 +484,8 @@ Some regulons may not have significant pathways, in which case the function will
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.make_goi_grn">
-<span class="sig-name descname"><span class="pre">make_goi_grn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.make_goi_grn" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="grn_pipeline.GRNPipeline.make_goi_grn">
+<span class="sig-name descname"><span class="pre">make_goi_grn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#grn_pipeline.GRNPipeline.make_goi_grn" title="Link to this definition">#</a></dt>
 <dd><p>This function creates a gene regulatory network (GRN) for a given gene of interest (GOI).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -504,8 +504,8 @@ Some regulons may not have significant pathways, in which case the function will
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.make_network">
-<span class="sig-name descname"><span class="pre">make_network</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direct_TF</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'src/gene_report/goi_network.html'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.make_network" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="grn_pipeline.GRNPipeline.make_network">
+<span class="sig-name descname"><span class="pre">make_network</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direct_TF</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'src/gene_report/goi_network.html'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#grn_pipeline.GRNPipeline.make_network" title="Link to this definition">#</a></dt>
 <dd><p>This function creates a network visualization of a given gene of interest (GOI) and its regulons.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -521,8 +521,8 @@ Some regulons may not have significant pathways, in which case the function will
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.make_regulon_dataframe">
-<span class="sig-name descname"><span class="pre">make_regulon_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">TF</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.make_regulon_dataframe" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="grn_pipeline.GRNPipeline.make_regulon_dataframe">
+<span class="sig-name descname"><span class="pre">make_regulon_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">TF</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#grn_pipeline.GRNPipeline.make_regulon_dataframe" title="Link to this definition">#</a></dt>
 <dd><p>This function creates a DataFrame for a given transcription factor (TF) with its target genes and their importance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -541,8 +541,8 @@ Some regulons may not have significant pathways, in which case the function will
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.plot_pathways">
-<span class="sig-name descname"><span class="pre">plot_pathways</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.plot_pathways" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="grn_pipeline.GRNPipeline.plot_pathways">
+<span class="sig-name descname"><span class="pre">plot_pathways</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#grn_pipeline.GRNPipeline.plot_pathways" title="Link to this definition">#</a></dt>
 <dd><p>This function plots the UMAP of the top 5 pathways along with the cell type and the gene of interest (GOI).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -556,8 +556,8 @@ Some regulons may not have significant pathways, in which case the function will
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.plot_regulon_expression">
-<span class="sig-name descname"><span class="pre">plot_regulon_expression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.plot_regulon_expression" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="grn_pipeline.GRNPipeline.plot_regulon_expression">
+<span class="sig-name descname"><span class="pre">plot_regulon_expression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GOI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#grn_pipeline.GRNPipeline.plot_regulon_expression" title="Link to this definition">#</a></dt>
 <dd><p>This function plots the expression of a given gene of interest (GOI) and its regulons.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -571,8 +571,8 @@ Some regulons may not have significant pathways, in which case the function will
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="gene_report.grn_pipeline.GRNPipeline.show_network">
-<span class="sig-name descname"><span class="pre">show_network</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">out_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'src/gene_report/goi_network.html'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#gene_report.grn_pipeline.GRNPipeline.show_network" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="grn_pipeline.GRNPipeline.show_network">
+<span class="sig-name descname"><span class="pre">show_network</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">out_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'src/gene_report/goi_network.html'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#grn_pipeline.GRNPipeline.show_network" title="Link to this definition">#</a></dt>
 <dd><p>This function displays the HTML content of a given file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -641,28 +641,28 @@ Some regulons may not have significant pathways, in which case the function will
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Gene Regulatory Network Analysis</a><ul>
-<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline"><code class="docutils literal notranslate"><span class="pre">GRNPipeline</span></code></a><ul>
-<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.GOI_network_stats"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.GOI_network_stats()</span></code></a></li>
-<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.__init__"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.__init__()</span></code></a></li>
-<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.find_TFs"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.find_TFs()</span></code></a></li>
-<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.format_gene_summary"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.format_gene_summary()</span></code></a></li>
-<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.gGOSt"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.gGOSt()</span></code></a></li>
-<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.get_entrez_gene_summary"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.get_entrez_gene_summary()</span></code></a></li>
-<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.get_gene_summary"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.get_gene_summary()</span></code></a></li>
-<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.get_genesets"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.get_genesets()</span></code></a></li>
-<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.get_goi_pathways"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.get_goi_pathways()</span></code></a></li>
-<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.get_reactome"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.get_reactome()</span></code></a></li>
-<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.get_regulon_genes"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.get_regulon_genes()</span></code></a></li>
-<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.get_regulon_geneset"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.get_regulon_geneset()</span></code></a></li>
-<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.get_regulon_genesets"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.get_regulon_genesets()</span></code></a></li>
-<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.gmt_to_decoupler"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.gmt_to_decoupler()</span></code></a></li>
-<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.make_adj_df"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.make_adj_df()</span></code></a></li>
-<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.make_goi_grn"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.make_goi_grn()</span></code></a></li>
-<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.make_network"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.make_network()</span></code></a></li>
-<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.make_regulon_dataframe"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.make_regulon_dataframe()</span></code></a></li>
-<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.plot_pathways"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.plot_pathways()</span></code></a></li>
-<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.plot_regulon_expression"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.plot_regulon_expression()</span></code></a></li>
-<li><a class="reference internal" href="#gene_report.grn_pipeline.GRNPipeline.show_network"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.show_network()</span></code></a></li>
+<li><a class="reference internal" href="#grn_pipeline.GRNPipeline"><code class="docutils literal notranslate"><span class="pre">GRNPipeline</span></code></a><ul>
+<li><a class="reference internal" href="#grn_pipeline.GRNPipeline.GOI_network_stats"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.GOI_network_stats()</span></code></a></li>
+<li><a class="reference internal" href="#grn_pipeline.GRNPipeline.__init__"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#grn_pipeline.GRNPipeline.find_TFs"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.find_TFs()</span></code></a></li>
+<li><a class="reference internal" href="#grn_pipeline.GRNPipeline.format_gene_summary"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.format_gene_summary()</span></code></a></li>
+<li><a class="reference internal" href="#grn_pipeline.GRNPipeline.gGOSt"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.gGOSt()</span></code></a></li>
+<li><a class="reference internal" href="#grn_pipeline.GRNPipeline.get_entrez_gene_summary"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.get_entrez_gene_summary()</span></code></a></li>
+<li><a class="reference internal" href="#grn_pipeline.GRNPipeline.get_gene_summary"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.get_gene_summary()</span></code></a></li>
+<li><a class="reference internal" href="#grn_pipeline.GRNPipeline.get_genesets"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.get_genesets()</span></code></a></li>
+<li><a class="reference internal" href="#grn_pipeline.GRNPipeline.get_goi_pathways"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.get_goi_pathways()</span></code></a></li>
+<li><a class="reference internal" href="#grn_pipeline.GRNPipeline.get_reactome"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.get_reactome()</span></code></a></li>
+<li><a class="reference internal" href="#grn_pipeline.GRNPipeline.get_regulon_genes"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.get_regulon_genes()</span></code></a></li>
+<li><a class="reference internal" href="#grn_pipeline.GRNPipeline.get_regulon_geneset"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.get_regulon_geneset()</span></code></a></li>
+<li><a class="reference internal" href="#grn_pipeline.GRNPipeline.get_regulon_genesets"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.get_regulon_genesets()</span></code></a></li>
+<li><a class="reference internal" href="#grn_pipeline.GRNPipeline.gmt_to_decoupler"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.gmt_to_decoupler()</span></code></a></li>
+<li><a class="reference internal" href="#grn_pipeline.GRNPipeline.make_adj_df"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.make_adj_df()</span></code></a></li>
+<li><a class="reference internal" href="#grn_pipeline.GRNPipeline.make_goi_grn"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.make_goi_grn()</span></code></a></li>
+<li><a class="reference internal" href="#grn_pipeline.GRNPipeline.make_network"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.make_network()</span></code></a></li>
+<li><a class="reference internal" href="#grn_pipeline.GRNPipeline.make_regulon_dataframe"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.make_regulon_dataframe()</span></code></a></li>
+<li><a class="reference internal" href="#grn_pipeline.GRNPipeline.plot_pathways"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.plot_pathways()</span></code></a></li>
+<li><a class="reference internal" href="#grn_pipeline.GRNPipeline.plot_regulon_expression"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.plot_regulon_expression()</span></code></a></li>
+<li><a class="reference internal" href="#grn_pipeline.GRNPipeline.show_network"><code class="docutils literal notranslate"><span class="pre">GRNPipeline.show_network()</span></code></a></li>
 </ul>
 </li>
 </ul>

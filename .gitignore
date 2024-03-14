@@ -29,12 +29,11 @@ data/output/adata.csv
 data/output/adata.h5ad
 data/adata.h5ad
 
-SCENICfiles/scenic_umap.txt
-SCENICfiles/scenic_tsne.txt
-SCENICfiles/pyscenic_output.loom
+src/SCENICfiles/*.txt
+src/SCENICfiles/pyscenic_output.loom
 data/c2.cp.reactome.v2023.2.Hs.symbols.gmt
 data/output/adata_aucell.h5ad
-src/gene_report/__pycache__/*.pyc
+genereporter/__pycache__/*.pyc
 .DS_Store
 data/output/adata.h5
 lib/*
