@@ -213,11 +213,35 @@
 <h1>Usage<a class="headerlink" href="#usage" title="Link to this heading">#</a></h1>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
-<p>To use genereporter, first install it by cloning the github repository.</p>
+<p>Installing genereporter is straight forward–just clone the repository and install the package using pip.</p>
+<p>First, clone the github repository.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/chickaroo/genereporter
 </pre></div>
 </div>
-<p>(add instructions for installing the package here)</p>
+<p>Next, you might want to make a conda environment to install the package in.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>genereporter<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.11
+<span class="gp">$ </span>conda<span class="w"> </span>activate<span class="w"> </span>genereporter
+</pre></div>
+</div>
+<p>Then, navigate to the directory and install the package using pip.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>genereporter
+<span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>.
+</pre></div>
+</div>
+<p>This will install the package and all of its dependencies using pip. The standard dependencies are
+only geared towards the core functionality of the package. If you want to generate any of the GRN data
+using <a class="reference external" href="https://scenic.aertslab.org/">SCENIC</a>, for example, you will need to install additional dependencies according to the pySCENIC <a class="reference external" href="https://pyscenic.readthedocs.io/en/latest/installation.html">documentation</a>.</p>
+<p>You can now test if the package is installed correctly by running the following command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>python
+<span class="go">&gt;&gt;&gt;import genereporter</span>
+</pre></div>
+</div>
+<p>If you don’t get any errors, the package is installed correctly.</p>
+</section>
+<section id="obtaining-data">
+<h2>Obtaining Data<a class="headerlink" href="#obtaining-data" title="Link to this heading">#</a></h2>
+<p>The genereporter repository does not house the VEO-IBD data for storage and safety reasons.
+The data can be obtained from the Helmholtz HPC cluster.</p>
 </section>
 <section id="vignettes">
 <h2>Vignettes<a class="headerlink" href="#vignettes" title="Link to this heading">#</a></h2>
@@ -283,6 +307,7 @@
             <ul>
 <li><a class="reference internal" href="#">Usage</a><ul>
 <li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#obtaining-data">Obtaining Data</a></li>
 <li><a class="reference internal" href="#vignettes">Vignettes</a></li>
 </ul>
 </li>

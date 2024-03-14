@@ -1,0 +1,11 @@
+LICENSE
+README.md
+setup.py
+genereporter/__init__.py
+genereporter/cell_pipeline.py
+genereporter/grn_pipeline.py
+genereporter.egg-info/PKG-INFO
+genereporter.egg-info/SOURCES.txt
+genereporter.egg-info/dependency_links.txt
+genereporter.egg-info/requires.txt
+genereporter.egg-info/top_level.txt

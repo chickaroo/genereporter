@@ -1,0 +1,21 @@
+Metadata-Version: 2.1
+Name: genereporter
+Version: 0.1
+Summary: focus on only one jean guys
+Home-page: https://github.com/chickaroo/genereporter
+Author: Samantha Bening
+Author-email: samantha.bening@helmholtz-munich.de
+License: MIT
+License-File: LICENSE
+Requires-Dist: anndata
+Requires-Dist: scanpy
+Requires-Dist: jupyter
+Requires-Dist: matplotlib
+Requires-Dist: numpy
+Requires-Dist: pandas
+Requires-Dist: plotly
+Requires-Dist: pyvis
+Requires-Dist: scipy
+Requires-Dist: seaborn
+Requires-Dist: xmltodict
+Requires-Dist: biopython

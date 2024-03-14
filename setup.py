@@ -12,7 +12,7 @@ setup(
     #package_data={'speos': ['LICENSE.md', "speos/adjacencies.json", "speos/mapping.json", "speos/utils/config_default.yaml"],
                   #"extensions": ["extensions/mapping.json", "extensions/adjacencies.json", "extensions/datasets.json"]},
     #package_dir={"": "coregenes"},
-    install_requires=['anndata', 'anndata2ri', 'biopython', 'ca-certificates', 'celltypist', 'certifi', 'ipykernel', 'jupyter', 'loompy', 'matplotlib', 'multicore-tsne', 'numpy', 'openssl', 'pandas', 'plotly', 'pytables', 'pyvis', 'scanpy', 'scipy', 'scvi-tools', 'seaborn', 'xmltodict']
+    install_requires=['anndata', 'scanpy', 'jupyter', 'matplotlib', 'numpy', 'pandas', 'plotly', 'pyvis', 'scipy', 'seaborn', 'xmltodict', 'biopython']
 
 
 
