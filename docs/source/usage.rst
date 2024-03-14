@@ -14,6 +14,6 @@ To use genereporter, first install it by cloning the github repository.
 
 Vignettes
 ----------
-    
+
 Check out the notebooks for examples on how to use the package:
 :doc:`Cell_Example` and :doc:`GRN_Example`
