@@ -38,4 +38,5 @@ genereporter/__pycache__/*.pyc
 data/output/adata.h5
 lib/*
 src/.ipynb_checkpoints/*.ipynb
-
+build/*
+genereporter.egg-info/*
