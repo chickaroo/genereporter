@@ -1,6 +1,7 @@
-<h1 align="center">VEO-IBD Gene-Level Report Generator</h1>
+<h1 align="center">genereporter</h1>
 <p align="center">
-  aka Sami's Bachelor Thesis
+  VEO-IBD Gene-Level Report Generator
+  <img align="center" src="data/geneformer_logo.jpeg" alt="Demo image" width="300" height="300">
 </p>
 <!-- <a href="https://pradyunsg.me/furo/">
   <img align="center" src="https://github.com/pradyunsg/furo/raw/main/docs/_static/demo.png" alt="Demo image">
@@ -11,7 +12,7 @@
 <!-- start elevator-pitch -->
 
 - **Automatic Report** --- Automatic generation of the gene of interest analysis. 
-- **Varied Analysis Approaches** --- from classic UMAPs to gene regulatory networks, percent detection rates and more. 
+- **Varied Analysis Approaches** --- Classic UMAPs, gene regulatory networks, percent detection rates and more. 
 - **Tailored to VEO-IBD Multiomics Data** --- developed only with this dataset in mind. 
 - **Customizable** --- with just a little Python knowledge, the plots are yours to customize. 
 - **Sami Worked Very Hard On This!** 
@@ -27,5 +28,5 @@ Clone the repo to use!
 
 <!-- end quickstart -->
 
-<img align="center" src="data/geneformer_logo.jpeg" alt="Demo image" width="300" height="175">
+
 
