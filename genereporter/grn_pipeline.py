@@ -26,7 +26,7 @@ class GRNPipeline():
         os.chdir( wdir )
 
         # load the adata object
-        adata = sc.read_h5ad('data/output/adata_aucell.h5ad')
+        #adata = sc.read_h5ad('data/output/adata_aucell.h5ad')
 
         # read the adjacency and regulon data
         adjacencies = pd.read_csv(f_adj)

@@ -1,0 +1,3 @@
+{
+    "path": "../../src/sample_pipeline.ipynb"
+}

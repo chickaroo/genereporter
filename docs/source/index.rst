@@ -17,8 +17,10 @@ Check out the :doc:`usage` section for further information.
    usage
    cellpipeline
    grnpipeline
+   samplepipeline
    Cell_Example
    GRN_Example
+   Sample_Example
 
 
 
