@@ -27,5 +27,5 @@ Clone the repo to use!
 
 <!-- end quickstart -->
 
-<img align="center" src="https://i.kym-cdn.com/entries/icons/original/000/037/951/w3i6hsyv4na51.jpg" alt="Demo image" width="300" height="175">
+<img align="center" src="data/geneformer_logo.jpeg" alt="Demo image" width="300" height="175">
 

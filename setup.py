@@ -5,7 +5,7 @@ setup(
     version='0.1',
     author='Samantha Bening',
     author_email='samantha.bening@helmholtz-munich.de',
-    description='focus on only one jean guys',
+    description='focus on one gene',
     url="https://github.com/chickaroo/genereporter",
     license='MIT',
     packages=['genereporter'],
@@ -13,7 +13,5 @@ setup(
                   #"extensions": ["extensions/mapping.json", "extensions/adjacencies.json", "extensions/datasets.json"]},
     #package_dir={"": "coregenes"},
     install_requires=['anndata', 'scanpy', 'jupyter', 'matplotlib', 'numpy', 'pandas', 'plotly', 'pyvis', 'scipy', 'seaborn', 'xmltodict', 'biopython']
-
-
 
 )
