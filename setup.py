@@ -5,7 +5,7 @@ setup(
     version='0.1',
     author='Samantha Bening',
     author_email='samantha.bening@helmholtz-munich.de',
-    description='focus on one gene',
+    description='Automatic generation of gene expression reports.',
     url="https://github.com/chickaroo/genereporter",
     license='MIT',
     packages=['genereporter'],
