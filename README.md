@@ -31,15 +31,13 @@ First, clone the github repository.
 
 Next, you might want to make a conda environment to install the package in.
 
-<code>
-$ conda create -n genereporter python=3.11
+<code>$ conda create -n genereporter python=3.11
 $ conda activate genereporter
 </code>
 
 Then, navigate to the directory and install the package using pip.
 
-<code>
-$ cd genereporter
+<code>$ cd genereporter
 $ pip install .
 </code>
 
@@ -49,8 +47,7 @@ using <a href="https://scenic.aertslab.org/">SCENIC</a> for example, you will ne
 
 You can now test if the package is installed correctly by running the following command:
 
-<code>
-$ python
+<code>$ python
 >>>import genereporter
 
 </code>
