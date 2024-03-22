@@ -10,5 +10,6 @@ pyvis
 scanpy==1.9.8
 scipy==1.11.4
 scvi-tools==0.14.6
-seaborn==0.12.2
+seaborn
 xmltodict
+furo
