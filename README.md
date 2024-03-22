@@ -1,8 +1,8 @@
 <h1 align="center">genereporter</h1>
 <p align="center">
   VEO-IBD Gene-Level Report Generator
-  
-  
+  <br>
+  <br>
   <img src="data/geneformer_logo.jpeg" alt="Demo image" width="300" height="300">
 </p>
 <!-- <a href="https://pradyunsg.me/furo/">
