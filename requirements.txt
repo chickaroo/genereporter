@@ -1,0 +1,15 @@
+anndata
+biopython
+ipykernel
+jupyter
+matplotlib
+numpy
+pandas
+plotly
+pytables
+pyvis
+scanpy
+scipy
+scvi-tools
+seaborn
+xmltodict
