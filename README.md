@@ -31,11 +31,17 @@ First, clone the github repository.
 
 Next, you might want to make a conda environment to install the package in.
 
-<code>$ conda create -n genereporter python=3.11 <br> $ conda activate genereporter</code>
+<code>
+  $ conda create -n genereporter python=3.11
+  $ conda activate genereporter
+</code>
 
 Then, navigate to the directory and install the package using pip.
 
-<code>$ cd genereporter <br> $ pip install . </code>
+<code>
+  $ cd genereporter
+  $ pip install .
+</code>
 
 This will install the package and all of its dependencies using pip. The standard dependencies are
 only geared towards the core functionality of the package. If you want to generate any of the GRN data
@@ -43,7 +49,11 @@ using <a href="https://scenic.aertslab.org/">SCENIC</a> for example, you will ne
 
 You can now test if the package is installed correctly by running the following command:
 
-<code>$ python <br> &gt;&gt;&gt;import genereporter </code>
+<code>
+
+  $ python
+  &gt;&gt;&gt;import genereporter
+</code>
 
 If you don't get any errors, the package is installed correctly.
 
