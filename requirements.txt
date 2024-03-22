@@ -13,3 +13,4 @@ scvi-tools==0.14.6
 seaborn
 xmltodict
 furo
+pyyaml==5.3.1
