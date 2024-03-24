@@ -28,7 +28,7 @@ class CellPipeline:
         warnings.filterwarnings('ignore')
         plt.rcParams["font.family"] = "monospace"
         plt.rcParams["font.size"] = 10
-        plt.rcParams['figure.figsize'] = (8,7)
+        plt.rcParams['figure.figsize'] = (8,6)
         self.wdir = wdir
         os.chdir(self.wdir)
         self.data_file = data_file
@@ -75,6 +75,7 @@ class CellPipeline:
         :rtype: numpy.ndarray
         """
         data = df[col].to_numpy().flatten()  # Convert the column to a 1D numpy array
+        #print(type(data))
         data = data[data <= np.percentile(data, threshold)]  # Remove data points above the threshold percentile
         return data  # Return the cleaned data
 
@@ -135,7 +136,7 @@ class CellPipeline:
         return df, summary
 
 
-    def make_df(self, threshold: float=99.75, col: str='log1p(means)', layer: str='log_norm') -> Tuple[pd.DataFrame, str]:
+    def make_df(self, adata, threshold: float=99.75, col: str='log1p(means)', layer: str='log_norm') -> Tuple[pd.DataFrame, str]:
         """
         This function creates a DataFrame from the given AnnData object, where the genes' expression level
         is calculated and classified into five categories: very low, low, middle, high, very high.
@@ -152,8 +153,8 @@ class CellPipeline:
         :return: The DataFrame with additional columns for the gene number and expression level category, and the summary string.
         :rtype: tuple(pandas.DataFrame, str)
         """
-        sc.pp.highly_variable_genes(self.adata, layer=layer)
-        df = self.adata.var.sort_values(['means'])
+        sc.pp.highly_variable_genes(adata, layer=layer)
+        df = adata.var.sort_values(['means'])
         df['gene_num'] = range(len(df))
         df['log(means)'] = np.log(df['means'])
         df['log1p(means)'] = np.log1p(df['means'])
@@ -185,7 +186,7 @@ class CellPipeline:
         # Loop over each unique cell type
         for cell_type in self.adata.obs['celltypist_cell_label_coarse'].unique():
             subset = self.adata[self.adata.obs['celltypist_cell_label_coarse'] == cell_type]
-            df, = self.make_df(adata=subset, col=col, layer=layer)
+            df, sum = self.make_df(adata=subset)
             out = pd.concat([out, df.loc[df.index == GOI]])
             
         # format the output
@@ -207,7 +208,7 @@ class CellPipeline:
     # Plot overall expression of all genes, highlighting GOI
 
 
-    def plot_expr_class(self, GOI: str, ax, cell_type: str = None, col: str = 'log1p(means)') -> Tuple[pd.DataFrame, str]:
+    def plot_expr_class(self, GOI: str, ax, adata, cell_type: str = None, col: str = 'log1p(means)') -> Tuple[pd.DataFrame, str]:
         """
         This function plots the expression class of a given gene of interest (GOI) across all cell types or a specific cell type.
         It creates a DataFrame, highlights the GOI on the plot, and annotates it with its expression class.
@@ -238,7 +239,7 @@ class CellPipeline:
                 return
         
         # Create a DataFrame and calculate the expression level of the GOI
-        df_new, sum = self.make_df(adata)
+        df_new, sum = self.make_df(adata=adata)
         # Plot the data with seaborn
         g = sns.scatterplot(data=df_new, ax=ax, x='gene_num',  y=col, hue='expr_class', linewidth=0)
         # Highlight the GOI on the plot and annotate it with its expression class
@@ -273,8 +274,8 @@ class CellPipeline:
         # Create a figure with two subplots
         fig, axes = plt.subplots(1, 2, figsize=(10, 5), sharey=True)
         # Plot the expression class 
-        df_allcells, sum_all = self.plot_expr_class(GOI, ax=axes[0])
-        df_celltype, sum_cell = self.plot_expr_class(GOI, ax=axes[1], cell_type=cell_type)
+        df_allcells, sum_all = self.plot_expr_class(GOI, ax=axes[0], adata=self.adata)
+        df_celltype, sum_cell = self.plot_expr_class(GOI, ax=axes[1], adata=self.adata, cell_type=cell_type)
         # Adjust and show
         fig.tight_layout(pad=2.0)
         plt.show()
@@ -353,7 +354,7 @@ class CellPipeline:
         
 
     # for cell type: mean expression of a gene (x) vs. percentace of cells where this gene is detected (y) (wihtin a cell type)
-    def expression_vs_detection(self, GOI:str, cell_type: str=None, layer:str='log_norm', col:str='log1p(means)', return_df:bool = False)-> Union[None, pd.DataFrame]:
+    def expression_vs_detection(self, GOI:str, adata = None, cell_type: str=None, layer:str='log_norm', col:str='log1p(means)', return_df:bool = False)-> Union[None, pd.DataFrame]:
         """
         This function creates a DataFrame, calculates the percentage of cells where each gene is detected, and optionally returns the DataFrame.
         If return_df=False, the function plots the mean expression of a given gene of interest (GOI) versus the percentage of cells where this gene is detected, either across all cell types or a specific cell type.
@@ -373,6 +374,8 @@ class CellPipeline:
         :return: If return_df is True, the DataFrame with the mean expression and percentage detection of the GOI for each cell type. Otherwise, None.
         :rtype: Union[None, pandas.DataFrame]
         """
+        if adata == None:
+            adata = self.adata
         title=str(GOI)
         if cell_type != None:
             title = str("Overall expression in " + cell_type + " cells")
@@ -386,7 +389,7 @@ class CellPipeline:
         else:
             title = "All cell types"
             
-        df, sum = self.make_df(adata, col, layer=layer)
+        df, sum = self.make_df(adata, col=col, layer=layer)
 
         # calculate percentage of cells (of the given cell type) where each gene is detected
         subset_df = adata.to_df(layer=layer)
@@ -480,7 +483,7 @@ class CellPipeline:
         x2, y2 = p2
         return abs((x2-x1)*(y1-y0) - (x1-x0)*(y2-y1)) / math.sqrt((y2-y1)**2 + (x2-x1)**2) # orthogonal distance formula
 
-    def calc_distance(self, x: pd.Series, y: pd.Series) -> List[float]:
+    def calc_distance(self, x: pd.Series, y: pd.Series, cell_type: str = None) -> List[float]:
         """
         This function calculates the orthogonal distance of each point in the given x and y series from the spline fitted to the data.
 
@@ -492,7 +495,7 @@ class CellPipeline:
         :rtype: List[float]
         """
         # make  linear interpolations of the fit function, eg. from 0 to infl point and from infl point to max
-        tck, inflection = self.fit_spline()
+        tck, inflection = self.fit_spline(cell_type=cell_type)
 
         lowest = [0,0]
         highest = [x[-1], BSpline(*tck)(x[-1])]
@@ -535,7 +538,7 @@ class CellPipeline:
         df['percent_detected'] = df['percent_detected']/100
 
         detecter = df[['log1p(means)', 'percent_detected']]
-        detecter['distance'] = self.calc_distance(detecter['log1p(means)'], detecter['percent_detected'])
+        detecter['distance'] = self.calc_distance(detecter['log1p(means)'], detecter['percent_detected'], cell_type=cell_type)
         detecter['is_outlier'] = detecter['distance'] > outlier_threshold
         return detecter
 
@@ -566,7 +569,7 @@ class CellPipeline:
             title = str(cell_type + " expression vs. detected; outliers highlighted")
 
         fig, ax = plt.subplots(1,1)
-        sns.scatterplot(data=detecter, x='log1p(means)', y='percent_detected', hue='is_outlier', alpha=1, ax=ax)
+        sns.scatterplot(data=detecter, x='log1p(means)', y='percent_detected', hue='is_outlier', linewidth=0, alpha=1, ax=ax)
         x_list = [[0], [x for x in inflections['log1p(means)']], [detecter['log1p(means)'][-1]]]
         y_list = [[0], [y for y in inflections['spline']], [BSpline(*tck)(detecter['log1p(means)'][-1])]]
         x_list = list(chain(*x_list))
@@ -577,7 +580,7 @@ class CellPipeline:
         annotation = str(GOI)
         highlight_y = detecter.loc[detecter.index == GOI]['percent_detected']
         highlight_x = detecter.loc[detecter.index == GOI]['log1p(means)']
-        ax.scatter(highlight_x, highlight_y, color = 'yellow', linewidth=1)
+        ax.scatter(highlight_x, highlight_y, color = 'yellow', linewidth=1, alpha=0.8)
         props = dict(facecolor='black', width=1, headwidth=5, headlength=8)
         ax.annotate(annotation, (highlight_x, highlight_y), (highlight_x-0.25, highlight_y+0.05), arrowprops=props)
 

@@ -4,8 +4,8 @@ import sys
 sys.path.insert(0, os.path.abspath('../../genereporter/'))
 
 project = 'genereporter'
-copyright = '2024, sami'
-author = 'sami'
+copyright = '2024, Samantha Bening'
+author = 'Samantha Bening'
 release = '0.1'
 
 # -- General configuration ---------------------------------------------------
