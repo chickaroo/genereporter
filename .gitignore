@@ -37,3 +37,5 @@ data/output/adata_aucell.h5ad
 src/gene_report/__pycache__/*.pyc
 .DS_Store
 data/output/adata.h5
+veo_ibd_all_samples.h5ad
+veo_ibd_balanced.h5ad
