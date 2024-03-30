@@ -33,7 +33,9 @@ class CellPipeline:
         os.chdir(self.wdir)
         self.data_file = data_file
         self.adata = anndata.read_h5ad(self.data_file)
-
+        self.adata.obs['celltype_l2'] = self.adata.obs['celltype_l2'].astype(str)
+        self.adata.obs['celltype_l3'] = self.adata.obs['celltype_l3'].astype(str)
+        
 
     def get_adata(self) -> anndata.AnnData:
         """
@@ -45,18 +47,20 @@ class CellPipeline:
         return self.adata
 
 
-    def plot_umap(self, color: str = "celltypist_cell_label_coarse") -> None:
+    def plot_umap(self, color: str = "celltype_l2") -> None:
         """
         This function plots a UMAP of the given AnnData object, grouping by coarse cell type in the adata object.
 
         :param color: The color to use for the plot. Default is "celltypist_cell_label_coarse".
         :type color: str
         """
+        plt.rcParams['figure.figsize'] = (9,10)
         sc.pl.umap(
             self.adata, color=[color],
             frameon=False, legend_loc="on data", title=color, legend_fontsize=9, legend_fontweight=600, 
             legend_fontoutline=1
         )
+        plt.rcParams['figure.figsize'] = (8,6)
 
 
     # Classify gene expression levels in discrete categories
@@ -136,7 +140,7 @@ class CellPipeline:
         return df, summary
 
 
-    def make_df(self, adata, threshold: float=99.75, col: str='log1p(means)', layer: str='log_norm') -> Tuple[pd.DataFrame, str]:
+    def make_df(self, adata, threshold: float=99.75, col: str='log1p(means)') -> Tuple[pd.DataFrame, str]:
         """
         This function creates a DataFrame from the given AnnData object, where the genes' expression level
         is calculated and classified into five categories: very low, low, middle, high, very high.
@@ -153,7 +157,7 @@ class CellPipeline:
         :return: The DataFrame with additional columns for the gene number and expression level category, and the summary string.
         :rtype: tuple(pandas.DataFrame, str)
         """
-        sc.pp.highly_variable_genes(adata, layer=layer)
+        sc.pp.highly_variable_genes(adata, inplace=True)
         df = adata.var.sort_values(['means'])
         df['gene_num'] = range(len(df))
         df['log(means)'] = np.log(df['means'])
@@ -184,25 +188,17 @@ class CellPipeline:
         out = pd.DataFrame()
         
         # Loop over each unique cell type
-        for cell_type in self.adata.obs['celltypist_cell_label_coarse'].unique():
-            subset = self.adata[self.adata.obs['celltypist_cell_label_coarse'] == cell_type]
-            df, sum = self.make_df(adata=subset)
+        for cell_type in self.adata.obs['celltype_l2'].unique():
+            df, sum = self.make_df(adata=self.adata[self.adata.obs['celltype_l2'] == cell_type])
             out = pd.concat([out, df.loc[df.index == GOI]])
             
         # format the output
-        out['cell_type'] = self.adata.obs['celltypist_cell_label_coarse'].unique()
+        out['cell_type'] = self.adata.obs['celltype_l2'].unique()
         out = out[['cell_type', 'expr_class', col]]
         out[col] = out[col].apply(lambda x: round(x, 3))
         out['expr_class'] = out['expr_class'].apply(lambda x: x.replace('_', ' '))
         out = out.rename(columns={'cell_type': 'Cell type', 'expr_class': 'Expression class', col: 'Avg. expression over cell type'})
         return out
-
-
-    # TODO threshold for expecting dropout zeros 
-    #def dropout_threshold(adata):
-        #df = adata.to_df()
-        # finalized threshold to come here
-        #return df
 
 
     # Plot overall expression of all genes, highlighting GOI
@@ -226,14 +222,14 @@ class CellPipeline:
         :return: The DataFrame with the expression level of the GOI for each cell type, and the summary string.
         :rtype: tuple(pandas.DataFrame, str)
         """
-        title = "Overall expression across all cell types"
+        title = "Overall Expression Across all Cell Types"
         # If a specific cell type is provided, subset the data for that cell type
         if cell_type != None:
-            title = str("Overall expression in " + cell_type + " cells")
-            if cell_type in adata.obs['celltypist_cell_label_coarse'].unique():
-                adata = adata[adata.obs['celltypist_cell_label_coarse'] == cell_type]
-            elif cell_type in adata.obs['celltypist_cell_label'].unique():
-                adata = adata[adata.obs['celltypist_cell_label'] == cell_type]
+            title = str("Overall Expression in " + cell_type + " Cells")
+            if cell_type in adata.obs['celltype_l2'].unique():
+                adata = adata[adata.obs['celltype_l2'] == cell_type]
+            elif cell_type in adata.obs['celltype_l3'].unique():
+                adata = adata[adata.obs['celltype_l3'] == cell_type]
             else:
                 print("Cell type not found. Please check spelling.")
                 return
@@ -256,7 +252,7 @@ class CellPipeline:
         return df_new, sum
 
 
-    def plot_expressions(self, GOI: str, cell_type: str = 'T cell', show_summary: bool = False) -> None:
+    def plot_expressions(self, GOI: str, cell_type: str = 'CD4 T', show_summary: bool = False) -> None:
         """
         This function plots the expression class of a given gene of interest (GOI) across all cell types and a specific cell type.
         It creates two subplots, one for all cell types and one for the specific cell type, and optionally prints a summary of the expression class for each plot.
@@ -301,12 +297,12 @@ class CellPipeline:
         :return: None
         """
         if cell_type == None:
-            fig = sc.pl.dotplot(self.adata, var_names=GOI, groupby='celltypist_cell_label_coarse', 
+            fig = sc.pl.dotplot(self.adata, var_names=GOI, groupby='celltype_l2', 
                             return_fig=True, standard_scale='var', title="Coarse Cell Types", figsize=(3.5,8), **kwargs)
             fig.add_totals().show()
         else:
-            fig = sc.pl.dotplot(self.adata[self.adata.obs['celltypist_cell_label_coarse'] == cell_type], 
-                                var_names=GOI, groupby='celltypist_cell_label', return_fig=True,
+            fig = sc.pl.dotplot(self.adata[self.adata.obs['celltype_l2'] == cell_type], 
+                                var_names=GOI, groupby='celltype_l3', return_fig=True,
                                 standard_scale='var', title=str('Fine Cell Types: ' + cell_type), figsize=(4,3), **kwargs)
             fig.add_totals().show()
 
@@ -325,17 +321,17 @@ class CellPipeline:
         :return: None
         """
         if cell_type == None:
-            fig = sc.pl.matrixplot(self.adata, var_names=GOI, groupby='celltypist_cell_label_coarse', layer='log_norm',
+            fig = sc.pl.matrixplot(self.adata, var_names=GOI, groupby='celltype_l2',
                             return_fig=True, standard_scale='var', title="Coarse Cell Types", figsize=(3.5,8))
             fig.add_totals().style(edge_color='black').show()
         else:
-            fig = sc.pl.matrixplot(self.adata[self.adata.obs['celltypist_cell_label_coarse'] == cell_type], 
-                                var_names=GOI, groupby='celltypist_cell_label', return_fig=True, layer='log_norm',
+            fig = sc.pl.matrixplot(self.adata[self.adata.obs['celltype_l2'] == cell_type], 
+                                var_names=GOI, groupby='celltype_l3', return_fig=True, 
                                 standard_scale='var', title=str('Fine Cell Types: ' + cell_type), figsize=(4,3))
             fig.add_totals().style(edge_color='black').show()
         plt.show()
 
-    def heatmap(self, GOI: str, layer: str = 'log_norm') -> None:
+    def heatmap(self, GOI: str, layer: str = None) -> None:
         """
         This function creates a heatmap of the expression of a given gene of interest (GOI) across all cell types.
 
@@ -347,14 +343,14 @@ class CellPipeline:
         :type adata: anndata.AnnData, optional
         :return: None
         """
-        sc.pl.heatmap(self.adata, GOI, groupby='celltypist_cell_label_coarse', swap_axes=True, figsize=(18,1.5), layer=layer, standard_scale='var')
+        sc.pl.heatmap(self.adata, GOI, groupby='celltype_l2', swap_axes=True, figsize=(18,1.5), layer=layer, standard_scale='var')
 
 
     ### Expression vs. detection calculations and plots ###
         
 
     # for cell type: mean expression of a gene (x) vs. percentace of cells where this gene is detected (y) (wihtin a cell type)
-    def expression_vs_detection(self, GOI:str, adata = None, cell_type: str=None, layer:str='log_norm', col:str='log1p(means)', return_df:bool = False)-> Union[None, pd.DataFrame]:
+    def expression_vs_detection(self, GOI:str, adata = None, cell_type: str=None, col:str='log1p(means)', return_df:bool = False)-> Union[None, pd.DataFrame]:
         """
         This function creates a DataFrame, calculates the percentage of cells where each gene is detected, and optionally returns the DataFrame.
         If return_df=False, the function plots the mean expression of a given gene of interest (GOI) versus the percentage of cells where this gene is detected, either across all cell types or a specific cell type.
@@ -378,21 +374,21 @@ class CellPipeline:
             adata = self.adata
         title=str(GOI)
         if cell_type != None:
-            title = str("Overall expression in " + cell_type + " cells")
-            if cell_type in adata.obs['celltypist_cell_label_coarse'].unique():
-                adata = adata[adata.obs['celltypist_cell_label_coarse'] == cell_type]
-            elif cell_type in adata.obs['celltypist_cell_label'].unique():
-                adata = adata[adata.obs['celltypist_cell_label'] == cell_type]
+            title = str(cell_type + " Cells: ")
+            if cell_type in adata.obs['celltype_l2'].unique():
+                adata = adata[adata.obs['celltype_l2'] == cell_type]
+            elif cell_type in adata.obs['celltype_l3'].unique():
+                adata = adata[adata.obs['celltype_l3'] == cell_type]
             else:
                 print("Cell type not found. Please check spelling.")
                 return
         else:
-            title = "All cell types"
+            title = "Over All Cells: "
             
-        df, sum = self.make_df(adata, col=col, layer=layer)
+        df, sum = self.make_df(adata, col=col)
 
         # calculate percentage of cells (of the given cell type) where each gene is detected
-        subset_df = adata.to_df(layer=layer)
+        subset_df = adata.to_df()
         nonzero_detected = pd.DataFrame(np.count_nonzero(subset_df, axis=0) / len(subset_df)*100, columns=['percent_detected'], index=subset_df.columns)
         df = df.join(nonzero_detected, how='left').sort_values(['gene_num'], ascending=True)
         if return_df:
@@ -400,7 +396,7 @@ class CellPipeline:
             
         # plot mean expression of a gene (x) vs. percentage of cells where this gene is detected (y)
         ax = sns.scatterplot(data=df, x=col, y='percent_detected', hue='expr_class', linewidth=0)
-        ax.set_title(str(title+ ": mean expression vs. percentage detected"))
+        ax.set_title(str(title+ "Mean Expression vs. Percentage Detected"))
         ax.legend(title='Expression Class', loc='lower left', bbox_to_anchor=(1, 0))
 
         annotation = str(GOI)
@@ -410,6 +406,7 @@ class CellPipeline:
         props = dict(facecolor='black', width=1, headwidth=5, headlength=8)
         ax.annotate(annotation, (highlight_x, highlight_y), (highlight_x-0.1, highlight_y+20), arrowprops=props)
         plt.show()
+
 
     def fit_spline(self, cell_type: str = None, plot: bool = False) -> Union[None, Tuple[np.ndarray, np.ndarray]]:
         """
@@ -451,11 +448,11 @@ class CellPipeline:
             # plot data vs fitted spline with inflection points
             fig, ax2 = plt.subplots(1,1)
             ax2.scatter(data=df, x='log1p(means)', y='percent_detected', alpha=0.5, color='orange', s=2.5)
-            ax2.plot(xdata, BSpline(*tck)(xdata), label='s=0.001')
-            ax2.set_title(str(cell_type + " Spline fit to expression vs. fraction detected"))
+            ax2.plot(xdata, BSpline(*tck)(xdata), label=f's=0.0009')
+            ax2.set_title(str(cell_type + " Spline Fit to Expression vs. Detecttion"))
             ax2.set_xlabel("log1p(means)")
-            ax2.set_ylabel("fraction detected")
-            ax2.vlines(infls, 0, 1.05, color='red', linestyles='dashed', label='turning points')
+            ax2.set_ylabel("Fraction detected")
+            ax2.vlines(infls, 0, 1.05, color='red', linestyles='dashed', label='Curve change points')
             ax2.legend()
             plt.show()
         else:
@@ -463,6 +460,7 @@ class CellPipeline:
 
     # calculate the orthogonal distance of each point (gene) from the spline
     # if greater than a certain value (threshold), then it is an outlier
+
 
     # calculate the distance of each point from the linear interpolation of its respective section
     def calc_distance_point(self, point: Tuple[float, float], p1: Tuple[float, float], p2: Tuple[float, float]) -> float:
@@ -498,7 +496,7 @@ class CellPipeline:
         tck, inflection = self.fit_spline(cell_type=cell_type)
 
         lowest = [0,0]
-        highest = [x[-1], BSpline(*tck)(x[-1])]
+        highest = [x[-1], max(1, BSpline(*tck)(x[-1]))]
         
         distance = []
         complete_data = pd.DataFrame(data={'x': x.values, 'y': y.values})
@@ -564,9 +562,9 @@ class CellPipeline:
         inflections['spline'] = BSpline(*tck)(inflections['log1p(means)'])
         inflections['log1p(means)'][0]
         if cell_type == None:
-            title = "expression vs. detected; outliers highlighted"
+            title = "Over all Cells: Lower Outliers Highlighted"
         else:
-            title = str(cell_type + " expression vs. detected; outliers highlighted")
+            title = str(cell_type + " Cells: Lower Outliers Highlighted")
 
         fig, ax = plt.subplots(1,1)
         sns.scatterplot(data=detecter, x='log1p(means)', y='percent_detected', hue='is_outlier', linewidth=0, alpha=1, ax=ax)

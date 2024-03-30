@@ -40,3 +40,5 @@ lib/*
 src/.ipynb_checkpoints/*.ipynb
 build/*
 genereporter.egg-info/*
+data2/veo_ibd_all_samples.h5ad
+data2/veo_ibd_balanced.h5ad
