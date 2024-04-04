@@ -54,10 +54,10 @@ class CellPipeline:
         :param color: The color to use for the plot. Default is "celltypist_cell_label_coarse".
         :type color: str
         """
-        plt.rcParams['figure.figsize'] = (9,10)
+        plt.rcParams['figure.figsize'] = (10,10)
         sc.pl.umap(
             self.adata, color=[color],
-            frameon=False, legend_loc="on data", title=color, legend_fontsize=9, legend_fontweight=600, 
+            frameon=False, legend_loc="on data", title="Coarse (Level 2) Cell Types", legend_fontsize=8, legend_fontweight=400, 
             legend_fontoutline=1
         )
         plt.rcParams['figure.figsize'] = (8,6)
@@ -198,6 +198,7 @@ class CellPipeline:
         out[col] = out[col].apply(lambda x: round(x, 3))
         out['expr_class'] = out['expr_class'].apply(lambda x: x.replace('_', ' '))
         out = out.rename(columns={'cell_type': 'Cell type', 'expr_class': 'Expression class', col: 'Avg. expression over cell type'})
+        out.sort_values(by='Avg. expression over cell type', ascending=False, inplace=True)
         return out
 
 
@@ -244,7 +245,11 @@ class CellPipeline:
         highlight_x = df_new.loc[df_new.index == GOI]['gene_num']
         g.scatter(highlight_x, highlight_y, color = 'yellow', linewidth=1)
         props = dict(facecolor='black', width=1, headwidth=5, headlength=8)
-        g.annotate(annotation, (highlight_x, highlight_y), (highlight_x - 1000, highlight_y+0.7), arrowprops=props, ha='right')
+        if df_new.loc[df_new.index == GOI]['expr_class'].values[0] == 'very_high':
+            shift = -0.7
+        else:
+            shift = 0.7
+        g.annotate(annotation, (highlight_x, highlight_y), (highlight_x - 1000, highlight_y + shift), arrowprops=props, ha='right')
         # Set the title and labels of the plot
         g.set_title(title)
         g.set_xlabel("ranked genes")
@@ -343,7 +348,7 @@ class CellPipeline:
         :type adata: anndata.AnnData, optional
         :return: None
         """
-        sc.pl.heatmap(self.adata, GOI, groupby='celltype_l2', swap_axes=True, figsize=(18,1.5), layer=layer, standard_scale='var')
+        sc.pl.heatmap(self.adata, GOI, groupby='celltype_l2', swap_axes=True, figsize=(20,1.5), layer=layer, standard_scale='var')
 
 
     ### Expression vs. detection calculations and plots ###
@@ -435,7 +440,7 @@ class CellPipeline:
         ydata = ydata.values
 
         # fit and plot splines
-        tck = splrep(xdata, ydata, s=0.0009, k=3) #TODO find optimal s value??? 
+        tck = splrep(xdata, ydata, s=0.0005, k=3) #TODO find optimal s value??? 
 
         # derivatives of spline function
         yders = interpolate.spalde(xdata, tck)
@@ -448,8 +453,11 @@ class CellPipeline:
             # plot data vs fitted spline with inflection points
             fig, ax2 = plt.subplots(1,1)
             ax2.scatter(data=df, x='log1p(means)', y='percent_detected', alpha=0.5, color='orange', s=2.5)
-            ax2.plot(xdata, BSpline(*tck)(xdata), label=f's=0.0009')
-            ax2.set_title(str(cell_type + " Spline Fit to Expression vs. Detecttion"))
+            ax2.plot(xdata, BSpline(*tck)(xdata), label=f's=0.0005')
+            if cell_type is None:
+                ax2.set_title(str("Spline Fit to Expression vs. Detection, all cells"))
+            else:
+                ax2.set_title(str("Spline Fit to Expression vs. Detection, " + cell_type))
             ax2.set_xlabel("log1p(means)")
             ax2.set_ylabel("Fraction detected")
             ax2.vlines(infls, 0, 1.05, color='red', linestyles='dashed', label='Curve change points')
@@ -567,7 +575,7 @@ class CellPipeline:
             title = str(cell_type + " Cells: Lower Outliers Highlighted")
 
         fig, ax = plt.subplots(1,1)
-        sns.scatterplot(data=detecter, x='log1p(means)', y='percent_detected', hue='is_outlier', linewidth=0, alpha=1, ax=ax)
+        sns.scatterplot(data=detecter, x='log1p(means)', y='percent_detected', hue='is_outlier', legend=False, linewidth=0, alpha=1, ax=ax)
         x_list = [[0], [x for x in inflections['log1p(means)']], [detecter['log1p(means)'][-1]]]
         y_list = [[0], [y for y in inflections['spline']], [BSpline(*tck)(detecter['log1p(means)'][-1])]]
         x_list = list(chain(*x_list))
@@ -583,7 +591,6 @@ class CellPipeline:
         ax.annotate(annotation, (highlight_x, highlight_y), (highlight_x-0.25, highlight_y+0.05), arrowprops=props)
 
         ax.set_title(title)
-        ax.legend(title='Outlier', loc='lower left', bbox_to_anchor=(1, 0))
         plt.show()
 
     def list_outliers(self, cell_type: str = None, head: int = 5) -> pd.DataFrame:
@@ -599,5 +606,5 @@ class CellPipeline:
         :rtype: pandas.DataFrame
         """
         detecter = self.detect_outliers(cell_type=cell_type)
-        detecter = detecter.sort_values(by='distance', ascending=False)
+        detecter.sort_values(by='distance', ascending=False, inplace=True)
         return detecter[detecter['is_outlier'] == True].head(head)

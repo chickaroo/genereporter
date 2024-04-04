@@ -53,7 +53,7 @@ class SamplePipeline():
 
         return goi_df_mean
     
-    def pl_sample_celltype(self, GOI):
+    def pl_sample_celltype(self, GOI, standard_scale=1, z_score=False):
         """
         Generate a clustermap of GOI expression data across patients and cell types. 
         The clustermap is accompanied by a barplot showing the number of cells per cell type.
@@ -69,8 +69,14 @@ class SamplePipeline():
         goi_expr = goi_expr.drop(columns='cell_count')
 
         # Generate the clustermap
-        g = sns.clustermap(goi_expr, cmap='YlGnBu', cbar_kws={'label': 'Mean expression in group'}, 
-                        dendrogram_ratio=(0, 0.09), standard_scale=1, figsize=(11,6))
+        if z_score:
+            label = "Z-Score in group"
+            g = sns.clustermap(goi_expr, mask=False, cmap='BrBG', z_score=1, center=0, 
+                        dendrogram_ratio=(0, 0.09), figsize=(11,6))
+        else:
+            label = "Mean expression in group"
+            g = sns.clustermap(goi_expr, mask=False, cmap='YlGnBu', standard_scale=1, 
+                        dendrogram_ratio=(0, 0.09), figsize=(11,6))
 
         # Rotate x-axis labels
         plt.setp(g.ax_heatmap.get_xticklabels(), rotation=45, ha='right') 
@@ -103,7 +109,7 @@ class SamplePipeline():
         # edit the colorbar
         g.cax.set_visible(False)
         cbar_ax = g.figure.add_axes([0.9, 0.05, 0.1, 0.05])
-        g.figure.colorbar(g.ax_heatmap.get_children()[0], cax=cbar_ax, orientation='horizontal', label='mean expression in group')
+        g.figure.colorbar(g.ax_heatmap.get_children()[0], cax=cbar_ax, orientation='horizontal', label=label)
 
         # add numbers to the right of the bars
         max_x = max([p.get_width() for p in total_barplot_ax.patches])
@@ -138,17 +144,29 @@ class SamplePipeline():
         :type celltype: str, optional
         """
         # violin plot of gene of interest expression across all or a specific cell type of interest
-        temp = self.adata
+
+        goi_adata = self.adata[:, GOI]
+        
         title = f"{GOI} Expression per Sample Across all Cell Types"
         if celltype != None:
-            temp = self.adata[self.adata.obs['celltype_l2'] == celltype]
+            goi_adata = self.adata[self.adata.obs['celltype_l2'] == celltype]
             title = f'{GOI} Expression per Sample in {celltype} Cells'
         
+        # sort samples by mean expression in group (all cells or specific cell type)
+        goi_df = goi_adata.to_df()
+        goi_df['celltype'] = goi_adata.obs['celltype_l2']
+        goi_df['sample'] = goi_adata.obs['PatientID']
+        # calculate mean expression per sample
+        goi_df_mean = goi_df.groupby(['sample'], observed=True).mean(numeric_only=True)
+        goi_df_mean.sort_values(by=GOI, axis=0, ascending=False, inplace=True)
+        sorted_patients = list(goi_df_mean.index)
+
         plt.rcParams["font.size"] = 9
-        plt.rcParams['figure.figsize'] = (14,5)
+        plt.rcParams['figure.figsize'] = (25,8)
         fig, ax1 = plt.subplots()
-        sc.pl.violin(temp, keys=GOI, groupby='PatientID', rotation=90, stripplot=True, 
-                     jitter=True, linewidth=0.05, show=False, ax=ax1)
+        sc.pl.violin(goi_adata, keys=GOI, groupby='PatientID', rotation=90, stripplot=True, 
+                     jitter=False, size=2, log=False, linewidth=0, order=sorted_patients, 
+                     show=False, ax=ax1)
         ax1.set_title(title)
         ax1.set_ylabel(f'{GOI} Expression')
         ax1.set_xlabel('Sample ID')

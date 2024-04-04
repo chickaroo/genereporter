@@ -42,3 +42,13 @@ build/*
 genereporter.egg-info/*
 data2/veo_ibd_all_samples.h5ad
 data2/veo_ibd_balanced.h5ad
+src/SCENICfiles/data_filtered_scenic.loom
+src/SCENICfiles/gg_adj_B_Cell.csv
+src/SCENICfiles/gg_adj_B_Cell5k.csv
+src/SCENICfiles/gg_adj_Epithelium.csv
+src/SCENICfiles/gg_adj_Myeloid.csv
+src/SCENICfiles/gg_adj_Stroma.csv
+src/SCENICfiles/gg_adj_T_Cell.csv
+src/SCENICfiles/TFtg_adj.csv
+src/SCENICfiles/reg_full10k.csv
+src/SCENICfiles/*.loom
