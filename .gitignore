@@ -52,3 +52,6 @@ src/SCENICfiles/gg_adj_T_Cell.csv
 src/SCENICfiles/TFtg_adj.csv
 src/SCENICfiles/reg_full10k.csv
 src/SCENICfiles/*.loom
+data2/veo_ibd_balanced_aucell.h5ad
+src/SCENICfiles/reg_full_df2regulons.p
+src/SCENICfiles/network_CASP8.html

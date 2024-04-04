@@ -26,7 +26,7 @@ class GRNPipeline():
         os.chdir( wdir )
 
         # load the adata object
-        #adata = sc.read_h5ad('data/output/adata_aucell.h5ad')
+        adata = sc.read_h5ad(adata)
 
         # read the adjacency and regulon data
         adjacencies = pd.read_csv(f_adj)
@@ -43,6 +43,7 @@ class GRNPipeline():
         self.reactome = self.get_reactome()
         self.regulon_geneset = self.get_regulon_genesets()
         self.geneset_df = self.get_genesets()
+        self.network_file = ""
 
 
     def get_reactome(self) -> pd.DataFrame:
@@ -52,7 +53,7 @@ class GRNPipeline():
         :return: A DataFrame with the filtered reactome data.
         :rtype: pandas.DataFrame
         """
-        reactome = self.gmt_to_decoupler("data/c2.cp.reactome.v2023.2.Hs.symbols.gmt")
+        reactome = self.gmt_to_decoupler("data2/c2.cp.reactome.v2023.2.Hs.symbols.gmt")
         # Filtering genesets to match behaviour of fgsea
         geneset_size = reactome.groupby("geneset").size()
         gsea_genesets = geneset_size.index[(geneset_size > 15) & (geneset_size < 300)]
@@ -87,7 +88,7 @@ class GRNPipeline():
         :return: A DataFrame with the concatenated reactome and regulon data.
         :rtype: pandas.DataFrame
         """
-        geneset_df = pd.concat([self.reactome, self.reg_df], axis=0)
+        geneset_df = pd.concat([self.reactome, self.regulon_geneset], axis=0)
         geneset_df = geneset_df.reset_index(drop=True)
         return geneset_df
 
@@ -292,7 +293,7 @@ class GRNPipeline():
         for row, col in df.iterrows():
             print(f"\t{col['TF']}: {round(col['importance'], 3)}")
         print("\n")
-        df_adj, temp = self.read_grn()
+        df_adj = self.adj_df
         df_adj = self.make_adj_df(df_adj, GOI)
         # filter df_adj for any TFs that are NOT in df
         df_adj = df_adj[~df_adj['TF'].isin(df['TF'])]
@@ -335,14 +336,14 @@ class GRNPipeline():
         print(f"Plotting cell-type specific expression or AUCell score for GOI and regulons")
         sc.pl.umap(
             self.adata,
-            color=["celltypist_cell_label_coarse", GOI] + regulons_in_genesets,
+            color=["celltype_l2", GOI] + regulons_in_genesets,
             frameon=False,
             ncols=2,
             wspace=0.4,
         )
 
 
-    def make_network(self, df: pd.DataFrame, GOI: str, direct_TF: bool = True, top_n: int = None, out_file: str = 'src/gene_report/goi_network.html') -> None:
+    def make_network(self, df: pd.DataFrame, GOI: str, direct_TF: bool = True, top_n: int = None, out_file: str = 'src/SCENICfiles/network') -> str:
         """
         This function creates a network visualization of a given gene of interest (GOI) and its regulons.
 
@@ -405,18 +406,17 @@ class GRNPipeline():
                         node['label'] = node['id']
 
         net.toggle_physics(False)
-        net.save_graph(out_file)
+        self.network_file = f"{out_file}_{GOI}.html"
+        net.save_graph(self.network_file)
+        
 
 
-    def show_network(self, out_file: str = 'src/gene_report/goi_network.html') -> None:
+    def show_network(self) -> None:
         """
         This function displays the HTML content of a given file.
-
-        :param out_file: The path to the HTML file to display. Default is 'src/gene_report/goi_network.html'.
-        :type out_file: str, optional
         """
         # Read the contents of the HTML file
-        with open(out_file, 'r') as file:
+        with open(self.network_file, 'r') as file:
             html_content = file.read()
 
         # Display the HTML content
@@ -538,7 +538,7 @@ class GRNPipeline():
 
         sc.pl.umap(
             self.adata,
-            color=["celltypist_cell_label_coarse", GOI] + top_pathways,
+            color=["celltype_l2", GOI] + top_pathways,
             frameon=False,
             ncols=2,
             wspace=0.4,
