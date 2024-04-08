@@ -3,7 +3,7 @@
   VEO-IBD Gene-Level Report Generator
   <br>
   <br>
-  <img src="data/geneformer_logo.jpeg" alt="Demo image" width="300" height="300">
+  <img src="data2/geneformer_logo.jpeg" alt="Demo image" width="300" height="300">
 </p>
 
 <!-- start elevator-pitch -->
