@@ -3,6 +3,7 @@ import os
 import pandas as pd
 from pyvis.network import Network
 import seaborn as sns
+import matplotlib.pyplot as plt
 import scanpy as sc
 import numpy as np
 import time
@@ -18,7 +19,7 @@ from typing import List
 import warnings
 
 class GRNPipeline():
-    def __init__(self, wdir, adata, f_adj, f_reg):
+    def __init__(self, wdir, adata, f_adj, f_reg, dir_gg_adj):
         warnings.filterwarnings('ignore')
         pd.options.mode.chained_assignment = None  # default='warn'
 
@@ -44,6 +45,12 @@ class GRNPipeline():
         self.regulon_geneset = self.get_regulon_genesets()
         self.geneset_df = self.get_genesets()
         self.network_file = ""
+
+        self.bcell_adj = pd.read_csv(os.path.join(dir_gg_adj, 'gg_adj_B_Cell.csv'), names=['TF','target','importance'])
+        self.epithelium_adj = pd.read_csv(os.path.join(dir_gg_adj, 'gg_adj_Epithelium.csv'), names=['TF','target','importance'])
+        self.myeloid_adj = pd.read_csv(os.path.join(dir_gg_adj, 'gg_adj_Myeloid.csv'), names=['TF','target','importance'])
+        self.stroma_adj = pd.read_csv(os.path.join(dir_gg_adj, 'gg_adj_Stroma.csv'), names=['TF','target','importance'])
+        self.tcell_adj = pd.read_csv(os.path.join(dir_gg_adj, 'gg_adj_T_Cell.csv'), names=['TF','target','importance'])
 
 
     def get_reactome(self) -> pd.DataFrame:
@@ -342,6 +349,31 @@ class GRNPipeline():
             wspace=0.4,
         )
 
+    def genegene_importance_histograms(self, log_scale=False, xlim=10):
+        fig, (ax1, ax2, ax3, ax4, ax5) = plt.subplots(nrows = 1, ncols = 5, figsize=(14,7), sharey=True)
+        fig.suptitle("Gene-Gene Adj. Importance Score Distributions")
+        fig.supxlabel("Importance score")
+        if log_scale:
+            fig.supylabel("log(Number of genes)")
+        else:
+            fig.supylabel("Number of genes")
+        
+        ax1.hist(self.bcell_adj['importance'], bins=15, log=log_scale, rwidth = 0.9, range=(0, xlim))
+        ax1.set_title("B Cells")
+        ax2.hist(self.epithelium_adj['importance'], bins=15, log=log_scale, rwidth = 0.9, range=(0, xlim))
+        ax2.set_title("Epithelium Cells")
+        ax3.hist(self.myeloid_adj['importance'], bins=15, log=log_scale, rwidth = 0.9, range=(0, xlim))
+        ax3.set_title("Myeloid Cells")
+        ax4.hist(self.stroma_adj['importance'], bins=15, log=log_scale, rwidth = 0.9, range=(0, xlim))
+        ax4.set_title("Stroma Cells")
+        ax5.hist(self.tcell_adj['importance'], bins=15, log=log_scale, rwidth = 0.9, range=(0, xlim))
+        ax5.set_title("T Cells")
+
+        fig.tight_layout()
+        plt.show()
+            
+
+
 
     def make_network(self, df: pd.DataFrame, GOI: str, direct_TF: bool = True, top_n: int = None, out_file: str = 'src/SCENICfiles/network') -> str:
         """
@@ -359,7 +391,7 @@ class GRNPipeline():
         :type out_file: str, optional
         """
         net = Network(notebook=True, height='600px', width='700px', bgcolor="#FFFFFF", 
-                    font_color="black", cdn_resources='remote')
+                    font_color="black", cdn_resources='in_line')
 
         # filter for only direct neighbors of GOI
         if direct_TF and top_n == None:
@@ -408,6 +440,7 @@ class GRNPipeline():
         net.toggle_physics(False)
         self.network_file = f"{out_file}_{GOI}.html"
         net.save_graph(self.network_file)
+        #net.show("tester.html")
         
 
 

@@ -55,3 +55,8 @@ src/SCENICfiles/*.loom
 data2/veo_ibd_balanced_aucell.h5ad
 src/SCENICfiles/reg_full_df2regulons.p
 src/SCENICfiles/network_CASP8.html
+src/SCENICfiles/gg_adj/gg_adj_B_Cell.csv
+src/SCENICfiles/gg_adj/gg_adj_Epithelium.csv
+src/SCENICfiles/gg_adj/gg_adj_Myeloid.csv
+src/SCENICfiles/gg_adj/gg_adj_Stroma.csv
+src/SCENICfiles/gg_adj/gg_adj_T_Cell.csv
