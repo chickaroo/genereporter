@@ -60,3 +60,4 @@ src/SCENICfiles/gg_adj/gg_adj_Epithelium.csv
 src/SCENICfiles/gg_adj/gg_adj_Myeloid.csv
 src/SCENICfiles/gg_adj/gg_adj_Stroma.csv
 src/SCENICfiles/gg_adj/gg_adj_T_Cell.csv
+data2/veo_ibd_balanced_old.h5ad

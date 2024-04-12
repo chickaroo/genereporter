@@ -577,7 +577,8 @@ class CellPipeline:
         fig, ax = plt.subplots(1,1)
         sns.scatterplot(data=detecter, x='log1p(means)', y='percent_detected', hue='is_outlier', legend=False, linewidth=0, alpha=1, ax=ax)
         x_list = [[0], [x for x in inflections['log1p(means)']], [detecter['log1p(means)'][-1]]]
-        y_list = [[0], [y for y in inflections['spline']], [BSpline(*tck)(detecter['log1p(means)'][-1])]]
+        y_list = [[0], [y for y in inflections['spline']], [max(1, BSpline(*tck)(detecter['log1p(means)'][-1]))]]
+        
         x_list = list(chain(*x_list))
         y_list = list(chain(*y_list))
         ax.plot(x_list, y_list, color='red', linestyle='dashed')

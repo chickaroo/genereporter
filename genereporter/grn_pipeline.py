@@ -44,13 +44,18 @@ class GRNPipeline():
         self.reactome = self.get_reactome()
         self.regulon_geneset = self.get_regulon_genesets()
         self.geneset_df = self.get_genesets()
-        self.network_file = ""
 
-        self.bcell_adj = pd.read_csv(os.path.join(dir_gg_adj, 'gg_adj_B_Cell.csv'), names=['TF','target','importance'])
-        self.epithelium_adj = pd.read_csv(os.path.join(dir_gg_adj, 'gg_adj_Epithelium.csv'), names=['TF','target','importance'])
-        self.myeloid_adj = pd.read_csv(os.path.join(dir_gg_adj, 'gg_adj_Myeloid.csv'), names=['TF','target','importance'])
-        self.stroma_adj = pd.read_csv(os.path.join(dir_gg_adj, 'gg_adj_Stroma.csv'), names=['TF','target','importance'])
-        self.tcell_adj = pd.read_csv(os.path.join(dir_gg_adj, 'gg_adj_T_Cell.csv'), names=['TF','target','importance'])
+        self.bcell_adj = pd.read_csv(os.path.join(dir_gg_adj, 'gg_adj_B_Cell.csv'), names=['gene','target','importance'])
+        self.bcell_adj['cell_lineage'] = 'b_cell'
+        self.epithelium_adj = pd.read_csv(os.path.join(dir_gg_adj, 'gg_adj_Epithelium.csv'), names=['gene','target','importance'])
+        self.epithelium_adj['cell_lineage'] = 'epithelium'
+        self.myeloid_adj = pd.read_csv(os.path.join(dir_gg_adj, 'gg_adj_Myeloid.csv'), names=['gene','target','importance'])
+        self.myeloid_adj['cell_lineage'] = 'myeloid'
+        self.stroma_adj = pd.read_csv(os.path.join(dir_gg_adj, 'gg_adj_Stroma.csv'), names=['gene','target','importance'])
+        self.stroma_adj['cell_lineage'] = 'stroma'
+        self.tcell_adj = pd.read_csv(os.path.join(dir_gg_adj, 'gg_adj_T_Cell.csv'), names=['gene','target','importance'])
+        self.tcell_adj['cell_lineage'] = 't_cell'
+        self.gene_gene_adj = [self.bcell_adj, self.epithelium_adj, self.myeloid_adj, self.stroma_adj, self.tcell_adj]
 
 
     def get_reactome(self) -> pd.DataFrame:
@@ -181,6 +186,7 @@ class GRNPipeline():
         return goi_grn
 
 
+
     def get_entrez_gene_summary(self, gene_name: str, email: str, organism: str = "human", max_gene_ids: int = 10) -> dict:
         """
         Returns the 'Summary' contents for provided input gene from the Entrez Gene database.
@@ -296,7 +302,7 @@ class GRNPipeline():
         print(f"Summary of {GOI}:\n")
         print(f"There are {len(df)} regulons that have {GOI} in their target genes.\n")
         print(f"Regulons that have {GOI} in their target genes:\n")
-        print(f"\t(TF: GENIE3 Importance Score)")
+        print(f"\t(TF: GRNBoost2 Importance Score)")
         for row, col in df.iterrows():
             print(f"\t{col['TF']}: {round(col['importance'], 3)}")
         print("\n")
@@ -306,7 +312,7 @@ class GRNPipeline():
         df_adj = df_adj[~df_adj['TF'].isin(df['TF'])]
         print(f"There are {len(df_adj)} TFs for {GOI} that were NOT supported by a regulon (motif analysis),")
         print(f"here are the top 10:\n")
-        print(f"\t(TF: GENIE3 Importance Score)")
+        print(f"\t(TF: GRNBoost2 Importance Score)")
         counter = 0
         for row, col in df_adj.iterrows():
             if counter > 10:
@@ -425,33 +431,100 @@ class GRNPipeline():
                         dst = e[1]
                         w = e[2]
 
-                        net.add_node(src, src, title=src, color=groups[e[3]])
-                        net.add_node(dst, dst, title=dst, color=groups[e[3]])
-                        net.add_edge(src, dst, value=w, color=groups[e[3]])
+                        net.add_node(src, src, title=str(e[3]), color=groups[e[3]])
+                        net.add_node(dst, dst, title=str(e[3]), color=groups[e[3]])
+                        net.add_edge(src, dst, value=w, label=w, title=w, color=groups[e[3]])
 
         neighbor_map = net.get_adj_list()
 
         # add neighbor data to node hover data
         for node in net.nodes:
-                        node["title"] = node['id']
-                        node["value"] = len(neighbor_map[node["id"]])
-                        node['label'] = node['id']
+            node["value"] = len(neighbor_map[node["id"]])
+            if node['id'] == GOI:
+                    node['color'] = '#001861'
+
 
         net.toggle_physics(False)
-        self.network_file = f"{out_file}_{GOI}.html"
-        net.save_graph(self.network_file)
-        #net.show("tester.html")
+        network_file = f"{out_file}_regulons_{GOI}.html"
+        net.save_graph(network_file)
+        return network_file
+
+
         
+    def make_gene_gene_network(self, GOI: str, top_n: int = None, out_file: str = 'src/SCENICfiles/network') -> str:
+        """
+        This function creates a network visualization of a given gene of interest (GOI) and its co-expressed genes.
+
+        :param df: The DataFrame containing the gene data.
+        :type df: pandas.DataFrame
+        :param GOI: The gene of interest.
+        :type GOI: str
+        :param top_n: The number of top neighbors of each regulon (other than GOI) to include. If None, no regulon neighbors (other than GOI) are included. Default is None.
+        :type top_n: int, optional
+        :param out_file: The path to the output file where the network visualization will be saved. 
+        :type out_file: str, optional
+        """
+        net = Network(notebook=True, height='600px', width='700px', bgcolor="#FFFFFF", 
+                    font_color="black", cdn_resources='in_line')
+
+        df = pd.DataFrame()
+        for df_i in self.gene_gene_adj:
+             df_i = df_i[(df_i['target'] == GOI) | (df_i['gene'] == GOI)]
+             df = pd.concat([df, df_i.head(top_n)], axis=0)
+
+        # assign colors to regulons
+        groups = {}
+        colors = sns.color_palette("hls", len(df['cell_lineage'].unique())).as_hex()
+        i = 0
+        for group in df['cell_lineage'].unique():
+            groups[group] = colors[i]
+            i = i + 1
+
+        # build network
+        sources = df['gene']
+        targets = df['target']
+        weights = df['importance']
+        group = df['cell_lineage']
+
+        edge_data = zip(sources, targets, weights, group)
+
+        for e in edge_data:
+                        src = e[0]
+                        dst = e[1]
+                        w = e[2]
+
+                        net.add_node(src, title=str(e[3]), color=groups[e[3]])
+                        net.add_node(dst, title=str(e[3]), color=groups[e[3]])
+                        net.add_edge(src, dst, title=w, color=groups[e[3]], label=w, value=w)
+
+        neighbor_map = net.get_adj_list()
+
+        # add neighbor data to node hover data
+        for node in net.nodes:
+            node["value"] = len(neighbor_map[node["id"]])
+            if node['id'] == GOI:
+                    node['color'] = '#001861'
+
+        net.toggle_physics(False)
+        network_file1 = f"{out_file}_genegene_{GOI}.html"
+        net.save_graph(network_file1)
+        return network_file1
 
 
-    def show_network(self) -> None:
+
+    def show_network(self, GOI: str, type: str ='gene_gene', top_n: int = 5) -> None:
         """
         This function displays the HTML content of a given file.
         """
-        # Read the contents of the HTML file
-        with open(self.network_file, 'r') as file:
+        if type == 'regulon':
+             df = self.make_goi_grn(GOI)
+             network_file = self.make_network(GOI=GOI, df=df, direct_TF=True, top_n=top_n)
+        elif type =='gene_gene':
+             network_file = self.make_gene_gene_network(GOI=GOI, top_n=top_n)
+                # Read the contents of the HTML file
+        
+        with open(network_file, 'r') as file:
             html_content = file.read()
-
         # Display the HTML content
         display(HTML(html_content))
 
@@ -566,7 +639,7 @@ class GRNPipeline():
         :type adata: anndata.AnnData, optional
         """
         # TODO: sort types of pathways (e.g. Reactome vs regulon) in columns under cell type and GOI expression reference
-        top_pathways = list(df['geneset'].values[:5])
+        top_pathways = list(df['geneset'].values[:4])
         self.adata.obs[top_pathways] = self.adata.obsm["aucell_estimate"][top_pathways]
 
         sc.pl.umap(
@@ -615,3 +688,41 @@ class GRNPipeline():
             return result
         except:
             print('No significant pathways found for this regulon. Try another regulon or gene set.')
+
+
+    def gGOSt_listed(self, GOI: str) -> str:
+        """
+        Print list of top three significantly differentially expressed in each 
+        """
+        print(f"Top 3 significantly differentially expressed pathways in genes co-expressed with {GOI}, per cell lineage.\nThis is in REACTOME and KEGG databases.\n")
+        for lineage in self.gene_gene_adj:
+            # get list of gene names in each gene_gene adjacencies file
+            lister = lineage[(lineage['gene'] == GOI) | (lineage['target'] == GOI)]
+            gene_list = lister['gene'].unique()
+            target_list = lister['target'].unique()
+            new_list = np.append(gene_list, target_list)
+            new_list = np.unique(new_list).tolist()
+            r = requests.post(
+                url='https://biit.cs.ut.ee/gprofiler/api/gost/profile/',
+                json={
+                    'organism':'hsapiens',
+                    'query':new_list,
+                    'sources': ['REAC', 'KEGG']
+                }
+                )
+            result = r.json()['result']
+            result = pd.DataFrame(result)
+            # sort by p-value
+            result = result.sort_values('p_value', ascending=True)
+            result = result[result['term_size'] < 500]
+            result = result.reset_index(drop=True)
+            result = result.head(3)
+            print(f"In {lineage['cell_lineage'].unique().tolist()[0]} cells:")
+            for index, row in result.iterrows():
+                print(f"{row['name']} (p-value: {row['p_value']})")
+            if len(result) == 0:
+                print("No significant pathways found.")
+            print("\n")
+
+
+

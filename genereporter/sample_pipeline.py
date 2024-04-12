@@ -42,11 +42,12 @@ class SamplePipeline():
         goi_adata = self.adata[:, GOI]
         goi_df = goi_adata.to_df()
         goi_df['celltype'] = goi_adata.obs['celltype_l2']
-        goi_df['sample'] = goi_adata.obs['PatientID']
+        goi_df['sample'] = goi_adata.obs['PatientID_genotype']
         # calculate mean expression per celltype and sample
         goi_df_mean = goi_df.groupby(['celltype', 'sample'], observed=True).mean()
         goi_df_mean = goi_df_mean.pivot_table(index='celltype', columns='sample', values=GOI)
-        goi_df_mean = goi_df_mean.fillna(0)
+        #goi_df_mean = goi_df_mean.fillna(0)
+        goi_df_mean = goi_df_mean.apply(lambda row: row.fillna(row.mean()), axis=1) # fill missing boxes with mean of cell type
         # count the number of cells for each cell type and add as a new column
         cell_counts = goi_df['celltype'].value_counts()
         goi_df_mean['cell_count'] = goi_df_mean.index.map(cell_counts.to_dict())
@@ -72,23 +73,25 @@ class SamplePipeline():
         if z_score:
             label = "Z-Score in group"
             g = sns.clustermap(goi_expr, mask=False, cmap='BrBG', z_score=1, center=0, 
-                        dendrogram_ratio=(0, 0.09), figsize=(11,6))
+                        xticklabels=True, dendrogram_ratio=(0, 0.09), figsize=(12,8))
         else:
             label = "Mean expression in group"
             g = sns.clustermap(goi_expr, mask=False, cmap='YlGnBu', standard_scale=1, 
-                        dendrogram_ratio=(0, 0.09), figsize=(11,6))
+                        xticklabels=True, dendrogram_ratio=(0, 0.09), figsize=(12,8))
 
         # Rotate x-axis labels
-        plt.setp(g.ax_heatmap.get_xticklabels(), rotation=45, ha='right') 
+        #plt.setp(g.ax_heatmap.get_xticklabels(), rotation=45, ha='right') 
 
         # Add title
         g.ax_heatmap.set_title(f'{GOI} Expression per Sample per Celltype', y=1.1)
         # move y axis to the left
         g.ax_heatmap.yaxis.set_label_position("left")
         g.ax_heatmap.yaxis.tick_left()
+        g.ax_heatmap.set_xticklabels((str(x.get_text()).replace("PATIENT", "") for x in g.ax_heatmap.get_xticklabels()), ha='center')
+        g.ax_heatmap.set_xlabel('Patient ID')
 
-        g.figure.subplots_adjust(right=0.8)
-        total_barplot_ax = g.figure.add_axes([0.8, 0.2, 0.25, 0.71])
+        g.figure.subplots_adjust(right=0.85)
+        total_barplot_ax = g.figure.add_axes([0.85, 0.26, 0.2, 0.66])
 
         # match the order of the barplot with the order of the y-axis of the heatmap
         y_axis = list(reversed([x.get_text() for x in g.ax_heatmap.get_yticklabels()]))
@@ -155,20 +158,20 @@ class SamplePipeline():
         # sort samples by mean expression in group (all cells or specific cell type)
         goi_df = goi_adata.to_df()
         goi_df['celltype'] = goi_adata.obs['celltype_l2']
-        goi_df['sample'] = goi_adata.obs['PatientID']
+        goi_df['sample'] = goi_adata.obs['PatientID_genotype']
         # calculate mean expression per sample
         goi_df_mean = goi_df.groupby(['sample'], observed=True).mean(numeric_only=True)
         goi_df_mean.sort_values(by=GOI, axis=0, ascending=False, inplace=True)
         sorted_patients = list(goi_df_mean.index)
 
         plt.rcParams["font.size"] = 9
-        plt.rcParams['figure.figsize'] = (25,8)
+        plt.rcParams['figure.figsize'] = (14,6)
         fig, ax1 = plt.subplots()
-        sc.pl.violin(goi_adata, keys=GOI, groupby='PatientID', rotation=90, stripplot=True, 
-                     jitter=False, size=2, log=False, linewidth=0, order=sorted_patients, 
+        sc.pl.violin(goi_adata, keys=GOI, groupby='PatientID_genotype', rotation=90, stripplot=True, 
+                     jitter=False, size=1.5, log=False, linewidth=0, order=sorted_patients, 
                      show=False, ax=ax1)
         ax1.set_title(title)
         ax1.set_ylabel(f'{GOI} Expression')
-        ax1.set_xlabel('Sample ID')
-        ax1.set_xticklabels(ax1.get_xticklabels(), rotation=45, ha='right', fontsize=6)
+        ax1.set_xlabel('Patient ID')
+        ax1.set_xticklabels((str(x.get_text()).replace("PATIENT", "") for x in ax1.get_xticklabels()), ha='center', fontsize=7)
         plt.show()
