@@ -10,6 +10,8 @@
 
 genereporter automatically generates an analysis and visualization of the gene of interest. Across three different areas&mdash;cell type specific, gene set enrichment analysis, and sample (patient) specific&mdash;genereporter can help researchers quickly access and understand scRNA-seq data easily, which usually is a heavily computational task. However, genereporter is also built to be customizable for users that wish to dive into the code. 
 
+The <a href="https://genereporter.readthedocs.io/en/latest/index.html">documentation</a> includes sample automatic pipelines as well as the API. 
+
 
 <!-- end elevator-pitch -->
 
