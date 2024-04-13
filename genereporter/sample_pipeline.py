@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 import warnings
 
-class SamplePipeline():
+class SamplePipeline:
     def __init__(self, wdir, adata):
         """
         Initialize the SamplePipeline class. This class is used to generate plots for the GOI across different samples (patients).

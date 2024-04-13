@@ -177,7 +177,7 @@
 <li class="toctree-l1"><a class="reference internal" href="samplepipeline.html">Sample (Patient) Level Analysis</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Using CellPipeline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GRN_Example.html">Using GRNPipeline</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Sample_Example.html">Using Sample-Level Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Sample_Example.html">Using SamplePipeline</a></li>
 </ul>
 
 </div>
@@ -216,63 +216,36 @@
 <h1>Using CellPipeline<a class="headerlink" href="#Using-CellPipeline" title="Link to this heading">#</a></h1>
 <section id="A-cell-type-specific-analysis-and-visualization-tool-for-the-gene-of-interest">
 <h2>A cell type specific analysis and visualization tool for the gene of interest<a class="headerlink" href="#A-cell-type-specific-analysis-and-visualization-tool-for-the-gene-of-interest" title="Link to this heading">#</a></h2>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#import sys</span>
-<span class="c1">#sys.path.append(&#39;/Users/samibening/Projects/genereporter/&#39;)</span>
-<span class="kn">from</span> <span class="nn">genereporter.cell_pipeline</span> <span class="kn">import</span> <span class="n">CellPipeline</span>
-
-<span class="n">cp</span> <span class="o">=</span> <span class="n">CellPipeline</span><span class="p">(</span><span class="s2">&quot;/Users/samibening/Projects/genereporter/&quot;</span><span class="p">,</span> <span class="s2">&quot;data/output/adata.h5ad&quot;</span><span class="p">)</span>
-<span class="n">adata</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get_adata</span><span class="p">()</span>
-<span class="n">adata</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-AnnData object with n_obs × n_vars = 5397 × 16719
-    obs: &#39;sampleID&#39;, &#39;barcode&#39;, &#39;n_genes_by_counts&#39;, &#39;log1p_n_genes_by_counts&#39;, &#39;total_counts&#39;, &#39;log1p_total_counts&#39;, &#39;pct_counts_in_top_20_genes&#39;, &#39;total_counts_mt&#39;, &#39;log1p_total_counts_mt&#39;, &#39;pct_counts_mt&#39;, &#39;total_counts_ribo&#39;, &#39;log1p_total_counts_ribo&#39;, &#39;pct_counts_ribo&#39;, &#39;total_counts_hb&#39;, &#39;log1p_total_counts_hb&#39;, &#39;pct_counts_hb&#39;, &#39;outlier&#39;, &#39;mt_outlier&#39;, &#39;_scvi_batch&#39;, &#39;_scvi_labels&#39;, &#39;leiden_res0_6&#39;, &#39;manual_celltype_annotation&#39;, &#39;celltypist_cell_label&#39;, &#39;celltypist_conf_score&#39;, &#39;celltypist_cell_label_coarse&#39;
-    var: &#39;n_cells&#39;, &#39;highly_variable&#39;, &#39;means&#39;, &#39;dispersions&#39;, &#39;dispersions_norm&#39;
-    uns: &#39;_scvi_manager_uuid&#39;, &#39;_scvi_uuid&#39;, &#39;celltypist_cell_label_coarse_colors&#39;, &#39;celltypist_cell_label_colors&#39;, &#39;hvg&#39;, &#39;leiden&#39;, &#39;leiden_res0_6_colors&#39;, &#39;neighbors&#39;, &#39;pca&#39;, &#39;sampleID_colors&#39;, &#39;umap&#39;
-    obsm: &#39;X_pca&#39;, &#39;X_scVI&#39;, &#39;X_umap&#39;
-    varm: &#39;PCs&#39;
-    layers: &#39;int_norm&#39;, &#39;log_int_norm&#39;, &#39;log_norm&#39;, &#39;norm&#39;, &#39;raw&#39;
-    obsp: &#39;connectivities&#39;, &#39;distances&#39;
-</pre></div></div>
-</div>
+<body><p>This notebook is built to be run automatically, you can just “Run All” cells. Beware: this requires some patience and high computational resources at the moment.</p>
+</body><p>First, the data and package are loaded. This may take a minute. Set your gene of interest (GOI) here!</p>
 <div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;/lustre/groups/ml01/workspace/samantha.bening/Bachelor/&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">importlib</span> <span class="kn">import</span> <span class="n">reload</span>
+<span class="kn">import</span> <span class="nn">genereporter.cell_pipeline</span> <span class="k">as</span> <span class="nn">cp</span>
+<span class="n">reload</span><span class="p">(</span><span class="n">cp</span><span class="p">)</span>
+
+<span class="n">cp</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">CellPipeline</span><span class="p">(</span><span class="s2">&quot;/lustre/groups/ml01/workspace/samantha.bening/Bachelor/&quot;</span><span class="p">,</span> <span class="s2">&quot;data2/veo_ibd_balanced.h5ad&quot;</span><span class="p">)</span>
+
+<span class="c1"># set your gene of interest</span>
+<span class="n">GOI</span> <span class="o">=</span> <span class="s2">&quot;CASP8&quot;</span>
+<span class="c1"># set your cell type of interest</span>
+<span class="n">cell_type</span> <span class="o">=</span> <span class="s1">&#39;CD4 T&#39;</span>
+</pre></div>
+</div>
+</div>
+<p>Below is a list of possible coarse (level 1) cell types. Choose one of these as your cell type of interest above (cell_type = ‘[your cell type]’) to run the notebook automatically. Of course, you can rerun certain outputs on different cell types as well.</p>
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: print cell type names here? Easier to select?</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set your gene of interest (GOI)</span>
-<span class="n">GOI</span> <span class="o">=</span> <span class="s2">&quot;CASP8&quot;</span>
-
-<span class="c1"># set your cell type of interest (cell_type)</span>
-<span class="c1"># set this later on, after expression across cell type plots? Then can&#39;t run the entire notebook easily</span>
-<span class="n">cell_type</span> <span class="o">=</span> <span class="s1">&#39;T Cell&#39;</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># UMAP of coarse cell types</span>
-<span class="n">cp</span><span class="o">.</span><span class="n">plot_umap</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># print cell type names here; easier to select</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Coarse cell types: &quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">cell_type</span> <span class="ow">in</span> <span class="n">cp</span><span class="o">.</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;celltype_l2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">cell_type</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -280,21 +253,57 @@ AnnData object with n_obs × n_vars = 5397 × 16719
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/Cell_Example_4_0.png" src="_images/Cell_Example_4_0.png" />
-</div>
+<div class="highlight"><pre>
+Coarse cell types:
+        Pericyte
+        B
+        Endothelial
+        CD4 T
+        CD8 T
+        NK_ILC
+        Fibroblast
+        Cycling B
+        Plasma
+        Cycling Myeloid
+        Cycling Stroma
+        Cycling T
+        Epithelial
+        Glial
+        Myeloid
+        Tuft
+        Smooth Muscle Cell
+        pDC
+        Mast
+</pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expr_sum</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">explain_expr_celltypes</span><span class="p">(</span><span class="n">GOI</span><span class="p">)</span>
-<span class="n">expr_sum</span>
-<span class="c1"># TODO: sort this by expression high to low?</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># UMAP of coarse cell types</span>
+<span class="n">cp</span><span class="o">.</span><span class="n">plot_umap</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;celltype_l2&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/Cell_Example_5_0.png" src="_images/Cell_Example_5_0.png" />
+</div>
+</div>
+<p>Next, we provide a quick summary of the GOI’s expression class and mean expression level across all cell types.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expr_sum</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">explain_expr_celltypes</span><span class="p">(</span><span class="n">GOI</span><span class="o">=</span><span class="s1">&#39;CASP8&#39;</span><span class="p">)</span>
+<span class="n">expr_sum</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -320,126 +329,132 @@ AnnData object with n_obs × n_vars = 5397 × 16719
       <th>Expression class</th>
       <th>Avg. expression over cell type</th>
     </tr>
-    <tr>
-      <th>index</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
   </thead>
   <tbody>
     <tr>
       <th>CASP8</th>
-      <td>mLTo</td>
-      <td>very low</td>
-      <td>0.034</td>
-    </tr>
-    <tr>
-      <th>CASP8</th>
-      <td>Monocytes</td>
-      <td>very low</td>
-      <td>0.171</td>
-    </tr>
-    <tr>
-      <th>CASP8</th>
-      <td>B Cell</td>
-      <td>very low</td>
-      <td>0.221</td>
-    </tr>
-    <tr>
-      <th>CASP8</th>
-      <td>Epithelial</td>
-      <td>very low</td>
-      <td>0.135</td>
-    </tr>
-    <tr>
-      <th>CASP8</th>
-      <td>T Cell</td>
+      <td>pDC</td>
       <td>low</td>
-      <td>0.399</td>
+      <td>0.349</td>
     </tr>
     <tr>
       <th>CASP8</th>
-      <td>Dentritic</td>
-      <td>very low</td>
-      <td>0.162</td>
-    </tr>
-    <tr>
-      <th>CASP8</th>
-      <td>Plasma</td>
-      <td>very low</td>
-      <td>0.184</td>
-    </tr>
-    <tr>
-      <th>CASP8</th>
-      <td>Enteroendocrine</td>
-      <td>very low</td>
-      <td>0.163</td>
-    </tr>
-    <tr>
-      <th>CASP8</th>
-      <td>Colonocyte</td>
-      <td>very low</td>
-      <td>0.120</td>
-    </tr>
-    <tr>
-      <th>CASP8</th>
-      <td>myofibroblast</td>
-      <td>very low</td>
-      <td>0.141</td>
-    </tr>
-    <tr>
-      <th>CASP8</th>
-      <td>Stromal</td>
-      <td>very low</td>
-      <td>0.120</td>
-    </tr>
-    <tr>
-      <th>CASP8</th>
-      <td>Adult Glia</td>
-      <td>very low</td>
-      <td>0.027</td>
-    </tr>
-    <tr>
-      <th>CASP8</th>
-      <td>Pericyte</td>
-      <td>very low</td>
-      <td>0.054</td>
-    </tr>
-    <tr>
-      <th>CASP8</th>
-      <td>ILC3</td>
+      <td>CD4 T</td>
       <td>very low</td>
       <td>0.266</td>
     </tr>
     <tr>
       <th>CASP8</th>
-      <td>NK cell</td>
+      <td>Cycling T</td>
       <td>very low</td>
-      <td>0.357</td>
+      <td>0.262</td>
     </tr>
     <tr>
       <th>CASP8</th>
-      <td>Macrophages</td>
+      <td>CD8 T</td>
       <td>very low</td>
-      <td>0.269</td>
+      <td>0.243</td>
     </tr>
     <tr>
       <th>CASP8</th>
-      <td>Goblet</td>
+      <td>NK_ILC</td>
       <td>very low</td>
-      <td>0.246</td>
+      <td>0.240</td>
+    </tr>
+    <tr>
+      <th>CASP8</th>
+      <td>Mast</td>
+      <td>very low</td>
+      <td>0.202</td>
+    </tr>
+    <tr>
+      <th>CASP8</th>
+      <td>B</td>
+      <td>very low</td>
+      <td>0.140</td>
+    </tr>
+    <tr>
+      <th>CASP8</th>
+      <td>Cycling B</td>
+      <td>very low</td>
+      <td>0.122</td>
+    </tr>
+    <tr>
+      <th>CASP8</th>
+      <td>Cycling Myeloid</td>
+      <td>very low</td>
+      <td>0.109</td>
+    </tr>
+    <tr>
+      <th>CASP8</th>
+      <td>Plasma</td>
+      <td>very low</td>
+      <td>0.109</td>
+    </tr>
+    <tr>
+      <th>CASP8</th>
+      <td>Tuft</td>
+      <td>very low</td>
+      <td>0.108</td>
+    </tr>
+    <tr>
+      <th>CASP8</th>
+      <td>Myeloid</td>
+      <td>very low</td>
+      <td>0.104</td>
+    </tr>
+    <tr>
+      <th>CASP8</th>
+      <td>Epithelial</td>
+      <td>very low</td>
+      <td>0.091</td>
+    </tr>
+    <tr>
+      <th>CASP8</th>
+      <td>Endothelial</td>
+      <td>very low</td>
+      <td>0.064</td>
+    </tr>
+    <tr>
+      <th>CASP8</th>
+      <td>Cycling Stroma</td>
+      <td>very low</td>
+      <td>0.056</td>
+    </tr>
+    <tr>
+      <th>CASP8</th>
+      <td>Pericyte</td>
+      <td>very low</td>
+      <td>0.037</td>
+    </tr>
+    <tr>
+      <th>CASP8</th>
+      <td>Fibroblast</td>
+      <td>very low</td>
+      <td>0.037</td>
+    </tr>
+    <tr>
+      <th>CASP8</th>
+      <td>Glial</td>
+      <td>very low</td>
+      <td>0.023</td>
+    </tr>
+    <tr>
+      <th>CASP8</th>
+      <td>Smooth Muscle Cell</td>
+      <td>very low</td>
+      <td>0.013</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span><span class="o">.</span><span class="n">plot_expressions</span><span class="p">(</span><span class="n">GOI</span><span class="p">,</span> <span class="n">cell_type</span><span class="p">,</span> <span class="n">show_summary</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="c1"># Can change show_summary=True to show the summary of the expression classes (quantile thresholds and cell counts per category)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span><span class="o">.</span><span class="n">plot_expressions</span><span class="p">(</span><span class="n">GOI</span><span class="p">,</span> <span class="n">cell_type</span><span class="o">=</span><span class="n">cell_type</span><span class="p">,</span> <span class="n">show_summary</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># Can change show_summary=False to hide the textual summary of the expression classes (quantile thresholds and cell counts per category)</span>
 </pre></div>
 </div>
 </div>
@@ -447,7 +462,7 @@ AnnData object with n_obs × n_vars = 5397 × 16719
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/Cell_Example_6_0.png" src="_images/Cell_Example_6_0.png" />
+<img alt="_images/Cell_Example_8_0.png" src="_images/Cell_Example_8_0.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -457,68 +472,40 @@ AnnData object with n_obs × n_vars = 5397 × 16719
 <div class="highlight"><pre>
 Summary for all cells:
 Quantile thresholds:
-very low: 90.8188, low: 97.769, middle: 99.0909, high: 99.7488, very high: 99.7500
+very low: 96.2325, low: 98.8921, middle: 99.4425, high: 99.7479, very high: 99.7500
 
 Number of genes per category:
-very_low: 15184
-low: 1162
-middle: 221
-high: 110
-very_high: 42
+very_low: 27101
+low: 749
+middle: 155
+high: 86
+very_high: 71
 
 
-Summary for T Cell cells:
+Summary for CD4 T cells:
 Quantile thresholds:
-very low: 90.2805, low: 97.5298, middle: 99.1208, high: 99.7488, very high: 99.7500
+very low: 96.5912, low: 98.988, middle: 99.4709, high: 99.7479, very high: 99.7500
 
 Number of genes per category:
-very_low: 15094
-low: 1212
-middle: 266
-high: 105
-very_high: 42
+very_low: 27202
+low: 675
+middle: 136
+high: 78
+very_high: 71
 
 </pre></div></div>
 </div>
 </section>
-<section id="GOI-expression-across-cell-types">
-<h2>GOI expression across cell types<a class="headerlink" href="#GOI-expression-across-cell-types" title="Link to this heading">#</a></h2>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<section id="Expression-vs.-Detection-visualization">
+<h2>Expression vs. Detection visualization<a class="headerlink" href="#Expression-vs.-Detection-visualization" title="Link to this heading">#</a></h2>
+<body><p>This can contextualize the expression levels we observe in the standard scanpy plots. In single-cell RNA-seq, only a random sampling of the RNA present in a cell is selected to be sequenced. By pure chance, lowly expressed genes may not be present in all the sampled RNA due to their low prevalance. Here, we can inspect the maximum percentage of expression expected in all genes, specifically our gene of interest.</p>
+</body><div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># find expression across cell types of GOI here</span>
-<span class="n">cp</span><span class="o">.</span><span class="n">dotplot</span><span class="p">(</span><span class="n">GOI</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="_images/Cell_Example_8_0.png" src="_images/Cell_Example_8_0.png" />
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span><span class="o">.</span><span class="n">dotplot</span><span class="p">(</span><span class="n">GOI</span><span class="p">,</span> <span class="n">cell_type</span><span class="o">=</span><span class="n">cell_type</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="_images/Cell_Example_9_0.png" src="_images/Cell_Example_9_0.png" />
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span><span class="o">.</span><span class="n">matrixplot</span><span class="p">(</span><span class="n">GOI</span><span class="p">,</span> <span class="n">cell_type</span><span class="o">=</span><span class="n">cell_type</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span><span class="o">.</span><span class="n">expression_vs_detection</span><span class="p">(</span><span class="n">GOI</span><span class="p">,</span> <span class="n">cell_type</span><span class="o">=</span><span class="n">cell_type</span><span class="p">)</span>
+<span class="c1"># Can add (or remove) &quot;cell_type=cell_type&quot; to plot only the cell type of interest (or across all cell types)</span>
+<span class="c1"># todo this section before dotplots etc.</span>
 </pre></div>
 </div>
 </div>
@@ -529,12 +516,14 @@ very_high: 42
 <img alt="_images/Cell_Example_10_0.png" src="_images/Cell_Example_10_0.png" />
 </div>
 </div>
+<section id="Automatically-identify-lower-outliers-(clue-to-look-at-celltype-subset)">
+<h3>Automatically identify lower outliers (clue to look at celltype subset)<a class="headerlink" href="#Automatically-identify-lower-outliers-(clue-to-look-at-celltype-subset)" title="Link to this heading">#</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">GOI</span><span class="p">)</span>
-<span class="c1"># show different normalization methods here?</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span><span class="o">.</span><span class="n">plot_outliers</span><span class="p">(</span><span class="n">GOI</span><span class="p">,</span> <span class="n">outlier_threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">cell_type</span><span class="o">=</span><span class="n">cell_type</span><span class="p">)</span>
+<span class="c1"># Can add &quot;cell_type=cell_type&quot; to plot only the cell type of interest</span>
 </pre></div>
 </div>
 </div>
@@ -542,30 +531,15 @@ very_high: 42
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/Cell_Example_11_0.png" src="_images/Cell_Example_11_0.png" />
+<img alt="_images/Cell_Example_12_0.png" src="_images/Cell_Example_12_0.png" />
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<p>This is how the maximum threshold curve approximation is calculated. This is primarily interesting for our fundamental understanding of the curve’s approximation through the spline’s 3rd derivative’s change points and the linear approximation of this curve.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: patient specific data:</span>
-<span class="c1"># Any specific things here?</span>
-</pre></div>
-</div>
-</div>
-</section>
-<section id="Expression-vs.-Detection-visualization">
-<h2>Expression vs. Detection visualization<a class="headerlink" href="#Expression-vs.-Detection-visualization" title="Link to this heading">#</a></h2>
-<body><p>This can contextualize the expression levels we observed previously. In single-cell RNA-seq, only a random sampling of the RNA present in a cell is selected to be sequenced. By pure chance, lowly expressed genes may not be present in all the sampled RNA due to their low prevalance. Here, we can inspect the maximum percentage of expression expected in all genes, specifically our gene of interest.</p>
-</body><div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span><span class="o">.</span><span class="n">expression_vs_detection</span><span class="p">(</span><span class="n">GOI</span><span class="p">,</span> <span class="n">cell_type</span><span class="o">=</span><span class="n">cell_type</span><span class="p">)</span>
-<span class="c1"># Can add &quot;cell_type=cell_type&quot; to plot only the cell type of interest</span>
-<span class="c1"># rather have a side by side view here again?</span>
-<span class="c1"># todo this section before dotplots etc.</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span><span class="o">.</span><span class="n">fit_spline</span><span class="p">(</span><span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cell_type</span><span class="o">=</span><span class="n">cell_type</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -576,40 +550,19 @@ very_high: 42
 <img alt="_images/Cell_Example_14_0.png" src="_images/Cell_Example_14_0.png" />
 </div>
 </div>
-<section id="Automatically-identify-lower-outliers-(clue-to-look-at-celltype-subset)">
-<h3>Automatically identify lower outliers (clue to look at celltype subset)<a class="headerlink" href="#Automatically-identify-lower-outliers-(clue-to-look-at-celltype-subset)" title="Link to this heading">#</a></h3>
+<p>These are the top 5 number of outliers, sorted by their distance away from the maximum curve. You can show more or less by changing the head=n parameter.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span><span class="o">.</span><span class="n">plot_outliers</span><span class="p">(</span><span class="n">GOI</span><span class="p">,</span> <span class="n">cell_type</span><span class="o">=</span><span class="n">cell_type</span><span class="p">)</span>
-<span class="c1"># Can add &quot;cell_type=cell_type&quot; to plot only the cell type of interest</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="_images/Cell_Example_16_0.png" src="_images/Cell_Example_16_0.png" />
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span><span class="o">.</span><span class="n">list_outliers</span><span class="p">()</span>
-<span class="c1"># show top 5 most extreme outlier genes</span>
-<span class="c1"># (by orthogonal distance to the max line)</span>
-<span class="c1"># can show top x genes by adding &quot;head=x&quot; to the function</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span><span class="o">.</span><span class="n">list_outliers</span><span class="p">(</span><span class="n">cell_type</span><span class="o">=</span><span class="n">cell_type</span><span class="p">)</span>
 
-<span class="c1">#TODO: make outlier plot above interactive? Hover over dot to show gene name etc. (sami: use plotly)</span>
-<span class="c1">#      Slider for threshold value?</span>
+<span class="c1"># can show top n number of genes by adding &quot;head=n&quot;</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -636,48 +589,41 @@ very_high: 42
       <th>distance</th>
       <th>is_outlier</th>
     </tr>
-    <tr>
-      <th>index</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
   </thead>
   <tbody>
     <tr>
-      <th>CXCL14</th>
-      <td>1.002802</td>
-      <td>0.075783</td>
-      <td>0.848793</td>
+      <th>HSPA1A</th>
+      <td>1.041783</td>
+      <td>0.459530</td>
+      <td>0.394890</td>
       <td>True</td>
     </tr>
     <tr>
-      <th>IGLC7</th>
-      <td>0.932603</td>
-      <td>0.045951</td>
-      <td>0.772127</td>
+      <th>HSPA1B</th>
+      <td>0.911569</td>
+      <td>0.453423</td>
+      <td>0.339097</td>
       <td>True</td>
     </tr>
     <tr>
-      <th>IGHG1</th>
-      <td>0.963830</td>
-      <td>0.067074</td>
-      <td>0.766993</td>
+      <th>IGKC</th>
+      <td>0.581478</td>
+      <td>0.103288</td>
+      <td>0.320663</td>
       <td>True</td>
     </tr>
     <tr>
-      <th>IGHM</th>
-      <td>1.242698</td>
-      <td>0.212525</td>
-      <td>0.760515</td>
+      <th>KLF2</th>
+      <td>0.865623</td>
+      <td>0.474351</td>
+      <td>0.299710</td>
       <td>True</td>
     </tr>
     <tr>
-      <th>IGFBP7</th>
-      <td>1.167887</td>
-      <td>0.246063</td>
-      <td>0.713274</td>
+      <th>CCL4</th>
+      <td>0.509195</td>
+      <td>0.062818</td>
+      <td>0.299202</td>
       <td>True</td>
     </tr>
   </tbody>
@@ -685,6 +631,77 @@ very_high: 42
 </div></div>
 </div>
 </section>
+</section>
+<section id="GOI-expression-across-cell-types">
+<h2>GOI expression across cell types<a class="headerlink" href="#GOI-expression-across-cell-types" title="Link to this heading">#</a></h2>
+<body><p>Now we show the standard scanpy plots of our GOI’s expression across both coarse cell types and fine cell types. The fine cell type automatically shown in the one you set at the beginning of this notebook. You can rerun the cell with other cell types of interest by setting the cell_type=[‘your cell type’] parameter.</p>
+</body><div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># GOI expression across coarse cell types</span>
+<span class="n">cp</span><span class="o">.</span><span class="n">dotplot</span><span class="p">(</span><span class="n">GOI</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/Cell_Example_18_0.png" src="_images/Cell_Example_18_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># GOI expression in fine cell type</span>
+<span class="n">cp</span><span class="o">.</span><span class="n">dotplot</span><span class="p">(</span><span class="n">GOI</span><span class="p">,</span> <span class="n">cell_type</span><span class="o">=</span><span class="n">cell_type</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/Cell_Example_19_0.png" src="_images/Cell_Example_19_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># GOI expression across coarse cell types</span>
+<span class="c1"># This is similar to the coarse cell type dotplot previously, just a different visualization</span>
+<span class="n">cp</span><span class="o">.</span><span class="n">matrixplot</span><span class="p">(</span><span class="n">GOI</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/Cell_Example_20_0.png" src="_images/Cell_Example_20_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># GOI expression across coarse cell types</span>
+<span class="c1"># Individual vertical &quot;lines&quot; correspond to individual cells</span>
+<span class="c1"># A more fine grained visual than the mean expression plots shown before</span>
+<span class="n">cp</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">GOI</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/Cell_Example_21_0.png" src="_images/Cell_Example_21_0.png" />
+</div>
+</div>
 </section>
 </section>
 
@@ -717,7 +734,7 @@ very_high: 42
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2024, sami
+                Copyright &#169; 2024, Samantha Bening
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -745,11 +762,11 @@ very_high: 42
             <ul>
 <li><a class="reference internal" href="#">Using CellPipeline</a><ul>
 <li><a class="reference internal" href="#A-cell-type-specific-analysis-and-visualization-tool-for-the-gene-of-interest">A cell type specific analysis and visualization tool for the gene of interest</a></li>
-<li><a class="reference internal" href="#GOI-expression-across-cell-types">GOI expression across cell types</a></li>
 <li><a class="reference internal" href="#Expression-vs.-Detection-visualization">Expression vs. Detection visualization</a><ul>
 <li><a class="reference internal" href="#Automatically-identify-lower-outliers-(clue-to-look-at-celltype-subset)">Automatically identify lower outliers (clue to look at celltype subset)</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#GOI-expression-across-cell-types">GOI expression across cell types</a></li>
 </ul>
 </li>
 </ul>

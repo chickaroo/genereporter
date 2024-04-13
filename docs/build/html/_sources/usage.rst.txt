@@ -51,4 +51,6 @@ Vignettes
 ----------
 
 Check out the notebooks for examples on how to use the package:
-:doc:`Cell_Example` and :doc:`GRN_Example`
+:doc:`Cell_Example`
+:doc:`GRN_Example`
+:doc:`Sample_Example`

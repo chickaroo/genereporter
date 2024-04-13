@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Using Sample-Level Pipeline" href="Sample_Example.html" /><link rel="prev" title="Using CellPipeline" href="Cell_Example.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Using SamplePipeline" href="Sample_Example.html" /><link rel="prev" title="Using CellPipeline" href="Cell_Example.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
         <title>Using GRNPipeline - genereporter 0.1 documentation</title>
@@ -177,7 +177,7 @@
 <li class="toctree-l1"><a class="reference internal" href="samplepipeline.html">Sample (Patient) Level Analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Cell_Example.html">Using CellPipeline</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Using GRNPipeline</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Sample_Example.html">Using Sample-Level Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Sample_Example.html">Using SamplePipeline</a></li>
 </ul>
 
 </div>
@@ -216,53 +216,42 @@
 <h1>Using GRNPipeline<a class="headerlink" href="#Using-GRNPipeline" title="Link to this heading">#</a></h1>
 <section id="A-GRN-analysis-and-visualization-tool-for-the-gene-of-interest">
 <h2>A GRN analysis and visualization tool for the gene of interest<a class="headerlink" href="#A-GRN-analysis-and-visualization-tool-for-the-gene-of-interest" title="Link to this heading">#</a></h2>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<p>First, the data and package are loaded. This may take a minute. Set your gene of interest (GOI) here!</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;/Users/samibening/Projects/genereporter/&#39;</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">genereporter.grn_pipeline</span> <span class="kn">import</span> <span class="n">GRNPipeline</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;/lustre/groups/ml01/workspace/samantha.bening/Bachelor/&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">importlib</span> <span class="kn">import</span> <span class="n">reload</span>
+<span class="kn">import</span> <span class="nn">genereporter.grn_pipeline</span> <span class="k">as</span> <span class="nn">ggModule</span>
+<span class="n">reload</span><span class="p">(</span><span class="n">ggModule</span><span class="p">)</span>
 
-<span class="n">gg</span> <span class="o">=</span> <span class="n">GRNPipeline</span><span class="p">(</span><span class="n">wdir</span><span class="o">=</span><span class="s2">&quot;/Users/samibening/Projects/genereporter/&quot;</span><span class="p">,</span>
-                 <span class="n">adata</span><span class="o">=</span><span class="s2">&quot;data/output/adata.h5ad&quot;</span><span class="p">,</span>
-                 <span class="n">f_adj</span><span class="o">=</span><span class="s1">&#39;src/SCENICfiles/adj.csv&#39;</span><span class="p">,</span>
-                 <span class="n">f_reg</span><span class="o">=</span><span class="s1">&#39;src/SCENICfiles/reg.csv&#39;</span><span class="p">)</span>
-<span class="n">gg</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-&lt;genereporter.grn_pipeline.GRNPipeline at 0x30a472850&gt;
-</pre></div></div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set GOI</span>
+<span class="n">gg</span> <span class="o">=</span> <span class="n">ggModule</span><span class="o">.</span><span class="n">GRNPipeline</span><span class="p">(</span><span class="n">wdir</span><span class="o">=</span><span class="s2">&quot;/lustre/groups/ml01/workspace/samantha.bening/Bachelor/&quot;</span><span class="p">,</span>
+                          <span class="n">adata</span><span class="o">=</span><span class="s2">&quot;data2/veo_ibd_balanced_aucell.h5ad&quot;</span><span class="p">,</span>
+                          <span class="n">f_adj</span><span class="o">=</span><span class="s1">&#39;src/SCENICfiles/TFtg_adj.csv&#39;</span><span class="p">,</span>
+                          <span class="n">f_reg</span><span class="o">=</span><span class="s1">&#39;src/SCENICfiles/reg_full10k.csv&#39;</span><span class="p">,</span>
+                          <span class="n">dir_gg_adj</span> <span class="o">=</span> <span class="s1">&#39;src/SCENICfiles/gg_adj/&#39;</span><span class="p">,</span>
+                          <span class="n">gg_adj_files</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;gg_adj_B_Cell.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;gg_adj_Epithelium.csv&#39;</span><span class="p">,</span>
+                                        <span class="s1">&#39;gg_adj_Myeloid.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;gg_adj_Stroma.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;gg_adj_T_Cell.csv&#39;</span><span class="p">])</span>
+
+<span class="c1"># set GOI</span>
 <span class="n">GOI</span> <span class="o">=</span> <span class="s1">&#39;CASP8&#39;</span>
 </pre></div>
 </div>
 </div>
+<p>A ranked list of the REACTOME pathway and GRN regulon gene sets that include the GOI. The ranking is based on the (absolute value of the) Spearman’s correlation coefficient between the genesets AUCell score and the GOI’s expression across all cells.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pathways_goi</span> <span class="o">=</span> <span class="n">gg</span><span class="o">.</span><span class="n">get_goi_pathways</span><span class="p">(</span><span class="n">GOI</span><span class="p">)</span>
 <span class="n">pathways_goi</span>
-
-<span class="c1"># Spearman correlation between geneset and GOI expression across all cell types</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -292,213 +281,218 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>MSC_REGULON</td>
+      <td>REACTOME_REGULATION_OF_NF_KAPPA_B_SIGNALING</td>
       <td>CASP8</td>
-      <td>0.236131</td>
+      <td>0.240202</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>REACTOME_REGULATION_OF_NF_KAPPA_B_SIGNALING</td>
+      <td>REACTOME_CASPASE_ACTIVATION_VIA_DEATH_RECEPTOR...</td>
       <td>CASP8</td>
-      <td>0.156916</td>
+      <td>0.225575</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>TFDP1_REGULON</td>
+      <td>REACTOME_INTRINSIC_PATHWAY_FOR_APOPTOSIS</td>
       <td>CASP8</td>
-      <td>0.142626</td>
+      <td>0.220298</td>
     </tr>
     <tr>
       <th>3</th>
       <td>REACTOME_NOD1_2_SIGNALING_PATHWAY</td>
       <td>CASP8</td>
-      <td>0.129718</td>
+      <td>0.202713</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>IKZF3_REGULON</td>
+      <td>REACTOME_NUCLEOTIDE_BINDING_DOMAIN_LEUCINE_RIC...</td>
       <td>CASP8</td>
-      <td>0.129300</td>
+      <td>0.201034</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>REACTOME_INTRINSIC_PATHWAY_FOR_APOPTOSIS</td>
+      <td>REACTOME_REGULATED_NECROSIS</td>
       <td>CASP8</td>
-      <td>0.125933</td>
+      <td>0.200855</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>REACTOME_NUCLEOTIDE_BINDING_DOMAIN_LEUCINE_RIC...</td>
+      <td>REACTOME_RIPK1_MEDIATED_REGULATED_NECROSIS</td>
       <td>CASP8</td>
-      <td>0.117351</td>
+      <td>0.196787</td>
     </tr>
     <tr>
       <th>7</th>
-      <td>IKZF1_REGULON</td>
+      <td>REACTOME_C_TYPE_LECTIN_RECEPTORS_CLRS</td>
       <td>CASP8</td>
-      <td>0.114201</td>
+      <td>0.192598</td>
     </tr>
     <tr>
       <th>8</th>
-      <td>REACTOME_TNF_SIGNALING</td>
+      <td>REACTOME_CASPASE_ACTIVATION_VIA_EXTRINSIC_APOP...</td>
       <td>CASP8</td>
-      <td>0.111905</td>
+      <td>0.190844</td>
     </tr>
     <tr>
       <th>9</th>
-      <td>REACTOME_TNFR1_INDUCED_PROAPOPTOTIC_SIGNALING</td>
+      <td>REACTOME_TNF_SIGNALING</td>
       <td>CASP8</td>
-      <td>0.111356</td>
+      <td>0.183101</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>REACTOME_DDX58_IFIH1_MEDIATED_INDUCTION_OF_INT...</td>
+      <td>REACTOME_TAK1_DEPENDENT_IKK_AND_NF_KAPPA_B_ACT...</td>
       <td>CASP8</td>
-      <td>0.104646</td>
+      <td>0.181794</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>REACTOME_TAK1_DEPENDENT_IKK_AND_NF_KAPPA_B_ACT...</td>
+      <td>REACTOME_CLEC7A_DECTIN_1_SIGNALING</td>
       <td>CASP8</td>
-      <td>0.089646</td>
+      <td>0.173996</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>REACTOME_CASPASE_ACTIVATION_VIA_DEATH_RECEPTOR...</td>
+      <td>REACTOME_PROGRAMMED_CELL_DEATH</td>
       <td>CASP8</td>
-      <td>0.086493</td>
+      <td>0.173493</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>REACTOME_REGULATED_NECROSIS</td>
+      <td>REACTOME_DDX58_IFIH1_MEDIATED_INDUCTION_OF_INT...</td>
       <td>CASP8</td>
-      <td>0.086321</td>
+      <td>0.164175</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>REACTOME_RIPK1_MEDIATED_REGULATED_NECROSIS</td>
+      <td>REACTOME_APOPTOSIS</td>
       <td>CASP8</td>
-      <td>0.084012</td>
+      <td>0.164043</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>REACTOME_C_TYPE_LECTIN_RECEPTORS_CLRS</td>
+      <td>REACTOME_DEATH_RECEPTOR_SIGNALING</td>
       <td>CASP8</td>
-      <td>0.078524</td>
+      <td>0.160035</td>
     </tr>
     <tr>
       <th>16</th>
-      <td>REACTOME_CLEC7A_DECTIN_1_SIGNALING</td>
+      <td>REACTOME_INTERLEUKIN_1_FAMILY_SIGNALING</td>
       <td>CASP8</td>
-      <td>0.078317</td>
+      <td>0.152561</td>
     </tr>
     <tr>
       <th>17</th>
-      <td>REACTOME_PROGRAMMED_CELL_DEATH</td>
+      <td>REACTOME_INTERLEUKIN_1_SIGNALING</td>
       <td>CASP8</td>
-      <td>0.072300</td>
+      <td>0.151888</td>
     </tr>
     <tr>
       <th>18</th>
-      <td>REACTOME_CASPASE_ACTIVATION_VIA_EXTRINSIC_APOP...</td>
+      <td>REACTOME_DISEASES_OF_PROGRAMMED_CELL_DEATH</td>
       <td>CASP8</td>
-      <td>0.068468</td>
+      <td>0.147965</td>
     </tr>
     <tr>
       <th>19</th>
-      <td>REACTOME_APOPTOSIS</td>
+      <td>REACTOME_TNFR1_INDUCED_PROAPOPTOTIC_SIGNALING</td>
       <td>CASP8</td>
-      <td>0.067486</td>
+      <td>0.146780</td>
     </tr>
     <tr>
       <th>20</th>
-      <td>TBP_REGULON</td>
+      <td>REACTOME_APOPTOTIC_EXECUTION_PHASE</td>
       <td>CASP8</td>
-      <td>0.067413</td>
+      <td>0.129255</td>
     </tr>
     <tr>
       <th>21</th>
-      <td>REACTOME_INTERLEUKIN_1_FAMILY_SIGNALING</td>
+      <td>REACTOME_MYD88_INDEPENDENT_TLR4_CASCADE</td>
       <td>CASP8</td>
-      <td>0.056597</td>
+      <td>0.118571</td>
     </tr>
     <tr>
       <th>22</th>
-      <td>REACTOME_INTERLEUKIN_1_SIGNALING</td>
+      <td>IKZF2_REGULON</td>
       <td>CASP8</td>
-      <td>0.055465</td>
+      <td>0.108758</td>
     </tr>
     <tr>
       <th>23</th>
-      <td>REACTOME_DEATH_RECEPTOR_SIGNALING</td>
+      <td>REACTOME_APOPTOTIC_CLEAVAGE_OF_CELLULAR_PROTEINS</td>
       <td>CASP8</td>
-      <td>0.050325</td>
+      <td>0.103956</td>
     </tr>
     <tr>
       <th>24</th>
-      <td>ATF4_REGULON</td>
+      <td>IKZF1_REGULON</td>
       <td>CASP8</td>
-      <td>0.041762</td>
+      <td>0.103613</td>
     </tr>
     <tr>
       <th>25</th>
-      <td>REACTOME_DISEASES_OF_PROGRAMMED_CELL_DEATH</td>
+      <td>ELF1_REGULON</td>
       <td>CASP8</td>
-      <td>0.038461</td>
+      <td>0.100515</td>
     </tr>
     <tr>
       <th>26</th>
-      <td>REACTOME_MYD88_INDEPENDENT_TLR4_CASCADE</td>
+      <td>GATA3_REGULON</td>
       <td>CASP8</td>
-      <td>0.036400</td>
+      <td>0.096939</td>
     </tr>
     <tr>
       <th>27</th>
-      <td>REACTOME_APOPTOTIC_EXECUTION_PHASE</td>
+      <td>CREM_REGULON</td>
       <td>CASP8</td>
-      <td>0.031947</td>
+      <td>0.096684</td>
     </tr>
     <tr>
       <th>28</th>
-      <td>REACTOME_APOPTOTIC_CLEAVAGE_OF_CELLULAR_PROTEINS</td>
+      <td>REACTOME_TOLL_LIKE_RECEPTOR_CASCADES</td>
       <td>CASP8</td>
-      <td>-0.009089</td>
+      <td>0.095853</td>
     </tr>
     <tr>
       <th>29</th>
-      <td>IRF1_REGULON</td>
+      <td>REACTOME_TOLL_LIKE_RECEPTOR_9_TLR9_CASCADE</td>
       <td>CASP8</td>
-      <td>0.006591</td>
+      <td>0.094180</td>
     </tr>
     <tr>
       <th>30</th>
-      <td>REACTOME_TOLL_LIKE_RECEPTOR_9_TLR9_CASCADE</td>
+      <td>REACTOME_TOLL_LIKE_RECEPTOR_TLR1_TLR2_CASCADE</td>
       <td>CASP8</td>
-      <td>0.003475</td>
+      <td>0.091920</td>
     </tr>
     <tr>
       <th>31</th>
-      <td>REACTOME_TOLL_LIKE_RECEPTOR_TLR1_TLR2_CASCADE</td>
+      <td>RUNX3_REGULON</td>
       <td>CASP8</td>
-      <td>0.002684</td>
+      <td>0.090005</td>
     </tr>
     <tr>
       <th>32</th>
-      <td>REACTOME_TOLL_LIKE_RECEPTOR_CASCADES</td>
+      <td>IRF1_REGULON</td>
       <td>CASP8</td>
-      <td>0.001308</td>
+      <td>0.054595</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>STAT1_REGULON</td>
+      <td>CASP8</td>
+      <td>-0.019003</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
+<p>We show the UMAPs of all the cells, first colored by cell type, then by the GOI expression, followed by the top four gene sets (according to the previous ranking). The color of the pathways corresponds to the AUCell score of that gene set in every cell.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gg</span><span class="o">.</span><span class="n">plot_pathways</span><span class="p">(</span><span class="n">pathways_goi</span><span class="p">,</span> <span class="n">GOI</span><span class="p">)</span>
-<span class="c1"># cell types and GOI on top, then</span>
-<span class="c1"># TODO: split different groups in columns (e.g. regulon, reactome, gene)</span>
 </pre></div>
 </div>
 </div>
@@ -506,22 +500,18 @@
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/GRN_Example_4_0.png" src="_images/GRN_Example_4_0.png" />
+<img alt="_images/GRN_Example_6_0.png" src="_images/GRN_Example_6_0.png" />
 </div>
 </div>
 </section>
 <section id="Regulon-level-gene-set-enrichment-analysis">
 <h2>Regulon-level gene set enrichment analysis<a class="headerlink" href="#Regulon-level-gene-set-enrichment-analysis" title="Link to this heading">#</a></h2>
+<p>Now we look into which pathways are significantly enriched in a specific gene set of interest. You can pick which gene set to look at by setting the regulon parameter: regulon=[‘your gene set’] We recommend looking at regulons, but you can also look at a REACTOME gene set. Hover over the individual pathways plotted to see more information.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show pathways enriched in specific GOI regulon</span>
-
-<span class="n">gprofiler</span> <span class="o">=</span> <span class="n">gg</span><span class="o">.</span><span class="n">gGOSt</span><span class="p">(</span><span class="n">regulon</span><span class="o">=</span><span class="s1">&#39;TFDP1_REGULON&#39;</span><span class="p">)</span> <span class="c1"># set gene set of interest here</span>
-
-<span class="c1"># What pathway databases do we want here? Reactome, KEGG, etc.?</span>
-<span class="c1"># easier access to pathway? link?</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gprofiler</span> <span class="o">=</span> <span class="n">gg</span><span class="o">.</span><span class="n">gGOSt</span><span class="p">(</span><span class="n">regulon</span><span class="o">=</span><span class="s1">&#39;IKZF2_REGULON&#39;</span><span class="p">)</span> <span class="c1"># set gene set of interest here</span>
 </pre></div>
 </div>
 </div>
@@ -554,9 +544,9 @@
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div>                            <div id="b31fed37-53c4-464b-9265-8150187091d1" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("b31fed37-53c4-464b-9265-8150187091d1")) {                    Plotly.newPlot(                        "b31fed37-53c4-464b-9265-8150187091d1",                        [{"customdata":[["REAC","REAC:R-HSA-69205"],["REAC","REAC:R-HSA-69242"],["REAC","REAC:R-HSA-69206"],["REAC","REAC:R-HSA-6804756"],["REAC","REAC:R-HSA-5693567"],["REAC","REAC:R-HSA-69239"],["REAC","REAC:R-HSA-69481"],["REAC","REAC:R-HSA-453279"],["REAC","REAC:R-HSA-69002"],["REAC","REAC:R-HSA-69186"],["REAC","REAC:R-HSA-9675135"],["REAC","REAC:R-HSA-5693607"],["REAC","REAC:R-HSA-9701190"],["REAC","REAC:R-HSA-9675136"],["REAC","REAC:R-HSA-5693616"],["REAC","REAC:R-HSA-73894"],["REAC","REAC:R-HSA-5693579"],["REAC","REAC:R-HSA-69306"],["REAC","REAC:R-HSA-3700989"],["REAC","REAC:R-HSA-176974"],["REAC","REAC:R-HSA-5693538"],["REAC","REAC:R-HSA-113510"],["REAC","REAC:R-HSA-174417"],["REAC","REAC:R-HSA-113501"],["REAC","REAC:R-HSA-9709570"],["REAC","REAC:R-HSA-5685942"],["REAC","REAC:R-HSA-180786"],["REAC","REAC:R-HSA-174411"],["REAC","REAC:R-HSA-69091"],["REAC","REAC:R-HSA-69109"],["REAC","REAC:R-HSA-5693532"],["REAC","REAC:R-HSA-73886"],["REAC","REAC:R-HSA-5685938"],["REAC","REAC:R-HSA-176187"],["REAC","REAC:R-HSA-9704331"],["REAC","REAC:R-HSA-9704646"],["REAC","REAC:R-HSA-9709603"],["REAC","REAC:R-HSA-9701192"],["REAC","REAC:R-HSA-69166"],["REAC","REAC:R-HSA-5693554"],["REAC","REAC:R-HSA-68962"],["REAC","REAC:R-HSA-9701193"],["REAC","REAC:R-HSA-5633007"],["REAC","REAC:R-HSA-69190"],["REAC","REAC:R-HSA-69620"],["REAC","REAC:R-HSA-5696398"],["REAC","REAC:R-HSA-69183"]],"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eindex=%{x}\u003cbr\u003enlog(p)=%{y}\u003cbr\u003enative=%{customdata[1]}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["G1\u002fS-Specific Transcription","S Phase","G1\u002fS Transition","Regulation of TP53 Activity through Phosphorylation","HDR through Homologous Recombination (HRR) or Single Strand Annealing (SSA)","Synthesis of DNA","G2\u002fM Checkpoints","Mitotic G1 phase and G1\u002fS transition","DNA Replication Pre-Initiation","Lagging Strand Synthesis","Diseases of DNA repair","Processing of DNA double-strand break ends","Defective homologous recombination repair (HRR) due to BRCA2 loss of function","Diseases of DNA Double-Strand Break Repair","Presynaptic phase of homologous DNA pairing and strand exchange","DNA Repair","Homologous DNA Pairing and Strand Exchange","DNA Replication","Transcriptional Regulation by TP53","Unwinding of DNA","Homology Directed Repair","E2F mediated regulation of DNA replication","Telomere C-strand (Lagging Strand) Synthesis","Inhibition of replication initiation of damaged DNA by RB1\u002fE2F1","Impaired BRCA2 binding to RAD51","HDR through Homologous Recombination (HRR)","Extension of Telomeres","Polymerase switching on the C-strand of the telomere","Polymerase switching","Leading Strand Synthesis","DNA Double-Strand Break Repair","Chromosome Maintenance","HDR through Single Strand Annealing (SSA)","Activation of ATR in response to replication stress","Defective HDR through Homologous Recombination Repair (HRR) due to PALB2 loss of BRCA1 binding function","Defective HDR through Homologous Recombination Repair (HRR) due to PALB2 loss of BRCA2\u002fRAD51\u002fRAD51C binding function","Impaired BRCA2 binding to PALB2","Defective homologous recombination repair (HRR) due to BRCA1 loss of function","Removal of the Flap Intermediate","Resolution of D-loop Structures through Synthesis-Dependent Strand Annealing (SDSA)","Activation of the pre-replicative complex","Defective homologous recombination repair (HRR) due to PALB2 loss of function","Regulation of TP53 Activity","DNA strand elongation","Cell Cycle Checkpoints","Nucleotide Excision Repair","Processive synthesis on the lagging strand"],"legendgroup":"REAC","marker":{"color":"#636efa","symbol":"circle","opacity":0.8,"size":11},"mode":"markers","name":"REAC","orientation":"v","showlegend":false,"x":[1,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,41,42,43,44,46,47,48,49,50],"xaxis":"x","y":[2.6179500848440385,5.9723913237665345,5.579941205937728,1.8980878819587934,2.9076201595355124,5.078474813455962,4.921479984931859,4.8460966092355235,2.073553207170804,2.0821859584663303,4.169224216038362,2.5529822957032726,3.7505964783590384,3.7505964783590384,2.6759853592534912,6.056961243457649,3.5821565091984997,3.46758429877904,3.390815745838227,3.3253778835707286,2.704795978456068,3.1854306840549014,3.1780018069747404,3.1205975615707144,3.087388034883173,2.9907988286952856,2.9904641159031575,2.7208952753508933,2.9347830343206387,2.9347830343206387,1.8346888780769937,1.9422073418573902,2.9149922935024177,8.117159850740146,1.5775510367943029,1.5775510367943029,1.6684130745441565,1.5775510367943029,1.464830929054366,1.4079454153143935,8.736451010269553,1.5775510367943029,1.3523715797550544,7.423958717345175,6.441095943194606,1.3157365530352447,1.3359767855267846],"yaxis":"y","type":"scatter"},{"customdata":[["KEGG","KEGG:04110"],["KEGG","KEGG:03030"],["KEGG","KEGG:03460"]],"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eindex=%{x}\u003cbr\u003enlog(p)=%{y}\u003cbr\u003enative=%{customdata[1]}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Cell cycle","DNA replication","Fanconi anemia pathway"],"legendgroup":"KEGG","marker":{"color":"#EF553B","symbol":"circle","opacity":0.8,"size":11},"mode":"markers","name":"KEGG","orientation":"v","showlegend":false,"x":[51,52,53],"xaxis":"x","y":[6.529206725636078,7.888765135770306,2.6908263186016064],"yaxis":"y","type":"scatter"},{"customdata":[["GO:BP","GO:0035825"],["GO:BP","GO:1901990"],["GO:BP","GO:0006271"],["GO:BP","GO:2000105"],["GO:BP","GO:1902292"],["GO:BP","GO:1902315"],["GO:BP","GO:1902975"],["GO:BP","GO:0045740"],["GO:BP","GO:0051053"],["GO:BP","GO:0022616"],["GO:BP","GO:0045005"],["GO:BP","GO:0000070"],["GO:BP","GO:0072331"],["GO:BP","GO:0007346"],["GO:BP","GO:0045786"],["GO:BP","GO:0006269"],["GO:BP","GO:0000018"],["GO:BP","GO:0000819"],["GO:BP","GO:0098813"],["GO:BP","GO:0000075"],["GO:BP","GO:1901987"],["GO:BP","GO:0032508"],["GO:BP","GO:0032392"],["GO:BP","GO:0006275"],["GO:BP","GO:0000725"],["GO:BP","GO:0000724"],["GO:BP","GO:0071103"],["GO:BP","GO:0006270"],["GO:BP","GO:0006310"],["GO:BP","GO:0090329"],["GO:BP","GO:0006302"],["GO:BP","GO:0006261"],["GO:BP","GO:0006260"],["GO:BP","GO:0031570"],["GO:BP","GO:0042770"],["GO:BP","GO:0033260"],["GO:BP","GO:0051054"],["GO:BP","GO:0007059"],["GO:BP","GO:0140014"],["GO:BP","GO:0010948"],["GO:BP","GO:0030174"],["GO:BP","GO:0048285"],["GO:BP","GO:0000077"],["GO:BP","GO:1901988"],["GO:BP","GO:0044786"],["GO:BP","GO:0000727"],["GO:BP","GO:0000280"],["GO:BP","GO:0006268"]],"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eindex=%{x}\u003cbr\u003enlog(p)=%{y}\u003cbr\u003enative=%{customdata[1]}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["homologous recombination","regulation of mitotic cell cycle phase transition","DNA strand elongation involved in DNA replication","positive regulation of DNA-templated DNA replication","cell cycle DNA replication initiation","nuclear cell cycle DNA replication initiation","mitotic DNA replication initiation","positive regulation of DNA replication","negative regulation of DNA metabolic process","DNA strand elongation","DNA-templated DNA replication maintenance of fidelity","mitotic sister chromatid segregation","signal transduction by p53 class mediator","regulation of mitotic cell cycle","negative regulation of cell cycle","DNA replication, synthesis of RNA primer","regulation of DNA recombination","sister chromatid segregation","nuclear chromosome segregation","cell cycle checkpoint signaling","regulation of cell cycle phase transition","DNA duplex unwinding","DNA geometric change","regulation of DNA replication","recombinational repair","double-strand break repair via homologous recombination","DNA conformation change","DNA replication initiation","DNA recombination","regulation of DNA-templated DNA replication","double-strand break repair","DNA-templated DNA replication","DNA replication","DNA integrity checkpoint signaling","signal transduction in response to DNA damage","nuclear DNA replication","positive regulation of DNA metabolic process","chromosome segregation","mitotic nuclear division","negative regulation of cell cycle process","regulation of DNA-templated DNA replication initiation","organelle fission","DNA damage checkpoint signaling","negative regulation of cell cycle phase transition","cell cycle DNA replication","double-strand break repair via break-induced replication","nuclear division","DNA unwinding involved in DNA replication"],"legendgroup":"GO:BP","marker":{"color":"#00cc96","symbol":"circle","opacity":0.8,"size":11},"mode":"markers","name":"GO:BP","orientation":"v","showlegend":false,"x":[54,55,57,58,59,60,61,62,63,66,67,70,73,74,77,79,81,82,85,86,87,89,91,92,94,95,96,97,98,101,103,107,108,110,111,113,114,117,118,120,126,127,130,133,134,135,136,137],"xaxis":"x","y":[1.3775792946697818,2.679443669870608,2.7770675959300775,1.3397078292304863,1.3943894567790682,1.3943894567790682,1.3943894567790682,1.8287038004702139,1.6009190056707967,1.8988250476748287,1.901196668783548,2.008239757440335,2.202639321057165,2.609350559495747,2.386542420698701,2.4695022152442814,1.8237344916096798,2.587057815304512,2.9385261192398358,6.013231582933537,6.348302798558192,7.395832381639238,8.189956510731907,8.201223731105577,8.558171081870935,8.777906166763188,8.842265706391885,8.91457175652198,9.654597716730082,10.455939969722156,12.314655462527057,17.497349353780887,17.525542737062974,6.293068651613531,6.013231582933537,5.4846463071571705,3.293989839680611,3.709430792685936,3.7445038812243188,3.983435425567544,4.4663139757509,4.489238435990138,4.674955832829678,4.9897173207525025,5.100425872665757,5.186447817570291,5.3498134006219855,3.458380424729158],"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Pathway"},"ticktext":["REAC","KEGG","GO:BP"],"tickvals":[1,51,54]},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"-log10(p-value)"}},"legend":{"title":{"text":"source"},"tracegroupgap":0},"margin":{"t":60},"title":{"text":"g:Profiler g:GOSt analysis for pathways in TFDP1_REGULON"}},                        {"responsive": true}                    ).then(function(){
+<div>                            <div id="9a257801-1d80-4c0c-9d74-d2c354996cce" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("9a257801-1d80-4c0c-9d74-d2c354996cce")) {                    Plotly.newPlot(                        "9a257801-1d80-4c0c-9d74-d2c354996cce",                        [{"customdata":[["REAC","REAC:R-HSA-449147"],["REAC","REAC:R-HSA-451927"]],"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eindex=%{x}\u003cbr\u003enlog(p)=%{y}\u003cbr\u003enative=%{customdata[1]}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Signaling by Interleukins","Interleukin-2 family signaling"],"legendgroup":"REAC","marker":{"color":"#636efa","symbol":"circle","opacity":0.8,"size":11},"mode":"markers","name":"REAC","orientation":"v","showlegend":false,"x":[0,3],"xaxis":"x","y":[1.3081112036209208,1.903014085912939],"yaxis":"y","type":"scatter"},{"customdata":[["KEGG","KEGG:04658"],["KEGG","KEGG:04060"],["KEGG","KEGG:04659"],["KEGG","KEGG:04650"],["KEGG","KEGG:04660"]],"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eindex=%{x}\u003cbr\u003enlog(p)=%{y}\u003cbr\u003enative=%{customdata[1]}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["Th1 and Th2 cell differentiation","Cytokine-cytokine receptor interaction","Th17 cell differentiation","Natural killer cell mediated cytotoxicity","T cell receptor signaling pathway"],"legendgroup":"KEGG","marker":{"color":"#EF553B","symbol":"circle","opacity":0.8,"size":11},"mode":"markers","name":"KEGG","orientation":"v","showlegend":false,"x":[4,5,6,7,8],"xaxis":"x","y":[3.6046494546752905,2.4044408162528756,2.025198553458529,1.685950048564767,1.7693532971751411],"yaxis":"y","type":"scatter"},{"customdata":[["GO:BP","GO:0002703"],["GO:BP","GO:0002263"],["GO:BP","GO:0045058"],["GO:BP","GO:0046651"],["GO:BP","GO:0070661"],["GO:BP","GO:0032943"],["GO:BP","GO:0002366"],["GO:BP","GO:0032609"],["GO:BP","GO:0002285"],["GO:BP","GO:0050856"],["GO:BP","GO:0002460"],["GO:BP","GO:0042113"],["GO:BP","GO:0002819"],["GO:BP","GO:1903038"],["GO:BP","GO:0070663"],["GO:BP","GO:0022408"],["GO:BP","GO:0032649"],["GO:BP","GO:0002708"],["GO:BP","GO:0050854"],["GO:BP","GO:0002705"],["GO:BP","GO:0006968"],["GO:BP","GO:0031341"],["GO:BP","GO:0042102"],["GO:BP","GO:0002715"],["GO:BP","GO:0046633"],["GO:BP","GO:0070665"],["GO:BP","GO:0042269"],["GO:BP","GO:0046640"],["GO:BP","GO:0001910"],["GO:BP","GO:0032946"],["GO:BP","GO:0002440"],["GO:BP","GO:0050671"],["GO:BP","GO:0050900"],["GO:BP","GO:0001909"],["GO:BP","GO:0002683"],["GO:BP","GO:0002228"],["GO:BP","GO:2000514"],["GO:BP","GO:0002520"],["GO:BP","GO:0007162"],["GO:BP","GO:0046637"],["GO:BP","GO:0042267"],["GO:BP","GO:0050868"],["GO:BP","GO:0002696"],["GO:BP","GO:0050852"],["GO:BP","GO:0022407"],["GO:BP","GO:0046634"],["GO:BP","GO:0002449"],["GO:BP","GO:0002706"],["GO:BP","GO:0050867"],["GO:BP","GO:0002429"],["GO:BP","GO:0002697"],["GO:BP","GO:0051251"],["GO:BP","GO:1903037"],["GO:BP","GO:1903131"],["GO:BP","GO:0007159"],["GO:BP","GO:0030098"],["GO:BP","GO:0030217"],["GO:BP","GO:0050863"],["GO:BP","GO:0051249"],["GO:BP","GO:0050851"],["GO:BP","GO:0002768"],["GO:BP","GO:0030101"],["GO:BP","GO:0042129"],["GO:BP","GO:1903706"],["GO:BP","GO:0032944"],["GO:BP","GO:0050670"],["GO:BP","GO:0001819"],["GO:BP","GO:0051250"],["GO:BP","GO:0045785"],["GO:BP","GO:0042098"],["GO:BP","GO:0050866"],["GO:BP","GO:0033077"],["GO:BP","GO:0002695"],["GO:BP","GO:0002699"],["GO:BP","GO:1902105"],["GO:BP","GO:0050870"],["GO:BP","GO:0045580"],["GO:BP","GO:0022409"],["GO:BP","GO:0046631"],["GO:BP","GO:0002764"],["GO:BP","GO:0002757"],["GO:BP","GO:0002443"],["GO:BP","GO:0045619"],["GO:BP","GO:1903039"],["GO:BP","GO:0032814"]],"hovertemplate":"\u003cb\u003e%{hovertext}\u003c\u002fb\u003e\u003cbr\u003e\u003cbr\u003eindex=%{x}\u003cbr\u003enlog(p)=%{y}\u003cbr\u003enative=%{customdata[1]}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["regulation of leukocyte mediated immunity","cell activation involved in immune response","T cell selection","lymphocyte proliferation","leukocyte proliferation","mononuclear cell proliferation","leukocyte activation involved in immune response","type II interferon production","lymphocyte activation involved in immune response","regulation of T cell receptor signaling pathway","adaptive immune response based on somatic recombination of immune receptors built from immunoglobulin superfamily domains","B cell activation","regulation of adaptive immune response","negative regulation of leukocyte cell-cell adhesion","regulation of leukocyte proliferation","negative regulation of cell-cell adhesion","regulation of type II interferon production","positive regulation of lymphocyte mediated immunity","regulation of antigen receptor-mediated signaling pathway","positive regulation of leukocyte mediated immunity","cellular defense response","regulation of cell killing","positive regulation of T cell proliferation","regulation of natural killer cell mediated immunity","alpha-beta T cell proliferation","positive regulation of leukocyte proliferation","regulation of natural killer cell mediated cytotoxicity","regulation of alpha-beta T cell proliferation","regulation of leukocyte mediated cytotoxicity","positive regulation of mononuclear cell proliferation","production of molecular mediator of immune response","positive regulation of lymphocyte proliferation","leukocyte migration","leukocyte mediated cytotoxicity","negative regulation of immune system process","natural killer cell mediated immunity","regulation of CD4-positive, alpha-beta T cell activation","immune system development","negative regulation of cell adhesion","regulation of alpha-beta T cell differentiation","natural killer cell mediated cytotoxicity","negative regulation of T cell activation","positive regulation of leukocyte activation","T cell receptor signaling pathway","regulation of cell-cell adhesion","regulation of alpha-beta T cell activation","lymphocyte mediated immunity","regulation of lymphocyte mediated immunity","positive regulation of cell activation","immune response-activating cell surface receptor signaling pathway","regulation of immune effector process","positive regulation of lymphocyte activation","regulation of leukocyte cell-cell adhesion","mononuclear cell differentiation","leukocyte cell-cell adhesion","lymphocyte differentiation","T cell differentiation","regulation of T cell activation","regulation of lymphocyte activation","antigen receptor-mediated signaling pathway","immune response-regulating cell surface receptor signaling pathway","natural killer cell activation","regulation of T cell proliferation","regulation of hemopoiesis","regulation of mononuclear cell proliferation","regulation of lymphocyte proliferation","positive regulation of cytokine production","negative regulation of lymphocyte activation","positive regulation of cell adhesion","T cell proliferation","negative regulation of cell activation","T cell differentiation in thymus","negative regulation of leukocyte activation","positive regulation of immune effector process","regulation of leukocyte differentiation","positive regulation of T cell activation","regulation of T cell differentiation","positive regulation of cell-cell adhesion","alpha-beta T cell activation","immune response-regulating signaling pathway","immune response-activating signaling pathway","leukocyte mediated immunity","regulation of lymphocyte differentiation","positive regulation of leukocyte cell-cell adhesion","regulation of natural killer cell activation"],"legendgroup":"GO:BP","marker":{"color":"#00cc96","symbol":"circle","opacity":0.8,"size":11},"mode":"markers","name":"GO:BP","orientation":"v","showlegend":false,"x":[11,13,14,15,18,19,21,22,23,24,25,27,29,30,32,34,36,37,38,39,40,42,43,45,47,48,50,51,52,53,54,56,58,59,60,61,62,63,64,66,67,70,73,75,76,79,80,81,83,84,85,87,88,89,90,92,94,95,99,105,106,107,109,111,112,113,115,117,119,120,122,123,125,126,127,128,129,131,132,133,135,136,137,138,139],"xaxis":"x","y":[2.5893789627492865,2.8818836947856643,2.7550226500248707,2.834671492448683,2.3665971419961527,2.7536689639974496,2.929791213078717,2.3191517506721855,3.0511885786576265,3.061416705584553,3.1030508018783176,3.1674519576267426,3.194992600072588,3.209501490438079,3.367975816103609,3.4155163805769644,2.3406829955540984,2.1939545720001896,2.317284196164221,1.785140641979698,1.3167743446720348,1.3272396137846736,1.3675943916370092,1.4199553174749768,1.492549986584809,1.4975538180876096,1.568510172825141,1.6078498391273361,1.6289129540485254,1.7681745840148877,1.8167806773997632,1.8194542744781144,1.9413342876913398,2.017907607017342,2.0210257114769776,2.0415066108912656,2.0415066108912656,2.0737135369047284,2.075923559806153,2.1293135788444304,2.1293135788444304,3.45946815235777,6.602555222241643,7.268213319230972,7.146359925474522,6.622513904565359,6.497850820621046,3.541191487285496,6.352064835684647,6.3024957686628404,6.2525534898010635,5.919622973415361,7.599530457089825,8.16465849207123,8.182395639387039,8.881612967242475,9.867053658791106,9.871290073135633,12.707946124804238,5.8757463327475925,5.858837939165543,5.727793387918707,3.559571994036545,3.6456537796707216,3.731497925791728,3.7934792216550766,3.903857429033752,3.9731545509740696,4.031022546129109,4.173557420176307,4.2800419949734465,4.551160290381432,4.701093808576249,4.74866841398445,4.787272950397423,4.798671484887975,4.804305660478955,4.857354033338224,4.8677202174459255,4.8696738832337045,5.1624132352761345,5.218705574989699,5.416295279350565,5.598650758623095,3.47803490388332],"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Pathway"},"ticktext":["REAC","KEGG","GO:BP"],"tickvals":[0,4,11]},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"-log10(p-value)"}},"legend":{"title":{"text":"source"},"tracegroupgap":0},"margin":{"t":60},"title":{"text":"g:Profiler g:GOSt analysis for pathways in IKZF2_REGULON"}},                        {"responsive": true}                    ).then(function(){
 
-var gd = document.getElementById('b31fed37-53c4-464b-9265-8150187091d1');
+var gd = document.getElementById('9a257801-1d80-4c0c-9d74-d2c354996cce');
 var x = new MutationObserver(function (mutations, observer) {{
         var display = window.getComputedStyle(gd).display;
         if (!display || display === 'none') {{
@@ -581,32 +571,15 @@ if (outputEl) {{
                         })                };                });            </script>        </div></div>
 </div>
 </section>
-<section id="Network-Visualization">
-<h2>Network Visualization<a class="headerlink" href="#Network-Visualization" title="Link to this heading">#</a></h2>
+<section id="TF-Target-Gene-Network-Visualization">
+<h2>TF-Target Gene Network Visualization<a class="headerlink" href="#TF-Target-Gene-Network-Visualization" title="Link to this heading">#</a></h2>
+<p>Now we can begin to look into specific TF-GOI pairs in the regulon network.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">goi_grn</span> <span class="o">=</span> <span class="n">gg</span><span class="o">.</span><span class="n">make_goi_grn</span><span class="p">(</span><span class="n">GOI</span><span class="o">=</span><span class="n">GOI</span><span class="p">)</span>
-<span class="nb">len</span><span class="p">(</span><span class="n">goi_grn</span><span class="p">)</span> <span class="c1"># number of TF-target gene pairs in entire GOI GRN</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-529
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># GOI text summary:</span>
-
+<span class="n">goi_grn</span> <span class="o">=</span> <span class="n">gg</span><span class="o">.</span><span class="n">make_goi_grn</span><span class="p">(</span><span class="n">GOI</span><span class="o">=</span><span class="n">GOI</span><span class="p">)</span>
 <span class="n">gg</span><span class="o">.</span><span class="n">GOI_network_stats</span><span class="p">(</span><span class="n">goi_grn</span><span class="p">,</span> <span class="n">GOI</span><span class="p">)</span>
 <span class="n">gg</span><span class="o">.</span><span class="n">format_gene_summary</span><span class="p">(</span><span class="n">goi_grn</span><span class="p">,</span> <span class="n">GOI</span><span class="p">)</span>
 </pre></div>
@@ -619,35 +592,36 @@ if (outputEl) {{
 <div class="highlight"><pre>
 Summary of CASP8:
 
-There are 7 regulons that have CASP8 in their target genes.
+There are 8 regulons that have CASP8 in their target genes.
 
 Regulons that have CASP8 in their target genes:
 
-        (TF: GENIE3 Importance Score)
-        MSC: 0.535
-        IKZF3: 0.374
-        ATF4: 0.309
-        IRF1: 0.242
-        TBP: 0.231
-        IKZF1: 0.222
-        TFDP1: 0.213
+        (TF: GRNBoost2 Importance Score)
+        IKZF2: 0.583
+        IRF1: 0.479
+        ELF1: 0.33
+        RUNX3: 0.177
+        GATA3: 0.161
+        CREM: 0.122
+        IKZF1: 0.106
+        STAT1: 0.1
 
 
-There are 114 TFs for CASP8 that were NOT supported by a regulon (motif analysis),
+There are 77 TFs for CASP8 that were NOT supported by a regulon (motif analysis),
 here are the top 10:
 
-        (TF: GENIE3 Importance Score)
-        RAN: 1.402
-        CANX: 1.209
-        HNRNPC: 1.187
-        YBX1: 1.095
-        RPS10: 0.948
-        RPL35: 0.914
-        RPS4X: 0.822
-        SFPQ: 0.8
-        HMGB1: 0.671
-        BATF: 0.65
-        HMGB2: 0.594
+        (TF: GRNBoost2 Importance Score)
+        YWHAZ: 2.754
+        EZR: 2.1
+        UBE2K: 1.437
+        SOD1: 1.025
+        ZNF529: 0.961
+        LEF1: 0.911
+        KLF6: 0.823
+        SFPQ: 0.7
+        ZNF275: 0.687
+        PSMD12: 0.673
+        HDAC1: 0.562
 
 CASP8:
 
@@ -666,37 +640,15 @@ CASP8:
         not all variants have had their full-length sequences determined. [provided by RefSeq,
         Jul 2008]
 
-MSC:
-
-        No summary available for MSC.
-
-IKZF3:
+IKZF2:
 
         This gene encodes a member of the Ikaros family of zinc-finger proteins.
         Three members of this protein family (Ikaros, Aiolos and Helios) are hematopoietic-specific
-        transcription factors involved in the regulation of lymphocyte development. This gene product
-        is a transcription factor that is important in the regulation of B
-        lymphocyte proliferation and differentiation. Both Ikaros and Aiolos can participate in chromatin
-        remodeling. Regulation of gene expression in B lymphocytes by Aiolos is complex
-        as it appears to require the sequential formation of Ikaros homodimers, Ikaros/Aiolos
-        heterodimers, and Aiolos homodimers. Several alternative transcripts encoding different isoforms have been
-        described, as well as some non-protein coding variants. [provided by RefSeq, Apr
-        2012]
-
-ATF4:
-
-        This gene encodes a transcription factor that was originally identified as a
-        widely expressed mammalian DNA binding protein that could bind a tax-responsive enhancer
-        element in the LTR of HTLV-1. The encoded protein was also isolated
-        and characterized as the cAMP-response element binding protein 2 (CREB-2). The protein
-        encoded by this gene belongs to a family of DNA-binding proteins that
-        includes the AP-1 family of transcription factors, cAMP-response element binding proteins (CREBs)
-        and CREB-like proteins. These transcription factors share a leucine zipper region that
-        is involved in protein-protein interactions, located C-terminal to a stretch of basic
-        amino acids that functions as a DNA binding domain. Two alternative transcripts
-        encoding the same protein have been described. Two pseudogenes are located on
-        the X chromosome at q28 in a region containing a large inverted
-        duplication. [provided by RefSeq, Sep 2011]
+        transcription factors involved in the regulation of lymphocyte development. This protein forms
+        homo- or hetero-dimers with other Ikaros family members, and is thought to
+        function predominantly in early hematopoietic development. Multiple transcript variants encoding different isoforms
+        have been found for this gene, but the biological validity of some
+        variants has not been determined. [provided by RefSeq, Jul 2008]
 
 IRF1:
 
@@ -710,26 +662,41 @@ IRF1:
         cells. Defects in this gene have been associated with gastric cancer, myelogenous
         leukemia, and lung cancer. [provided by RefSeq, Aug 2017]
 
-TBP:
+ELF1:
 
-        Initiation of transcription by RNA polymerase II requires the activities of more
-        than 70 polypeptides. The protein that coordinates these activities is transcription factor
-        IID (TFIID), which binds to the core promoter to position the polymerase
-        properly, serves as the scaffold for assembly of the remainder of the
-        transcription complex, and acts as a channel for regulatory signals. TFIID is
-        composed of the TATA-binding protein (TBP) and a group of evolutionarily conserved
-        proteins known as TBP-associated factors or TAFs. TAFs may participate in basal
-        transcription, serve as coactivators, function in promoter recognition or modify general transcription
-        factors (GTFs) to facilitate complex assembly and transcription initiation. This gene encodes
-        TBP, the TATA-binding protein. A distinctive feature of TBP is a long
-        string of glutamines in the N-terminus. This region of the protein modulates
-        the DNA binding activity of the C terminus, and modulation of DNA
-        binding affects the rate of transcription complex formation and initiation of transcription.
-        The number of CAG repeats encoding the polyglutamine tract is usually 25-42,
-        and expansion of the number of repeats to 45-66 increases the length
-        of the polyglutamine string and is associated with spinocerebellar ataxia 17, a
-        neurodegenerative disorder classified as a polyglutamine disease. Two transcript variants encoding different
-        isoforms have been found for this gene. [provided by RefSeq, Jul 2016]
+        This gene encodes an E26 transformation-specific related transcription factor. The encoded protein
+        is primarily expressed in lymphoid cells and acts as both an enhancer
+        and a repressor to regulate transcription of various genes. Alternative splicing results
+        in multiple transcript variants. [provided by RefSeq, Feb 2009]
+
+RUNX3:
+
+        This gene encodes a member of the runt domain-containing family of transcription
+        factors. A heterodimer of this protein and a beta subunit forms a
+        complex that binds to the core DNA sequence 5&#39;-PYGPYGGT-3&#39; found in a
+        number of enhancers and promoters, and can either activate or suppress transcription.
+        It also interacts with other transcription factors. It functions as a tumor
+        suppressor, and the gene is frequently deleted or transcriptionally silenced in cancer.
+        Alternative splicing results in multiple transcript variants. [provided by RefSeq, Mar 2016]
+
+GATA3:
+
+        This gene encodes a protein which belongs to the GATA family of
+        transcription factors. The protein contains two GATA-type zinc fingers and is an
+        important regulator of T-cell development and plays an important role in endothelial
+        cell biology. Defects in this gene are the cause of hypoparathyroidism with
+        sensorineural deafness and renal dysplasia. [provided by RefSeq, Nov 2009]
+
+CREM:
+
+        This gene encodes a bZIP transcription factor that binds to the cAMP
+        responsive element found in many viral and cellular promoters. It is an
+        important component of cAMP-mediated signal transduction during the spermatogenetic cycle, as well
+        as other complex processes. Alternative promoter and translation initiation site usage allows
+        this gene to exert spatial and temporal specificity to cAMP responsiveness. Multiple
+        alternatively spliced transcript variants encoding several different isoforms have been found for
+        this gene, with some of them functioning as activators and some as
+        repressors of transcription. [provided by RefSeq, Jul 2008]
 
 IKZF1:
 
@@ -750,388 +717,102 @@ IKZF1:
         B-cell malignancies, such as acute lymphoblastic leukemia (ALL). [provided by RefSeq, May
         2014]
 
-TFDP1:
+STAT1:
 
-        This gene encodes a member of a family of transcription factors that
-        heterodimerize with E2F proteins to enhance their DNA-binding activity and promote transcription
-        from E2F target genes. The encoded protein functions as part of this
-        complex to control the transcriptional activity of numerous genes involved in cell
-        cycle progression from G1 to S phase. Alternative splicing results in multiple
-        transcript variants. Pseudogenes of this gene are found on chromosomes 1, 15,
-        and X.[provided by RefSeq, Jan 2009]
+        The protein encoded by this gene is a member of the STAT
+        protein family. In response to cytokines and growth factors, STAT family members
+        are phosphorylated by the receptor associated kinases, and then form homo- or
+        heterodimers that translocate to the cell nucleus where they act as transcription
+        activators. The protein encoded by this gene can be activated by various
+        ligands including interferon-alpha, interferon-gamma, EGF, PDGF and IL6. This protein mediates the
+        expression of a variety of genes, which is thought to be important
+        for cell viability in response to different cell stimuli and pathogens. The
+        protein plays an important role in immune responses to viral, fungal and
+        mycobacterial pathogens. Mutations in this gene are associated with Immunodeficiency 31B, 31A,
+        and 31C. [provided by RefSeq, Jun 2020]
 </pre></div></div>
 </div>
+</section>
+<section id="Gene-gene-Co-Expression-Network">
+<h2>Gene-gene Co-Expression Network<a class="headerlink" href="#Gene-gene-Co-Expression-Network" title="Link to this heading">#</a></h2>
+<p>We can also look into not only TF-target gene regulatory relationships, but simple gene-gene co-expression patterns. Here, we show a gene-gene co-expression matrix for each very coarse cell lineage: B Cells, Epithelium Cells, Myeloid Cells, Stroma Cells, and T Cells. Each network is calculated using only gene expression values within these cell lineages. This means that the results here are cell-lineage specific.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># network visualization</span>
-
-<span class="c1"># customize network viz:</span>
-<span class="c1"># direct_TF = True (standard): only show GOI and it&#39;s direct regulating TFs (regulons)</span>
-<span class="c1"># top_n = X: only show top X direct target genes of each TF</span>
-<span class="c1"># other customize options? Hover data?</span>
-<span class="c1"># more overview, less customization</span>
-
-<span class="n">gg</span><span class="o">.</span><span class="n">make_network</span><span class="p">(</span><span class="n">goi_grn</span><span class="p">,</span> <span class="n">GOI</span><span class="p">,</span> <span class="n">direct_TF</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">top_n</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
-
-<span class="n">gg</span><span class="o">.</span><span class="n">show_network</span><span class="p">()</span> <span class="c1"># only works on browser for now</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># first: look at importance score distribution for each cell lineage</span>
+<span class="c1"># set log_scale=True for a log scale of the y-axis (Number of genes)</span>
+<span class="c1"># set xlim=x for a view of the x-axis from 0 to x</span>
+<span class="n">gg</span><span class="o">.</span><span class="n">genegene_importance_histograms</span><span class="p">(</span><span class="n">log_scale</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area rendered_html docutils container">
-<html>
-    <head>
-        <meta charset="utf-8">
-
-            <script>function neighbourhoodHighlight(params) {
-  // console.log("in nieghbourhoodhighlight");
-  allNodes = nodes.get({ returnType: "Object" });
-  // originalNodes = JSON.parse(JSON.stringify(allNodes));
-  // if something is selected:
-  if (params.nodes.length > 0) {
-    highlightActive = true;
-    var i, j;
-    var selectedNode = params.nodes[0];
-    var degrees = 2;
-
-    // mark all nodes as hard to read.
-    for (let nodeId in allNodes) {
-      // nodeColors[nodeId] = allNodes[nodeId].color;
-      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
-      if (allNodes[nodeId].hiddenLabel === undefined) {
-        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
-        allNodes[nodeId].label = undefined;
-      }
-    }
-    var connectedNodes = network.getConnectedNodes(selectedNode);
-    var allConnectedNodes = [];
-
-    // get the second degree nodes
-    for (i = 1; i < degrees; i++) {
-      for (j = 0; j < connectedNodes.length; j++) {
-        allConnectedNodes = allConnectedNodes.concat(
-          network.getConnectedNodes(connectedNodes[j])
-        );
-      }
-    }
-
-    // all second degree nodes get a different color and their label back
-    for (i = 0; i < allConnectedNodes.length; i++) {
-      // allNodes[allConnectedNodes[i]].color = "pink";
-      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
-      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
-        allNodes[allConnectedNodes[i]].label =
-          allNodes[allConnectedNodes[i]].hiddenLabel;
-        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
-      }
-    }
-
-    // all first degree nodes get their own color and their label back
-    for (i = 0; i < connectedNodes.length; i++) {
-      // allNodes[connectedNodes[i]].color = undefined;
-      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
-      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
-        allNodes[connectedNodes[i]].label =
-          allNodes[connectedNodes[i]].hiddenLabel;
-        allNodes[connectedNodes[i]].hiddenLabel = undefined;
-      }
-    }
-
-    // the main node gets its own color and its label back.
-    // allNodes[selectedNode].color = undefined;
-    allNodes[selectedNode].color = nodeColors[selectedNode];
-    if (allNodes[selectedNode].hiddenLabel !== undefined) {
-      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
-      allNodes[selectedNode].hiddenLabel = undefined;
-    }
-  } else if (highlightActive === true) {
-    // console.log("highlightActive was true");
-    // reset all nodes
-    for (let nodeId in allNodes) {
-      // allNodes[nodeId].color = "purple";
-      allNodes[nodeId].color = nodeColors[nodeId];
-      // delete allNodes[nodeId].color;
-      if (allNodes[nodeId].hiddenLabel !== undefined) {
-        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
-        allNodes[nodeId].hiddenLabel = undefined;
-      }
-    }
-    highlightActive = false;
-  }
-
-  // transform the object into an array
-  var updateArray = [];
-  if (params.nodes.length > 0) {
-    for (let nodeId in allNodes) {
-      if (allNodes.hasOwnProperty(nodeId)) {
-        // console.log(allNodes[nodeId]);
-        updateArray.push(allNodes[nodeId]);
-      }
-    }
-    nodes.update(updateArray);
-  } else {
-    // console.log("Nothing was selected");
-    for (let nodeId in allNodes) {
-      if (allNodes.hasOwnProperty(nodeId)) {
-        // console.log(allNodes[nodeId]);
-        // allNodes[nodeId].color = {};
-        updateArray.push(allNodes[nodeId]);
-      }
-    }
-    nodes.update(updateArray);
-  }
-}
-
-function filterHighlight(params) {
-  allNodes = nodes.get({ returnType: "Object" });
-  // if something is selected:
-  if (params.nodes.length > 0) {
-    filterActive = true;
-    let selectedNodes = params.nodes;
-
-    // hiding all nodes and saving the label
-    for (let nodeId in allNodes) {
-      allNodes[nodeId].hidden = true;
-      if (allNodes[nodeId].savedLabel === undefined) {
-        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
-        allNodes[nodeId].label = undefined;
-      }
-    }
-
-    for (let i=0; i < selectedNodes.length; i++) {
-      allNodes[selectedNodes[i]].hidden = false;
-      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
-        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
-        allNodes[selectedNodes[i]].savedLabel = undefined;
-      }
-    }
-
-  } else if (filterActive === true) {
-    // reset all nodes
-    for (let nodeId in allNodes) {
-      allNodes[nodeId].hidden = false;
-      if (allNodes[nodeId].savedLabel !== undefined) {
-        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
-        allNodes[nodeId].savedLabel = undefined;
-      }
-    }
-    filterActive = false;
-  }
-
-  // transform the object into an array
-  var updateArray = [];
-  if (params.nodes.length > 0) {
-    for (let nodeId in allNodes) {
-      if (allNodes.hasOwnProperty(nodeId)) {
-        updateArray.push(allNodes[nodeId]);
-      }
-    }
-    nodes.update(updateArray);
-  } else {
-    for (let nodeId in allNodes) {
-      if (allNodes.hasOwnProperty(nodeId)) {
-        updateArray.push(allNodes[nodeId]);
-      }
-    }
-    nodes.update(updateArray);
-  }
-}
-
-function selectNode(nodes) {
-  network.selectNodes(nodes);
-  neighbourhoodHighlight({ nodes: nodes });
-  return nodes;
-}
-
-function selectNodes(nodes) {
-  network.selectNodes(nodes);
-  filterHighlight({nodes: nodes});
-  return nodes;
-}
-
-function highlightFilter(filter) {
-  let selectedNodes = []
-  let selectedProp = filter['property']
-  if (filter['item'] === 'node') {
-    let allNodes = nodes.get({ returnType: "Object" });
-    for (let nodeId in allNodes) {
-      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
-        selectedNodes.push(nodeId)
-      }
-    }
-  }
-  else if (filter['item'] === 'edge'){
-    let allEdges = edges.get({returnType: 'object'});
-    // check if the selected property exists for selected edge and select the nodes connected to the edge
-    for (let edge in allEdges) {
-      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
-        selectedNodes.push(allEdges[edge]['from'])
-        selectedNodes.push(allEdges[edge]['to'])
-      }
-    }
-  }
-  selectNodes(selectedNodes)
-}</script>
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
-
-
-
-
-
-
-<center>
-<h1></h1>
-</center>
-
-<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
-<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
-        <link
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
-          crossorigin="anonymous"
-        />
-        <script
-          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
-          crossorigin="anonymous"
-        ></script>
-
-
-        <center>
-          <h1></h1>
-        </center>
-        <style type="text/css">
-
-             #mynetwork {
-                 width: 700px;
-                 height: 600px;
-                 background-color: #FFFFFF;
-                 border: 1px solid lightgray;
-                 position: relative;
-                 float: left;
-             }
-
-
-
-
-
-
-        </style>
-    </head>
-
-
-    <body>
-        <div class="card" style="width: 100%">
-
-
-            <div id="mynetwork" class="card-body"></div>
-        </div>
-
-
-
-
-        <script type="text/javascript">
-
-              // initialize global variables.
-              var edges;
-              var nodes;
-              var allNodes;
-              var allEdges;
-              var nodeColors;
-              var originalNodes;
-              var network;
-              var container;
-              var options, data;
-              var filter = {
-                  item : '',
-                  property : '',
-                  value : []
-              };
-
-
-
-
-
-              // This method is responsible for drawing the graph, returns the drawn network
-              function drawGraph() {
-                  var container = document.getElementById('mynetwork');
-
-
-
-                  // parsing and collecting nodes and edges from the python
-                  nodes = new vis.DataSet([{"color": "#66c2a5", "font": {"color": "black"}, "id": "MSC", "label": "MSC", "shape": "dot", "title": "MSC", "value": 4}, {"color": "#66c2a5", "font": {"color": "black"}, "id": "FSD1", "label": "FSD1", "shape": "dot", "title": "FSD1", "value": 1}, {"color": "#fc8d62", "font": {"color": "black"}, "id": "IKZF3", "label": "IKZF3", "shape": "dot", "title": "IKZF3", "value": 4}, {"color": "#fc8d62", "font": {"color": "black"}, "id": "RHOH", "label": "RHOH", "shape": "dot", "title": "RHOH", "value": 1}, {"color": "#fc8d62", "font": {"color": "black"}, "id": "HVCN1", "label": "HVCN1", "shape": "dot", "title": "HVCN1", "value": 1}, {"color": "#8da0cb", "font": {"color": "black"}, "id": "TFDP1", "label": "TFDP1", "shape": "dot", "title": "TFDP1", "value": 4}, {"color": "#8da0cb", "font": {"color": "black"}, "id": "PLEKHF1", "label": "PLEKHF1", "shape": "dot", "title": "PLEKHF1", "value": 1}, {"color": "#e78ac3", "font": {"color": "black"}, "id": "IKZF1", "label": "IKZF1", "shape": "dot", "title": "IKZF1", "value": 4}, {"color": "#e78ac3", "font": {"color": "black"}, "id": "USP49", "label": "USP49", "shape": "dot", "title": "USP49", "value": 1}, {"color": "#fc8d62", "font": {"color": "black"}, "id": "TMEM156", "label": "TMEM156", "shape": "dot", "title": "TMEM156", "value": 1}, {"color": "#e78ac3", "font": {"color": "black"}, "id": "KHDC1", "label": "KHDC1", "shape": "dot", "title": "KHDC1", "value": 1}, {"color": "#e78ac3", "font": {"color": "black"}, "id": "STK17A", "label": "STK17A", "shape": "dot", "title": "STK17A", "value": 1}, {"color": "#a6d854", "font": {"color": "black"}, "id": "ATF4", "label": "ATF4", "shape": "dot", "title": "ATF4", "value": 4}, {"color": "#a6d854", "font": {"color": "black"}, "id": "SPTY2D1", "label": "SPTY2D1", "shape": "dot", "title": "SPTY2D1", "value": 1}, {"color": "#ffd92f", "font": {"color": "black"}, "id": "IRF1", "label": "IRF1", "shape": "dot", "title": "IRF1", "value": 4}, {"color": "#ffd92f", "font": {"color": "black"}, "id": "AQP3", "label": "AQP3", "shape": "dot", "title": "AQP3", "value": 1}, {"color": "#8da0cb", "font": {"color": "black"}, "id": "ITPRIPL1", "label": "ITPRIPL1", "shape": "dot", "title": "ITPRIPL1", "value": 1}, {"color": "#ffd92f", "font": {"color": "black"}, "id": "HCG18", "label": "HCG18", "shape": "dot", "title": "HCG18", "value": 1}, {"color": "#ffd92f", "font": {"color": "black"}, "id": "SOCS1", "label": "SOCS1", "shape": "dot", "title": "SOCS1", "value": 1}, {"color": "#8da0cb", "font": {"color": "black"}, "id": "CHI3L2", "label": "CHI3L2", "shape": "dot", "title": "CHI3L2", "value": 1}, {"color": "#a6d854", "font": {"color": "black"}, "id": "CCDC88C", "label": "CCDC88C", "shape": "dot", "title": "CCDC88C", "value": 1}, {"color": "#a6d854", "font": {"color": "black"}, "id": "SRPRA", "label": "SRPRA", "shape": "dot", "title": "SRPRA", "value": 1}, {"color": "#66c2a5", "font": {"color": "black"}, "id": "GADD45G", "label": "GADD45G", "shape": "dot", "title": "GADD45G", "value": 1}, {"color": "#66c2a5", "font": {"color": "black"}, "id": "CD8A", "label": "CD8A", "shape": "dot", "title": "CD8A", "value": 1}, {"color": "#e5c494", "font": {"color": "black"}, "id": "TBP", "label": "TBP", "shape": "dot", "title": "TBP", "value": 4}, {"color": "#e5c494", "font": {"color": "black"}, "id": "ZEB2-AS1", "label": "ZEB2-AS1", "shape": "dot", "title": "ZEB2-AS1", "value": 1}, {"color": "#e5c494", "font": {"color": "black"}, "id": "UBXN10-AS1", "label": "UBXN10-AS1", "shape": "dot", "title": "UBXN10-AS1", "value": 1}, {"color": "#e5c494", "font": {"color": "black"}, "id": "LYRM9", "label": "LYRM9", "shape": "dot", "title": "LYRM9", "value": 1}, {"color": "#66c2a5", "font": {"color": "black"}, "id": "CASP8", "label": "CASP8", "shape": "dot", "title": "CASP8", "value": 7}]);
-                  edges = new vis.DataSet([{"color": "#66c2a5", "from": "MSC", "to": "FSD1", "value": 6.079824494886782}, {"color": "#fc8d62", "from": "IKZF3", "to": "RHOH", "value": 3.670655189426601}, {"color": "#fc8d62", "from": "IKZF3", "to": "HVCN1", "value": 3.0144736865629307}, {"color": "#8da0cb", "from": "TFDP1", "to": "PLEKHF1", "value": 2.3131258267544577}, {"color": "#e78ac3", "from": "IKZF1", "to": "USP49", "value": 2.2982489757268616}, {"color": "#fc8d62", "from": "IKZF3", "to": "TMEM156", "value": 2.2255930174742518}, {"color": "#e78ac3", "from": "IKZF1", "to": "KHDC1", "value": 1.9681201307426728}, {"color": "#e78ac3", "from": "IKZF1", "to": "STK17A", "value": 1.9444992244697985}, {"color": "#a6d854", "from": "ATF4", "to": "SPTY2D1", "value": 1.9217075515488249}, {"color": "#ffd92f", "from": "IRF1", "to": "AQP3", "value": 1.4311823519029363}, {"color": "#8da0cb", "from": "TFDP1", "to": "ITPRIPL1", "value": 1.3349107390077584}, {"color": "#ffd92f", "from": "IRF1", "to": "HCG18", "value": 1.2376161991619783}, {"color": "#ffd92f", "from": "IRF1", "to": "SOCS1", "value": 1.2292375695597113}, {"color": "#8da0cb", "from": "TFDP1", "to": "CHI3L2", "value": 1.1181383154658149}, {"color": "#a6d854", "from": "ATF4", "to": "CCDC88C", "value": 0.9985416691500268}, {"color": "#a6d854", "from": "ATF4", "to": "SRPRA", "value": 0.9589687259091992}, {"color": "#66c2a5", "from": "MSC", "to": "GADD45G", "value": 0.921375639560211}, {"color": "#66c2a5", "from": "MSC", "to": "CD8A", "value": 0.8992524199498175}, {"color": "#e5c494", "from": "TBP", "to": "ZEB2-AS1", "value": 0.8250245488178958}, {"color": "#e5c494", "from": "TBP", "to": "UBXN10-AS1", "value": 0.5948884943362097}, {"color": "#e5c494", "from": "TBP", "to": "LYRM9", "value": 0.4079185620399872}, {"color": "#66c2a5", "from": "MSC", "to": "CASP8", "value": 0.5346552907471942}, {"color": "#fc8d62", "from": "IKZF3", "to": "CASP8", "value": 0.3741714975421183}, {"color": "#a6d854", "from": "ATF4", "to": "CASP8", "value": 0.3087108187469085}, {"color": "#ffd92f", "from": "IRF1", "to": "CASP8", "value": 0.2415139614367004}, {"color": "#e5c494", "from": "TBP", "to": "CASP8", "value": 0.230571908675535}, {"color": "#e78ac3", "from": "IKZF1", "to": "CASP8", "value": 0.2219872924770317}, {"color": "#8da0cb", "from": "TFDP1", "to": "CASP8", "value": 0.2128562452632008}]);
-
-                  nodeColors = {};
-                  allNodes = nodes.get({ returnType: "Object" });
-                  for (nodeId in allNodes) {
-                    nodeColors[nodeId] = allNodes[nodeId].color;
-                  }
-                  allEdges = edges.get({ returnType: "Object" });
-                  // adding nodes and edges to the graph
-                  data = {nodes: nodes, edges: edges};
-
-                  var options = {
-    "configure": {
-        "enabled": false
-    },
-    "edges": {
-        "color": {
-            "inherit": true
-        },
-        "smooth": {
-            "enabled": true,
-            "type": "dynamic"
-        }
-    },
-    "interaction": {
-        "dragNodes": true,
-        "hideEdgesOnDrag": false,
-        "hideNodesOnDrag": false
-    },
-    "physics": {
-        "enabled": false,
-        "stabilization": {
-            "enabled": true,
-            "fit": true,
-            "iterations": 1000,
-            "onlyDynamicEdges": false,
-            "updateInterval": 50
-        }
-    }
-};
-
-
-
-
-
-
-                  network = new vis.Network(container, data, options);
-
-
-
-
-
-
-
-
-
-
-                  return network;
-
-              }
-              drawGraph();
-        </script>
-    </body>
-</html></div>
+<div class="output_area docutils container">
+<img alt="_images/GRN_Example_12_0.png" src="_images/GRN_Example_12_0.png" />
+</div>
+</div>
+<p>You can visualize either the regulon (TF-GOI regulating pairs) or gene-gene (GOI-gene coexpressed pairs) network here. Set the parameter to ‘regulon’ or ‘gene_gene’ for the desired network visualization. The output is interactive, so hover over nodes to see their gene set and move nodes around for a better view!</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># network visualization</span>
+<span class="c1"># type = &#39;gene_gene&#39; for the GOI-gene co-expression network</span>
+<span class="c1"># type = &#39;regulon&#39; for the TF-GOI regulon network</span>
+<span class="c1"># top_n = n: only show top n direct target genes of each TF or gene</span>
+
+<span class="n">gg</span><span class="o">.</span><span class="n">show_network</span><span class="p">(</span><span class="n">GOI</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;regulon&#39;</span><span class="p">,</span> <span class="n">top_n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># only works on jupyter notebook running in browser (not in VS Code for example)</span>
+</pre></div>
+</div>
+</div>
+<p>We apply the same principle of gene set enrichment analysis within the genes that are co-expressed with the GOI in each distinct cell lineage. We simply provide a list of the top three (or less) significantly enriched pathways from REACTOME and KEGG for each gene set, i.e. each set of genes co-expressed with the GOI within each cell lineage.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gg</span><span class="o">.</span><span class="n">gGOSt_listed</span><span class="p">(</span><span class="n">GOI</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Top 3 significantly differentially expressed pathways in genes co-expressed with CASP8, per cell lineage.
+This is in REACTOME and KEGG databases.
+
+In b_cell cells:
+Chemical carcinogenesis - reactive oxygen species (p-value: 6.962516250823133e-05)
+Parkinson disease (p-value: 9.276781736818912e-05)
+Pathways of neurodegeneration - multiple diseases (p-value: 0.00029275472393432405)
+
+
+In epithelium cells:
+Salmonella infection (p-value: 0.0006470528854317268)
+Endosomal/Vacuolar pathway (p-value: 0.0028136518951242927)
+EPH-Ephrin signaling (p-value: 0.006122716684392412)
+
+
+In myeloid cells:
+Viral myocarditis (p-value: 0.006700895160108687)
+mRNA Splicing (p-value: 0.013791609164411713)
+Interferon gamma signaling (p-value: 0.02805819662400579)
+
+
+In stroma cells:
+No significant pathways found.
+
+
+In t_cell cells:
+mRNA Splicing - Major Pathway (p-value: 0.0044740380794107)
+mRNA Splicing (p-value: 0.006595281995211552)
+
+
+</pre></div></div>
 </div>
 </section>
 </section>
@@ -1146,7 +827,7 @@ function highlightFilter(filter) {
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Using Sample-Level Pipeline</div>
+                <div class="title">Using SamplePipeline</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -1165,7 +846,7 @@ function highlightFilter(filter) {
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2024, sami
+                Copyright &#169; 2024, Samantha Bening
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -1194,7 +875,8 @@ function highlightFilter(filter) {
 <li><a class="reference internal" href="#">Using GRNPipeline</a><ul>
 <li><a class="reference internal" href="#A-GRN-analysis-and-visualization-tool-for-the-gene-of-interest">A GRN analysis and visualization tool for the gene of interest</a></li>
 <li><a class="reference internal" href="#Regulon-level-gene-set-enrichment-analysis">Regulon-level gene set enrichment analysis</a></li>
-<li><a class="reference internal" href="#Network-Visualization">Network Visualization</a></li>
+<li><a class="reference internal" href="#TF-Target-Gene-Network-Visualization">TF-Target Gene Network Visualization</a></li>
+<li><a class="reference internal" href="#Gene-gene-Co-Expression-Network">Gene-gene Co-Expression Network</a></li>
 </ul>
 </li>
 </ul>

@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="Using GRNPipeline" href="GRN_Example.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
-        <title>Using Sample-Level Pipeline - genereporter 0.1 documentation</title>
+        <title>Using SamplePipeline - genereporter 0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
@@ -177,7 +177,7 @@
 <li class="toctree-l1"><a class="reference internal" href="samplepipeline.html">Sample (Patient) Level Analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Cell_Example.html">Using CellPipeline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GRN_Example.html">Using GRNPipeline</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Using Sample-Level Pipeline</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Using SamplePipeline</a></li>
 </ul>
 
 </div>
@@ -212,31 +212,29 @@
           </label>
         </div>
         <article role="main">
-          <section id="Using-Sample-Level-Pipeline">
-<h1>Using Sample-Level Pipeline<a class="headerlink" href="#Using-Sample-Level-Pipeline" title="Link to this heading">#</a></h1>
+          <section id="Using-SamplePipeline">
+<h1>Using SamplePipeline<a class="headerlink" href="#Using-SamplePipeline" title="Link to this heading">#</a></h1>
 <section id="A-sample-level-(patient-level)-visualization-of-the-gene-and-cell-type-of-interest.">
 <h2>A sample-level (patient-level) visualization of the gene and cell-type of interest.<a class="headerlink" href="#A-sample-level-(patient-level)-visualization-of-the-gene-and-cell-type-of-interest." title="Link to this heading">#</a></h2>
+<p>First, the data and package are loaded. This may take a minute. Set your gene of interest (GOI) here!</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;/Users/samibening/Projects/genereporter/&#39;</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">genereporter.sample_pipeline</span> <span class="kn">import</span> <span class="n">SamplePipeline</span>
-<span class="n">sp</span> <span class="o">=</span> <span class="n">SamplePipeline</span><span class="p">(</span><span class="n">wdir</span><span class="o">=</span><span class="s2">&quot;/Users/samibening/Projects/genereporter/&quot;</span><span class="p">,</span> <span class="n">adata</span><span class="o">=</span><span class="s2">&quot;data/output/adata.h5ad&quot;</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;/lustre/groups/ml01/workspace/samantha.bening/Bachelor/&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">importlib</span> <span class="kn">import</span> <span class="n">reload</span>
+<span class="kn">import</span> <span class="nn">genereporter.sample_pipeline</span> <span class="k">as</span> <span class="nn">spModule</span>
+<span class="n">reload</span><span class="p">(</span><span class="n">spModule</span><span class="p">)</span>
+<span class="n">sp</span> <span class="o">=</span> <span class="n">spModule</span><span class="o">.</span><span class="n">SamplePipeline</span><span class="p">(</span><span class="n">wdir</span><span class="o">=</span><span class="s2">&quot;/lustre/groups/ml01/workspace/samantha.bening/Bachelor/&quot;</span><span class="p">,</span> <span class="n">adata</span><span class="o">=</span><span class="s2">&quot;data2/veo_ibd_balanced.h5ad&quot;</span><span class="p">)</span>
+
+<span class="n">GOI</span> <span class="o">=</span> <span class="s1">&#39;CASP8&#39;</span> <span class="c1"># set the GOI!!!</span>
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">GOI</span> <span class="o">=</span> <span class="s1">&#39;VAV3&#39;</span>
-</pre></div>
-</div>
-</div>
+<p>Violin plot for each sample’s expression distribution, across all cell types for the gene of interest. A scatterplot of each sample is overlayed to show the individual cells. This is particularly useful to quickly identify samples that perhaps have a very low number of cells.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sp</span><span class="o">.</span><span class="n">pl_violin</span><span class="p">(</span><span class="n">GOI</span><span class="p">)</span>
@@ -247,14 +245,31 @@
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/Sample_Example_3_0.png" src="_images/Sample_Example_3_0.png" />
+<img alt="_images/Sample_Example_4_0.png" src="_images/Sample_Example_4_0.png" />
+</div>
+</div>
+<p>A clustermap (hierarchically clustered heatmap) across all samples for all cell types. The mean expression values are either standardized between 0 and 1 for each patient or z-score normalized. The choice between standard scaling and z-score normalization depends on the specific analysis objectives and the presence of outliers within the data. Standard scaling provides a straightforward representation of mean expression values, while z-score normalization offers robustness against outliers,
+albeit at the expense of directly showing mean expression values. The user can quickly change which version is created with a single method parameter: z_score=True for z-score normalization or z_score=False for standard scaling.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sp</span><span class="o">.</span><span class="n">pl_sample_celltype</span><span class="p">(</span><span class="n">GOI</span><span class="p">,</span> <span class="n">z_score</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/Sample_Example_6_0.png" src="_images/Sample_Example_6_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sp</span><span class="o">.</span><span class="n">pl_sample_celltype</span><span class="p">(</span><span class="n">GOI</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sp</span><span class="o">.</span><span class="n">pl_sample_celltype</span><span class="p">(</span><span class="n">GOI</span><span class="p">)</span> <span class="c1"># balanced data set</span>
 </pre></div>
 </div>
 </div>
@@ -262,14 +277,16 @@
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/Sample_Example_4_0.png" src="_images/Sample_Example_4_0.png" />
+<img alt="_images/Sample_Example_7_0.png" src="_images/Sample_Example_7_0.png" />
 </div>
 </div>
+<p>Zooming further in, a violin plot across all samples in one specific cell type (instead of over all cell types). Set this cell type using the parameter</p>
+<p>celltype=’[your celltype here]’</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sp</span><span class="o">.</span><span class="n">pl_violin</span><span class="p">(</span><span class="n">GOI</span><span class="p">,</span> <span class="n">celltype</span><span class="o">=</span><span class="s1">&#39;B Cell&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sp</span><span class="o">.</span><span class="n">pl_violin</span><span class="p">(</span><span class="n">GOI</span><span class="p">,</span> <span class="n">celltype</span><span class="o">=</span><span class="s1">&#39;CD4 T&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -277,7 +294,7 @@
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/Sample_Example_5_0.png" src="_images/Sample_Example_5_0.png" />
+<img alt="_images/Sample_Example_9_0.png" src="_images/Sample_Example_9_0.png" />
 </div>
 </div>
 </section>
@@ -304,7 +321,7 @@
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2024, sami
+                Copyright &#169; 2024, Samantha Bening
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
@@ -330,7 +347,7 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Using Sample-Level Pipeline</a><ul>
+<li><a class="reference internal" href="#">Using SamplePipeline</a><ul>
 <li><a class="reference internal" href="#A-sample-level-(patient-level)-visualization-of-the-gene-and-cell-type-of-interest.">A sample-level (patient-level) visualization of the gene and cell-type of interest.</a></li>
 </ul>
 </li>

@@ -176,7 +176,7 @@
 <li class="toctree-l1"><a class="reference internal" href="samplepipeline.html">Sample (Patient) Level Analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Cell_Example.html">Using CellPipeline</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GRN_Example.html">Using GRNPipeline</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Sample_Example.html">Using Sample-Level Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Sample_Example.html">Using SamplePipeline</a></li>
 </ul>
 
 </div>
@@ -214,47 +214,26 @@
           <section id="welcome-to-genereporter-s-documentation">
 <h1>Welcome to genereporter’s documentation!<a class="headerlink" href="#welcome-to-genereporter-s-documentation" title="Link to this heading">#</a></h1>
 <p><strong>genereporter</strong> is a Python library Sami developed as part (or most) or her Bachelor’s thesis.
+genereporter focuses on generating an in-depth, gene-level view of a specific gene of interest.
+Using mostly scRNA-seq data (for now), genereporter provides analysis methods that can facilitate wet-lab
+researchers accessability of typically computational tasks. genereporter has three different methods of analysis:
+cell type specific, gene set enrichment analysis, and sample (patient) specific. Through both the python library and the
+automized Jupyter Notebook pipelines, genereporter is built to be user-friendly and easy to use for both
+bioinformaticians and wet-lab researchers.
 Check out the <a class="reference internal" href="usage.html"><span class="doc">Usage</span></a> section for further information.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This is a work in progress. The documentation is not complete and the library is not yet ready for use.</p>
+<p>This is a work in progress. The documentation and the library may still contain bugs and errors.</p>
 </div>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="usage.html#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="usage.html#obtaining-data">Obtaining Data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="usage.html#vignettes">Vignettes</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="cellpipeline.html">Cell Type Specific Analysis</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cellpipeline.html#cell_pipeline.CellPipeline"><code class="docutils literal notranslate"><span class="pre">CellPipeline</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="grnpipeline.html">Gene Regulatory Network Analysis</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="grnpipeline.html#grn_pipeline.GRNPipeline"><code class="docutils literal notranslate"><span class="pre">GRNPipeline</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="samplepipeline.html">Sample (Patient) Level Analysis</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="samplepipeline.html#sample_pipeline.SamplePipeline"><code class="docutils literal notranslate"><span class="pre">SamplePipeline</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="Cell_Example.html">Using CellPipeline</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Cell_Example.html#A-cell-type-specific-analysis-and-visualization-tool-for-the-gene-of-interest">A cell type specific analysis and visualization tool for the gene of interest</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Cell_Example.html#GOI-expression-across-cell-types">GOI expression across cell types</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Cell_Example.html#Expression-vs.-Detection-visualization">Expression vs. Detection visualization</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="GRN_Example.html">Using GRNPipeline</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="GRN_Example.html#A-GRN-analysis-and-visualization-tool-for-the-gene-of-interest">A GRN analysis and visualization tool for the gene of interest</a></li>
-<li class="toctree-l2"><a class="reference internal" href="GRN_Example.html#Regulon-level-gene-set-enrichment-analysis">Regulon-level gene set enrichment analysis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="GRN_Example.html#Network-Visualization">Network Visualization</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="Sample_Example.html">Using Sample-Level Pipeline</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Sample_Example.html#A-sample-level-(patient-level)-visualization-of-the-gene-and-cell-type-of-interest.">A sample-level (patient-level) visualization of the gene and cell-type of interest.</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cellpipeline.html">Cell Type Specific Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grnpipeline.html">Gene Regulatory Network Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="samplepipeline.html">Sample (Patient) Level Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Cell_Example.html">Using CellPipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GRN_Example.html">Using GRNPipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Sample_Example.html">Using SamplePipeline</a></li>
 </ul>
 </div>
 </section>
@@ -278,7 +257,7 @@ Check out the <a class="reference internal" href="usage.html"><span class="doc">
         <div class="bottom-of-page">
           <div class="left-details">
             <div class="copyright">
-                Copyright &#169; 2024, sami
+                Copyright &#169; 2024, Samantha Bening
             </div>
             Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
