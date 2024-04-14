@@ -76,7 +76,7 @@ class SamplePipeline:
                         xticklabels=True, dendrogram_ratio=(0, 0.09), figsize=(12,8))
         else:
             label = "Mean expression in group"
-            g = sns.clustermap(goi_expr, mask=False, cmap='YlGnBu', standard_scale=1, 
+            g = sns.clustermap(goi_expr, mask=False, cmap='YlGnBu', standard_scale=standard_scale, 
                         xticklabels=True, dendrogram_ratio=(0, 0.09), figsize=(12,8))
 
         # Rotate x-axis labels
@@ -134,7 +134,7 @@ class SamplePipeline:
         total_barplot_ax.grid(False)
         total_barplot_ax.axis("off")
 
-        #g.figure.savefig(f'clustermap_zscore_{GOI}.png', dpi=300, bbox_inches='tight')
+        g.figure.savefig(f'clustermap_standardrow_{GOI}.png', dpi=300, bbox_inches='tight')
         plt.show()
 
 

@@ -7,6 +7,6 @@ sp = spModule.SamplePipeline(wdir="/lustre/groups/ml01/workspace/samantha.bening
 
 GOI = 'CASP8' # set the GOI!!!
 
-sp.pl_sample_celltype(GOI, z_score=True)
+sp.pl_sample_celltype(GOI, standard_scale=0)
 
 print("Done!")
