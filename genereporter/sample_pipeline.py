@@ -72,7 +72,7 @@ class SamplePipeline:
         # Generate the clustermap
         if z_score:
             label = "Z-Score in group"
-            g = sns.clustermap(goi_expr, mask=False, cmap='BrBG', z_score=1, center=0, 
+            g = sns.clustermap(goi_expr, mask=False, cmap='BrBG', z_score=0, center=0, 
                         xticklabels=True, dendrogram_ratio=(0, 0.09), figsize=(12,8))
         else:
             label = "Mean expression in group"
@@ -134,6 +134,7 @@ class SamplePipeline:
         total_barplot_ax.grid(False)
         total_barplot_ax.axis("off")
 
+        plt.savefig(f'clustermap_zscore_{GOI}.png', dpi=300)
         plt.show()
 
 
