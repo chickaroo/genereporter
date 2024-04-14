@@ -54,7 +54,7 @@ class SamplePipeline:
 
         return goi_df_mean
     
-    def pl_sample_celltype(self, GOI, standard_scale=1, z_score=False):
+    def pl_sample_celltype(self, GOI, standard_scale=1, z_score=None):
         """
         Generate a clustermap of GOI expression data across patients and cell types. 
         The clustermap is accompanied by a barplot showing the number of cells per cell type.
@@ -70,9 +70,9 @@ class SamplePipeline:
         goi_expr = goi_expr.drop(columns='cell_count')
 
         # Generate the clustermap
-        if z_score:
+        if z_score is not None:
             label = "Z-Score in group"
-            g = sns.clustermap(goi_expr, mask=False, cmap='BrBG', z_score=0, center=0, 
+            g = sns.clustermap(goi_expr, mask=False, cmap='BrBG', z_score=z_score, center=0, 
                         xticklabels=True, dendrogram_ratio=(0, 0.09), figsize=(12,8))
         else:
             label = "Mean expression in group"
@@ -134,7 +134,7 @@ class SamplePipeline:
         total_barplot_ax.grid(False)
         total_barplot_ax.axis("off")
 
-        g.figure.savefig(f'clustermap_zscore_{GOI}.png', dpi=300, bbox_inches='tight')
+        #g.figure.savefig(f'clustermap_zscore_{GOI}.png', dpi=300, bbox_inches='tight')
         plt.show()
 
 
