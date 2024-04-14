@@ -17,7 +17,7 @@ mamba activate grnboost
 
 cd /lustre/groups/ml01/workspace/samantha.bening/Bachelor/
 
-python src/scripts/clustermap.py
+python src/scripts/make_clustermap.py
 
 echo "Clustermap done!"
 
