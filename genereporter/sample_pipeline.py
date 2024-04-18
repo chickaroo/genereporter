@@ -134,7 +134,7 @@ class SamplePipeline:
         total_barplot_ax.grid(False)
         total_barplot_ax.axis("off")
 
-        g.figure.savefig(f'clustermap_standardrow_{GOI}.png', dpi=300, bbox_inches='tight')
+        #g.figure.savefig(f'clustermap_standardrow_{GOI}.png', dpi=300, bbox_inches='tight')
         plt.show()
 
 

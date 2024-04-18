@@ -46,34 +46,31 @@ class GRNPipeline:
 
         # load the adata object
         adata = sc.read_h5ad(adata)
+        print('Read in adata. ')
 
-        # read the adjacency and regulon data
-        adjacencies = pd.read_csv(f_adj)
-        regulon = pd.read_csv(f_reg)
+        # read regulon data
+        regulon = pd.read_pickle(f_reg)
         def clean_target_genes(row: pd.Series) -> list:
             return eval(row['TargetGenes'])
         regulon.apply(clean_target_genes, axis=1)
-        
+        print('Cleaned regulon.')
 
         # assign to self
         self.adata = adata
-        self.adj_df = adjacencies
+        self.adj_df = pd.read_pickle(f_adj)
         self.reg_df = regulon
         self.reactome = self.get_reactome()
         self.regulon_geneset = self.get_regulon_genesets()
         self.geneset_df = self.get_genesets()
+        print('Loaded reactome, regulon geneset, and geneset data.')
 
-        self.bcell_adj = pd.read_csv(os.path.join(dir_gg_adj, gg_adj_files[0]), names=['gene','target','importance'])
-        self.bcell_adj['cell_lineage'] = 'b_cell'
-        self.epithelium_adj = pd.read_csv(os.path.join(dir_gg_adj, gg_adj_files[1]), names=['gene','target','importance'])
-        self.epithelium_adj['cell_lineage'] = 'epithelium'
-        self.myeloid_adj = pd.read_csv(os.path.join(dir_gg_adj, gg_adj_files[2]), names=['gene','target','importance'])
-        self.myeloid_adj['cell_lineage'] = 'myeloid'
-        self.stroma_adj = pd.read_csv(os.path.join(dir_gg_adj, gg_adj_files[3]), names=['gene','target','importance'])
-        self.stroma_adj['cell_lineage'] = 'stroma'
-        self.tcell_adj = pd.read_csv(os.path.join(dir_gg_adj, gg_adj_files[4]), names=['gene','target','importance'])
-        self.tcell_adj['cell_lineage'] = 't_cell'
+        self.bcell_adj = pd.read_pickle(os.path.join(dir_gg_adj, gg_adj_files[0]))
+        self.epithelium_adj = pd.read_pickle(os.path.join(dir_gg_adj, gg_adj_files[1]))
+        self.myeloid_adj = pd.read_pickle(os.path.join(dir_gg_adj, gg_adj_files[2]))
+        self.stroma_adj = pd.read_pickle(os.path.join(dir_gg_adj, gg_adj_files[3]))
+        self.tcell_adj = pd.read_pickle(os.path.join(dir_gg_adj, gg_adj_files[4]))
         self.gene_gene_adj = [self.bcell_adj, self.epithelium_adj, self.myeloid_adj, self.stroma_adj, self.tcell_adj]
+        print('Loaded gene-gene adjacency data.')
 
 
     def get_reactome(self) -> pd.DataFrame:
