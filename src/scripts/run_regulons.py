@@ -1,10 +1,11 @@
 from pathlib import Path
 import os
-import decoupler
+from pyscenic.prune import df2regulons
+from pyscenic.aucell import aucell
 import pandas as pd 
 pd.options.mode.chained_assignment = None  # default='warn'
-import numpy as np 
-import scanpy as sc
+import anndata as ad
+import pickle
 
 print('Started')
 
