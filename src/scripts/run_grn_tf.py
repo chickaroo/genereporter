@@ -15,15 +15,15 @@ if __name__ == '__main__':
     adata = sc.read_h5ad('data2/veo_ibd_balanced.h5ad')
 
     # create custom Dask client
-    local_cluster = LocalCluster(n_workers=31, # put in one less than the number of cores you gave the job
-                                threads_per_worker=5, 
+    local_cluster = LocalCluster(n_workers=20, # put in one less than the number of cores you gave the job
+                                threads_per_worker=3, 
                                 processes=True,
-                                memory_limit="10GiB") 
+                                memory_limit="13GiB") 
     custom_client = Client(local_cluster)
 
     # filter for genes not expressed in e.g. 30 or more cells
     sc.pp.filter_genes(adata, min_cells=30)
-    # randomly sample 5k cells from this subset (compute limit)
+    # randomly sample 10k cells from this subset (compute limit)
     a = np.zeros(len(adata), dtype=int)
     a[:10000] = 1
     np.random.shuffle(a)
