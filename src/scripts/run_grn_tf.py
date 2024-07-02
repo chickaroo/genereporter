@@ -44,4 +44,4 @@ if __name__ == '__main__':
     # filter for only importance >= 0.001 
     network = network[network['importance'] >= 0.001]
 
-    network.to_csv(f'src/SCENICfiles/TFtg_adj.csv',  header=False, index=False)
+    network.to_csv(f'src/SCENICfiles/new/TFtg_adj.csv',  header=False, index=False)
