@@ -98,7 +98,7 @@ def get_genesets(reactome: pd.DataFrame, reg_df: pd.DataFrame) -> pd.DataFrame:
     return geneset_df
 
 # read regulon data
-regulon = pd.read_csv('src/SCENICfiles/new/reg_full10k.csv')
+regulon = pd.read_csv('src/SCENICfiles/new/reg_full10k.csv', header=0)
 def clean_target_genes(row: pd.Series) -> list:
     return eval(row['TargetGenes'])
 regulon.apply(clean_target_genes, axis=1)
