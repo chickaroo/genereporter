@@ -39,7 +39,8 @@ if __name__ == '__main__':
     # run GRNBoost2
     network = grnboost2(expression_data=ex_matrix,
                         tf_names=tf_names, # TF-target gene adjacencies
-                        client_or_address=custom_client)
+                        client_or_address=custom_client, 
+                        verbose=True)
 
     # filter for only importance >= 0.001 
     network = network[network['importance'] >= 0.001]
