@@ -109,9 +109,9 @@ reactome_df = get_reactome("data2/c2.cp.reactome.v2023.2.Hs.symbols.gmt")
 regulon_genesets_df = get_regulon_genesets(regulon)  
 geneset_df = get_genesets(reactome_df, regulon_genesets_df)
 
-print('Started')
+print('Read in genesets (regulons and reactome)')
 
-adata = ad.read_h5ad('Bachelor/data2/veo_ibd_balanced.h5ad')
+adata = ad.read_h5ad('data2/veo_ibd_balanced.h5ad')
 
 
 decoupler.run_aucell(
