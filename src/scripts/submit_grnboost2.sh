@@ -1,12 +1,12 @@
 #!/bin/bash
 
-#SBATCH --job-name=GRNbcell
+#SBATCH --job-name=GRNtcell
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=25
 #SBATCH --mem=250GB
 #SBATCH --time=12:00:00
-#SBATCH -o grnboostbcell_%j.log
-#SBATCH -e grnboostbcell_%j.err
+#SBATCH -o grnboosttcell_%j.log
+#SBATCH -e grnboosttcell_%j.err
 #SBATCH --partition=cpu_p
 #SBATCH --qos=cpu_normal
 #SBATCH --nice=10000
