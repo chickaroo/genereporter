@@ -20,10 +20,10 @@ if __name__ == '__main__':
     adata = sc.read_h5ad('data2/veo_ibd_balanced.h5ad')
 
     # create custom Dask client
-    local_cluster = LocalCluster(n_workers=30, # put in one less than the number of cores you gave the job
+    local_cluster = LocalCluster(n_workers=24, # put in one less than the number of cores you gave the job
                                 threads_per_worker=2, 
                                 processes=True,
-                                memory_limit="10GiB") 
+                                memory_limit="9GiB") 
     custom_client = Client(local_cluster)
 
 
