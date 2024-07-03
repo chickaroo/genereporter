@@ -15,9 +15,9 @@ source $HOME/.bashrc
 
 mamba activate pyscenic_pipeline
 
-cd /lustre/groups/ml01/workspace/samantha.bening/Bachelor/
+cd /lustre/groups/ml01/workspace/christopher.lance/genereporter/
 
-python make_loom.py
+python src/scripts/make_loom.py
 
 echo "Done!"
 
