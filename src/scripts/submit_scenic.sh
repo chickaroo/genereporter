@@ -3,7 +3,7 @@
 #SBATCH --job-name=ctx
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=30
-#SBATCH --mem=150GB
+#SBATCH --mem=200GB
 #SBATCH --time=12:00:00
 #SBATCH -o ctx_%j.log
 #SBATCH -e ctx_%j.err
@@ -13,7 +13,7 @@
 
 source $HOME/.bashrc
 
-mamba activate pyscenic_notebook
+mamba activate pyscenic_small
 
 cd /lustre/groups/ml01/workspace/samantha.bening/Bachelor/
 
