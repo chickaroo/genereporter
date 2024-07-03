@@ -1,9 +1,6 @@
-from pathlib import Path
 import os
 from pyscenic.prune import df2regulons
 import pandas as pd 
-pd.options.mode.chained_assignment = None  # default='warn'
-import anndata as ad
 import pickle
 
 print('Started')
@@ -13,16 +10,11 @@ print('Started')
 wdir = "/lustre/groups/ml01/workspace/samantha.bening/"
 os.chdir( wdir )
 
-adata = ad.read_h5ad('Bachelor/data2/veo_ibd_balanced.h5ad')
-# make expression matrix 
-ex_matrix = adata.to_df()
-print("adata df read in")
-
 df = pd.read_csv("Bachelor/src/SCENICfiles/new/reg_full10k.csv")
-print(df.head())
+#print(df.head())
 
 regulons = df2regulons(df)
-print(regulons[:2])
+#print(regulons[:2])
 
 with open("Bachelor/src/SCENICfiles/new/reg_full_df2regulons.p", "wb") as f:
     regulons = pickle.dump(regulons, f)
