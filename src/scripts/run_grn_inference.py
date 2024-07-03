@@ -20,7 +20,7 @@ if __name__ == '__main__':
     adata = sc.read_h5ad('data2/veo_ibd_balanced.h5ad')
 
     # create custom Dask client
-    local_cluster = LocalCluster(n_workers=31, # put in one less than the number of cores you gave the job
+    local_cluster = LocalCluster(n_workers=30, # put in one less than the number of cores you gave the job
                                 threads_per_worker=2, 
                                 processes=True,
                                 memory_limit="10GiB") 
@@ -51,4 +51,4 @@ if __name__ == '__main__':
     # filter for only importance >= 0.001 
     network = network[network['importance'] >= 0.001]
 
-    network.to_csv(f'src/SCENICfiles/gg_adj_{celltype.replace(" ", "_")}.csv',  header=False, index=False)
+    network.to_csv(f'src/SCENICfiles/new/gg_adj/gg_adj_{celltype.replace(" ", "_")}.csv',  header=False, index=False)

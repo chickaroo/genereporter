@@ -17,8 +17,8 @@ mamba activate pyscenic_pipeline
 
 cd /lustre/groups/ml01/workspace/christopher.lance/genereporter/src/scripts
 
-#python run_grn_inference.py --celltype B Cell
-python run_grn_tf.py
+python run_grn_inference.py --celltype B Cell
+#python run_grn_tf.py
 
 echo "Done!"
 
