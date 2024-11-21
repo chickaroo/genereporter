@@ -6,9 +6,7 @@ import anndata as ad
 pd.options.mode.chained_assignment = None  # default='warn'
 from pathlib import Path
 from itertools import chain, repeat
-
-wdir = "/lustre/groups/ml01/workspace/samantha.bening/Bachelor/"
-os.chdir( wdir )
+from argparse import ArgumentParser
 
 def gmt_to_decoupler(pth: Path) -> pd.DataFrame:
     """
@@ -97,31 +95,43 @@ def get_genesets(reactome: pd.DataFrame, reg_df: pd.DataFrame) -> pd.DataFrame:
     geneset_df = geneset_df.reset_index(drop=True)
     return geneset_df
 
-# read regulon data
-regulon = pd.read_csv('src/SCENICfiles/new/reg_full10k.csv', header=0)
-def clean_target_genes(row: pd.Series) -> list:
-    return eval(row['TargetGenes'])
-regulon = regulon.apply(clean_target_genes, axis=1)
-print('Cleaned regulon.')
+if __name__ == '__main__':
 
-# usage:
-reactome_df = get_reactome("data2/c2.cp.reactome.v2023.2.Hs.symbols.gmt")
-regulon_genesets_df = get_regulon_genesets(regulon)  
-geneset_df = get_genesets(reactome_df, regulon_genesets_df)
+    parser = ArgumentParser()
+    parser.add_argument("--data", type=str, default = 'veo_ibd_balanced.h5ad')
+    parser.add_argument("--output", type=str, default = 'src/SCENICfiles/new')
+    args = parser.parse_args()
+    data_file = f'data2/{args.data}'
+    output_dir = args.output
 
-print('Read in genesets (regulons and reactome)')
+    wdir = "/lustre/groups/ml01/workspace/christopher.lance/genereporter/"
+    os.chdir( wdir )
 
-adata = ad.read_h5ad('data2/veo_ibd_balanced.h5ad')
+    # read regulon data
+    regulon = pd.read_csv(f'{output_dir}/regulons_output.csv')
+    def clean_target_genes(row: pd.Series) -> list:
+        return eval(row['TargetGenes'])
+    regulon = regulon.apply(clean_target_genes, axis=1)
+    print('Cleaned regulon.')
+
+    # usage:
+    reactome_df = get_reactome("data2/c2.cp.reactome.v2023.2.Hs.symbols.gmt")
+    regulon_genesets_df = get_regulon_genesets(regulon)  
+    geneset_df = get_genesets(reactome_df, regulon_genesets_df)
+
+    print('Read in genesets (regulons and reactome)')
+
+    adata = ad.read_h5ad(data_file)
 
 
-decoupler.run_aucell(
-    adata,
-    geneset_df,
-    source="geneset",
-    target="genesymbol",
-    use_raw=False,
-)
+    decoupler.run_aucell(
+        adata,
+        geneset_df,
+        source="geneset",
+        target="genesymbol",
+        use_raw=False,
+    )
 
-print("AUCell method done! ")
+    print("AUCell method done! ")
 
-adata.write_h5ad("data2/veo_ibd_balanced_aucell_new.h5ad")
+    adata.write_h5ad(f"{output_dir}/veo_ibd_balanced_aucell_final.h5ad")

@@ -4,15 +4,25 @@ import scanpy as sc
 from arboreto.algo import grnboost2
 from arboreto.utils import load_tf_names
 from distributed import Client, LocalCluster
+from argparse import ArgumentParser
 
 if __name__ == '__main__':
 
+    parser = ArgumentParser()
+    parser.add_argument("--data", type=str, default = 'veo_ibd_balanced.h5ad')
+    parser.add_argument("--output", type=str, default = 'src/SCENICfiles/new')
+    parser.add_argument("--subset", type=int, default = 20000)
+    args = parser.parse_args()
+    data_file = f'data2/{args.data}'
+    output_dir = args.output
+    subset_size = args.subset
+
     # read in expression matrix 
     # set a working directory
-    wdir = "/lustre/groups/ml01/workspace/samantha.bening/Bachelor/"
+    wdir = "/lustre/groups/ml01/workspace/christopher.lance/genereporter/"
     os.chdir( wdir )
 
-    adata = sc.read_h5ad('data2/veo_ibd_balanced.h5ad')
+    adata = sc.read_h5ad(data_file)
 
     # create custom Dask client
     local_cluster = LocalCluster(n_workers=20, # put in one less than the number of cores you gave the job
@@ -23,9 +33,9 @@ if __name__ == '__main__':
 
     # filter for genes not expressed in e.g. 30 or more cells
     sc.pp.filter_genes(adata, min_cells=30)
-    # randomly sample 10k cells from this subset (compute limit)
+    # randomly sample {subset_size} cells from this subset (compute limit)
     a = np.zeros(len(adata), dtype=int)
-    a[:10000] = 1
+    a[:subset_size] = 1
     np.random.shuffle(a)
     a = a.astype(bool)
     adata = adata[a, :]
@@ -45,4 +55,4 @@ if __name__ == '__main__':
     # filter for only importance >= 0.001 
     network = network[network['importance'] >= 0.001]
 
-    network.to_csv(f'src/SCENICfiles/new/TFtg_adj.csv',  header=False, index=False)
+    network.to_csv(f'{output_dir}/TFtg_adj.csv',  header=False, index=False)
