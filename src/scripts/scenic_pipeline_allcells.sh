@@ -88,6 +88,8 @@ pyscenic ctx "$parameterO"/TFtg_adj.csv \
 
 echo "3. done: cisTarget regulon inference"
 
+#TODO: edit regulons_output.csv file to ignore first three lines (header) and make header:
+# TF,MotifID,AUC,NES,MotifSimilarityQvalue,OrthologousIdentity,Annotation,Context,TargetGenes,RankAtMax
 
 # 4. Run AUCell
 

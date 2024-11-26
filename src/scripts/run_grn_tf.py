@@ -59,5 +59,5 @@ if __name__ == '__main__':
     # filter for only importance >= 0.001 
     network = network[network['importance'] >= 0.001]
 
-    network.to_csv(f'{output_dir}/TFtg_adj.csv',  header=False, index=False)
+    network.to_csv(f'{output_dir}/TFtg_adj.csv',  header=True, index=False)
     print("TF-target gene adjacencies written to file")
