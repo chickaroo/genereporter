@@ -45,7 +45,7 @@ if __name__ == '__main__':
     ex_matrix = adata.to_df(layer='raw') # use raw layer here
 
     # load tf_names
-    tf_names = load_tf_names("../data/allTFs_human.txt")
+    tf_names = load_tf_names("data/allTFs_human.txt")
     print("Preprocessing done")
 
 
