@@ -103,7 +103,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     data_file = f'data2/{args.data}'
     output_dir = args.output
-    print("args read in")
+    print("\tArgs read in")
 
     wdir = "/lustre/groups/ml01/workspace/christopher.lance/genereporter/"
     os.chdir( wdir )
@@ -115,16 +115,14 @@ if __name__ == '__main__':
     def clean_target_genes(row: pd.Series) -> list:
         return eval(row['TargetGenes'])
     regulon.apply(clean_target_genes, axis=1)
-    print(regulon.columns)
-    print(regulon['TF'].unique())
-    print('Cleaned regulon.')
+    print('\tCleaned regulon')
 
     # usage:
     reactome_df = get_reactome("data2/c2.cp.reactome.v2023.2.Hs.symbols.gmt")
     regulon_genesets_df = get_regulon_genesets(regulon)  
     geneset_df = get_genesets(reactome_df, regulon_genesets_df)
 
-    print('Read in genesets (regulons and reactome)')
+    print('\tRead in genesets (regulons and reactome)')
 
     adata = ad.read_h5ad(data_file)
 
@@ -137,9 +135,11 @@ if __name__ == '__main__':
         use_raw=False,
     )
 
-    print("AUCell method done! ")
+    print("\tAUCell decoupler done")
 
 
     print(adata.obs.columns)
 
     adata.write_h5ad(f"{output_dir}/veo_ibd_balanced_aucell_final.h5ad")
+
+    print("\tAUCell written to adata file done")

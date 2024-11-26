@@ -13,6 +13,8 @@
 
 source $HOME/.bashrc
 
+START_TIME=$(date +%s)
+
 mamba deactivate
 mamba activate pyscenic_pipeline
 
@@ -61,26 +63,33 @@ fi
 
 # 1. Run GRN inference
 
+echo "STARTING SCENIC PIPELINE"
+echo "1. Running GRN inference"
+
 python src/scripts/run_grn_tf.py --data $parameterA --output $parameterO --subset $parameterS
 
-echo "1. done: GRN inference"
+echo -e "1. DONE: GRN Inference\n\n"
 
 
 
 
 # 2. Make loom file 
+echo "2. Making loom file"
 
 python src/scripts/make_loom.py --data $parameterA --output $parameterO 
 
-echo "2. done: make loom file"
+echo -e "2. DONE: Made loom file\n\n"
 
 
 
 
 # 3. Run CisTarget
 
+echo "3. Running cisTarget regulon inference"
+
 mamba deactivate
 mamba activate pyscenic_small
+
 
 pyscenic ctx "$parameterO"/TFtg_adj.csv \
     /lustre/groups/ml01/workspace/christopher.lance/genereporter/data/scenic_dbs/hg38_10kbp_up_10kbp_down_full_tx_v10_clust.genes_vs_motifs.rankings.feather /lustre/groups/ml01/workspace/christopher.lance/genereporter/data/scenic_dbs/hg38_500bp_up_100bp_down_full_tx_v10_clust.genes_vs_motifs.rankings.feather \
@@ -90,18 +99,22 @@ pyscenic ctx "$parameterO"/TFtg_adj.csv \
     --output "$parameterO"/regulons_output.csv \
     --num_workers 29
 
-echo "3. done: cisTarget regulon inference"
+echo -e "3. DONE: cisTarget regulon inference\n\n"
 
 
 
 
 # 4. Run AUCell
 
+echo "4. Running AUCell"
+
 mamba deactivate
 mamba activate decoupler_env
 
 python src/scripts/run_aucell.py --data $parameterA --output $parameterO 
 
-echo "4. done: AUCell"
-echo ""
+echo -e "4. DONE: AUCell\n\n"
 echo "All SCENIC output files are in $parameterO"
+
+ELAPSED=$(($(date +%s) - START_TIME))
+printf "elapsed: %s\n\n" "$(date -d@$ELAPSED -u +%H\ hours\ %M\ min\ %S\ sec)"
