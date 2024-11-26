@@ -113,7 +113,7 @@ if __name__ == '__main__':
     def clean_target_genes(row: pd.Series) -> list:
         return eval(row['TargetGenes'])
     regulon = regulon.apply(clean_target_genes, axis=1)
-    print(regulon.index)
+    print(regulon.columns)
     print('Cleaned regulon.')
 
     # usage:
