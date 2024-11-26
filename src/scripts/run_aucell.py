@@ -109,10 +109,12 @@ if __name__ == '__main__':
     os.chdir( wdir )
 
     # read regulon data
-    regulon = pd.read_csv(f'{output_dir}/regulons_output.csv')
+    regulon = pd.read_csv(f'{output_dir}/regulons_output.csv', skiprows=3, header=0,
+                           names=['TF','MotifID','AUC','NES','MotifSimilarityQvalue','OrthologousIdentity','Annotation',
+                           'Context','TargetGenes','RankAtMax'])
     def clean_target_genes(row: pd.Series) -> list:
         return eval(row['TargetGenes'])
-    regulon = regulon.apply(clean_target_genes, axis=1)
+    regulon.apply(clean_target_genes, axis=1)
     print(regulon.columns)
     print('Cleaned regulon.')
 
