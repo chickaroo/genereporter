@@ -13,6 +13,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     data_file = f'data2/{args.data}'
     output_dir = args.output
+    print("args read in")
 
     # set a working directory
     wdir = "/lustre/groups/ml01/workspace/christopher.lance/genereporter"
@@ -22,6 +23,7 @@ if __name__ == '__main__':
     f_loom_path_scenic = f"{output_dir}/data_filtered_scenic.loom"
 
     adata = sc.read_h5ad(data_file)
+    print("adata read in")
 
     # create basic row and column attributes for the loom file:
     row_attrs = {
@@ -33,3 +35,4 @@ if __name__ == '__main__':
         "nUMI": np.array( np.sum(adata.layers['raw'].transpose() , axis=0)).flatten() ,
     }
     lp.create( f_loom_path_scenic, adata.layers['raw'].transpose(), row_attrs, col_attrs)
+    print("loom file created")

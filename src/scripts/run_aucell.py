@@ -103,6 +103,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     data_file = f'data2/{args.data}'
     output_dir = args.output
+    print("args read in")
 
     wdir = "/lustre/groups/ml01/workspace/christopher.lance/genereporter/"
     os.chdir( wdir )

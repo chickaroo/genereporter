@@ -16,6 +16,7 @@ if __name__ == '__main__':
     data_file = f'data2/{args.data}'
     output_dir = args.output
     subset_size = args.subset
+    print("Args read in")
 
     # read in expression matrix 
     # set a working directory
@@ -23,6 +24,7 @@ if __name__ == '__main__':
     os.chdir( wdir )
 
     adata = sc.read_h5ad(data_file)
+    print("adata read in")
 
     # create custom Dask client
     local_cluster = LocalCluster(n_workers=20, # put in one less than the number of cores you gave the job
@@ -44,6 +46,7 @@ if __name__ == '__main__':
 
     # load tf_names
     tf_names = load_tf_names("../data/allTFs_human.txt")
+    print("Preprocessing done")
 
 
     # run GRNBoost2
@@ -52,7 +55,9 @@ if __name__ == '__main__':
                         client_or_address=custom_client, 
                         verbose=True)
 
+    print("GRNBoost2 done")
     # filter for only importance >= 0.001 
     network = network[network['importance'] >= 0.001]
 
     network.to_csv(f'{output_dir}/TFtg_adj.csv',  header=False, index=False)
+    print("TF-target gene adjacencies written to file")
