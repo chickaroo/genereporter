@@ -116,6 +116,7 @@ if __name__ == '__main__':
         return eval(row['TargetGenes'])
     regulon.apply(clean_target_genes, axis=1)
     print(regulon.columns)
+    print(regulon['TF'].unique())
     print('Cleaned regulon.')
 
     # usage:
