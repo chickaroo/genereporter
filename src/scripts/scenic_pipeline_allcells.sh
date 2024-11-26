@@ -61,7 +61,7 @@ fi
 
 # 1. Run GRN inference
 
-python run_grn_tf.py --data $parameterA --output $parameterO --subset $parameterS
+python src/scripts/run_grn_tf.py --data $parameterA --output $parameterO --subset $parameterS
 
 echo "1. done: GRN inference"
 
@@ -82,8 +82,6 @@ echo "2. done: make loom file"
 mamba deactivate
 mamba activate pyscenic_small
 
-#cd /lustre/groups/ml01/workspace/samantha.bening/Bachelor/
-
 pyscenic ctx "$parameterO"/TFtg_adj.csv \
     /lustre/groups/ml01/workspace/christopher.lance/genereporter/data/scenic_dbs/hg38_10kbp_up_10kbp_down_full_tx_v10_clust.genes_vs_motifs.rankings.feather /lustre/groups/ml01/workspace/christopher.lance/genereporter/data/scenic_dbs/hg38_500bp_up_100bp_down_full_tx_v10_clust.genes_vs_motifs.rankings.feather \
     --annotations_fname /lustre/groups/ml01/workspace/christopher.lance/genereporter/data/motifs-v10nr_clust-nr.hgnc-m0.001-o0.0.tbl \
@@ -102,9 +100,7 @@ echo "3. done: cisTarget regulon inference"
 mamba deactivate
 mamba activate decoupler_env
 
-#cd /lustre/groups/ml01/workspace/christopher.lance/genereporter/
-
-python run_aucell.py --data $parameterA --output $parameterO 
+python src/scripts/run_aucell.py --data $parameterA --output $parameterO 
 
 echo "4. done: AUCell"
 echo ""
