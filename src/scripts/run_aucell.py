@@ -83,7 +83,7 @@ def get_regulon_genesets(reg_df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def get_genesets(reactome: pd.DataFrame, reg_df: pd.DataFrame) -> pd.DataFrame:
+def get_genesets(reactome: pd.DataFrame, reg_geneset: pd.DataFrame) -> pd.DataFrame:
     """
     Concatenates the reactome and regulon dataframes, resets the index, and returns the result.
 
@@ -91,7 +91,7 @@ def get_genesets(reactome: pd.DataFrame, reg_df: pd.DataFrame) -> pd.DataFrame:
     :param reg_df: The DataFrame containing the regulon data.
     :return: A DataFrame with the concatenated reactome and regulon data.
     """
-    geneset_df = pd.concat([reactome, get_regulon_genesets(reg_df)], axis=0)
+    geneset_df = pd.concat([reactome, reg_geneset], axis=0)
     geneset_df = geneset_df.reset_index(drop=True)
     return geneset_df
 
@@ -138,5 +138,8 @@ if __name__ == '__main__':
     )
 
     print("AUCell method done! ")
+
+
+    print(adata.obs.columns)
 
     adata.write_h5ad(f"{output_dir}/veo_ibd_balanced_aucell_final.h5ad")
