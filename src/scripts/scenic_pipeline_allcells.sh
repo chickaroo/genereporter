@@ -65,11 +65,17 @@ python run_grn_tf.py --data $parameterA --output $parameterO --subset $parameter
 
 echo "1. done: GRN inference"
 
+
+
+
 # 2. Make loom file 
 
 python src/scripts/make_loom.py --data $parameterA --output $parameterO 
 
 echo "2. done: make loom file"
+
+
+
 
 # 3. Run CisTarget
 
@@ -88,13 +94,13 @@ pyscenic ctx "$parameterO"/TFtg_adj.csv \
 
 echo "3. done: cisTarget regulon inference"
 
-#TODO: edit regulons_output.csv file to ignore first three lines (header) and make header:
-# TF,MotifID,AUC,NES,MotifSimilarityQvalue,OrthologousIdentity,Annotation,Context,TargetGenes,RankAtMax
+
+
 
 # 4. Run AUCell
 
 mamba deactivate
-mamba activate pyscenic_pipeline
+mamba activate decoupler_env
 
 #cd /lustre/groups/ml01/workspace/christopher.lance/genereporter/
 
