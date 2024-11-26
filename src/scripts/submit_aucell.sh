@@ -14,7 +14,7 @@
 source $HOME/.bashrc
 
 mamba deactivate
-mamba activate pyscenic_pipeline
+mamba activate decoupler_env
 
 cd /lustre/groups/ml01/workspace/christopher.lance/genereporter/
 
