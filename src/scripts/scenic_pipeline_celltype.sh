@@ -61,8 +61,15 @@ INDEX=${SLURM_ARRAY_TASK_ID}
 # 1. Run GRN inference
 
 echo "STARTING GRNBoost2 CELL TYPE SPECIFIC PIPELINE"
-echo "1. Running GRN inference"
+echo "1. Running GRN inference for cell type: ${X_PARAM[$INDEX]}"
 
 python src/scripts/run_grn_celltype.py --data $parameterA --output $parameterO --subset $parameterS --celltype ${X_PARAM[$INDEX]}
 
 echo -e "1. DONE: GRN Inference\n\n"
+
+cd {$parameterO}/gg_adj
+gzip gg_adj_${${X_PARAM[$INDEX]}// /_}.csv # compress the adjacency matrix
+
+ELAPSED=$(($(date +%s) - START_TIME))
+printf "Time elapsed: %s\n\n" "$(date -d@$ELAPSED -u +%H\ hours\ %M\ min\ %S\ sec)"
+echo -e "Cell type: ${X_PARAM[$INDEX]}"

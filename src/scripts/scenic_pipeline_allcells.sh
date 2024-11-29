@@ -103,7 +103,6 @@ echo -e "3. DONE: cisTarget regulon inference\n\n"
 
 
 
-
 # 4. Run AUCell
 
 echo "4. Running AUCell"
@@ -115,6 +114,13 @@ python src/scripts/run_aucell.py --data $parameterA --output $parameterO
 
 echo -e "4. DONE: AUCell\n\n"
 echo "All SCENIC output files are in $parameterO"
+
+# compress .csv files to .gz
+
+cd "$parameterO"
+gzip *.csv
+# remove loom file to save space 
+rm data_filtered_scenic.loom
 
 ELAPSED=$(($(date +%s) - START_TIME))
 printf "elapsed: %s\n\n" "$(date -d@$ELAPSED -u +%H\ hours\ %M\ min\ %S\ sec)"

@@ -49,7 +49,7 @@ class GRNPipeline:
         print('Read in adata. ')
 
         # read regulon data
-        regulon = pd.read_pickle(f_reg)
+        regulon = pd.read_csv(f_reg, compression='gzip')
         def clean_target_genes(row: pd.Series) -> list:
             return eval(row['TargetGenes'])
         regulon.apply(clean_target_genes, axis=1)
@@ -57,18 +57,18 @@ class GRNPipeline:
 
         # assign to self
         self.adata = adata
-        self.adj_df = pd.read_pickle(f_adj)
+        self.adj_df = pd.read_csv(f_adj, compression='gzip')
         self.reg_df = regulon
         self.reactome = self.get_reactome()
         self.regulon_geneset = self.get_regulon_genesets()
         self.geneset_df = self.get_genesets()
         print('Loaded reactome, regulon geneset, and geneset data.')
 
-        self.bcell_adj = pd.read_pickle(os.path.join(dir_gg_adj, gg_adj_files[0]))
-        self.epithelium_adj = pd.read_pickle(os.path.join(dir_gg_adj, gg_adj_files[1]))
-        self.myeloid_adj = pd.read_pickle(os.path.join(dir_gg_adj, gg_adj_files[2]))
-        self.stroma_adj = pd.read_pickle(os.path.join(dir_gg_adj, gg_adj_files[3]))
-        self.tcell_adj = pd.read_pickle(os.path.join(dir_gg_adj, gg_adj_files[4]))
+        self.bcell_adj = pd.read_csv(os.path.join(dir_gg_adj, gg_adj_files[0]), compression='gzip')
+        self.epithelium_adj = pd.read_csv(os.path.join(dir_gg_adj, gg_adj_files[1]), compression='gzip')
+        self.myeloid_adj = pd.read_csv(os.path.join(dir_gg_adj, gg_adj_files[2]), compression='gzip')
+        self.stroma_adj = pd.read_csv(os.path.join(dir_gg_adj, gg_adj_files[3]), compression='gzip')
+        self.tcell_adj = pd.read_csv(os.path.join(dir_gg_adj, gg_adj_files[4]), compression='gzip')
         self.gene_gene_adj = [self.bcell_adj, self.epithelium_adj, self.myeloid_adj, self.stroma_adj, self.tcell_adj]
         print('Loaded gene-gene adjacency data.')
 
