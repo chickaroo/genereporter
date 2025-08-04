@@ -3,6 +3,7 @@ import numpy as np
 import scanpy as sc
 from arboreto.algo import grnboost2
 from distributed import Client, LocalCluster
+from dask_jobqueue import SLURMCluster
 from argparse import ArgumentParser
 
 if __name__ == '__main__':
@@ -12,6 +13,7 @@ if __name__ == '__main__':
     parser.add_argument("--data", type=str, default = 'veo_ibd_balanced.h5ad')
     parser.add_argument("--output", type=str, default = 'src/SCENICfiles/new')
     parser.add_argument("--subset", type=int, default = 20000)
+    parser.add_argument("--cluster", type=str, default = "distributed")
     args = parser.parse_args()
     data_file = f'data2/{args.data}'
     output_dir = args.output
@@ -27,12 +29,37 @@ if __name__ == '__main__':
     adata = sc.read_h5ad(data_file)
     print("\tAdata read in")
 
-    # create custom Dask client
-    local_cluster = LocalCluster(n_workers=24, # put in one less than the number of cores you gave the job
-                                threads_per_worker=2, 
-                                processes=True,
-                                memory_limit="9GiB") 
-    custom_client = Client(local_cluster)
+    # alternative: create distributed dask client over multiple parallel jobs
+
+    if args.cluster == "distributed":
+        print("Using distributed cluster")
+        # create a SLURM cluster
+        cluster = SLURMCluster(
+            queue='cpu_p',                    # --partition=cpu_p
+            cores=32,                          # --cpus-per-task=8
+            memory="100GB",                    # --mem=20G
+            walltime="6:00:00",              # --time=12:00:00
+            job_name="scenicdist",            # --job-name=scenicplus
+            job_extra_directives=[
+                "--nodes=1",                  # --nodes=1
+                "--qos=cpu_normal",           # --qos=cpu_normal
+                "--nice=10000",               # --nice=10000
+                "-o scenicdist_%j.log",       # stdout log file (overrides default)
+                "-e scenicdist_%j.err"        # stderr log file (overrides default)
+            ]
+        )
+        cluster.scale(5)  # activate 10 workers
+    else:
+        # create local Dask client
+        print("Using local cluster")
+        local_cluster = LocalCluster(n_workers=24, # put in one less than the number of cores you gave the job
+                                    threads_per_worker=1, 
+                                    processes=True,
+                                    memory_limit="9GiB") 
+        cluster = Client(local_cluster)
+
+        
+    custom_client = Client(cluster) # create distributed client
 
 
     # subset for a very broad cell type
@@ -51,13 +78,12 @@ if __name__ == '__main__':
     ex_matrix = adata.to_df(layer='raw') # use raw layer here
     print("\tPreprocessing done")
 
-    # TODO: do dask distributed and have multiple jobs?? 
-
 
     # run GRNBoost2
     network = grnboost2(expression_data=ex_matrix,
                         tf_names='all', # gene-gene adjacencies
-                        client_or_address=custom_client)
+                        client_or_address=custom_client, 
+                        verbose=True)
 
     print("\tGRNBoost2 done")
     # filter for only importance >= 0.001 

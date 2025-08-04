@@ -2,9 +2,9 @@
 
 #SBATCH --job-name=sce_pipe
 #SBATCH --nodes=1
-#SBATCH --cpus-per-task=30
+#SBATCH --cpus-per-task=32
 #SBATCH --mem=200GB
-#SBATCH --time=12:00:00
+#SBATCH --time=6:00:00
 #SBATCH -o sce_pipe_%j.log
 #SBATCH -e sce_pipe_%j.err
 #SBATCH --partition=cpu_p
