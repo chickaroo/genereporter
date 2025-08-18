@@ -3,8 +3,8 @@
 #SBATCH --job-name=disttest
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=20
-#SBATCH --mem=200G
-#SBATCH --time=6:00:00
+#SBATCH --mem=100G
+#SBATCH --time=2:00:00
 #SBATCH -o disttest_%j.log
 #SBATCH -e disttest_%j.err
 #SBATCH --partition=cpu_p
