@@ -3,6 +3,7 @@ import numpy as np
 import scanpy as sc
 from arboreto.algo import grnboost2
 from distributed import Client, LocalCluster
+import dask.array as da
 from dask_jobqueue import SLURMCluster
 from argparse import ArgumentParser
 
@@ -52,10 +53,8 @@ if __name__ == '__main__':
     else:
         # create local Dask client
         print("Using local cluster")
-        local_cluster = LocalCluster(n_workers=24, # put in one less than the number of cores you gave the job
-                                    threads_per_worker=1, 
-                                    processes=True,
-                                    memory_limit="9GiB") 
+        local_cluster = LocalCluster(n_workers=30, # put in one less than the number of cores you gave the job
+                                    threads_per_worker=1) 
         cluster = Client(local_cluster)
 
         
@@ -76,11 +75,17 @@ if __name__ == '__main__':
         adata = adata[a, :]
     # make expression matrix 
     ex_matrix = adata.to_df(layer='raw') # use raw layer here
+    print(f"Expression matrix size: {ex_matrix.shape}")
+    # try to convert to dask array
+    ex_matrix_da = da.from_array(ex_matrix.values, chunks=(2000, ex_matrix.shape[1]))
+    ex_matrix_da = ex_matrix_da.persist()  # Persist the array in memory
+
     print("\tPreprocessing done")
 
 
     # run GRNBoost2
-    network = grnboost2(expression_data=ex_matrix,
+    network = grnboost2(expression_data=ex_matrix_da,
+                        gene_names=ex_matrix.columns,
                         tf_names='all', # gene-gene adjacencies
                         client_or_address=custom_client, 
                         verbose=True)
