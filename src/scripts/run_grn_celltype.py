@@ -53,9 +53,8 @@ if __name__ == '__main__':
     else:
         # create local Dask client
         print("Using local cluster")
-        local_cluster = LocalCluster(n_workers=30, # put in one less than the number of cores you gave the job
+        cluster = LocalCluster(n_workers=30, # put in one less than the number of cores you gave the job
                                     threads_per_worker=1) 
-        cluster = Client(local_cluster)
 
         
     custom_client = Client(cluster) # create distributed client
