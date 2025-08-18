@@ -20,7 +20,7 @@ mamba activate pyscenic_pipeline
 cd /lustre/groups/ml01/workspace/christopher.lance/genereporter/
 
 python src/scripts/run_grn_celltype.py \
-    --cell_type Myeloid \
+    --celltype Myeloid \
     --data data2/veo_ibd_balanced.h5ad \
     --output src/SCENICfiles/tester \
     --cluster distributed \
