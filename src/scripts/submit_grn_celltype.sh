@@ -22,7 +22,7 @@ cd /lustre/groups/ml01/workspace/christopher.lance/genereporter/
 python src/scripts/submit_grn_celltype.py \
     --cell_type Myeloid \
     --data data2/veo_ibd_balanced.h5ad \
-    --output src/SCENICfiles/new \
+    --output src/SCENICfiles/tester \
     --cluster distributed \
 
 
