@@ -31,12 +31,14 @@ if __name__ == '__main__':
     print("\tAdata read in")
 
 
-    # Configure Dask for your specific hardware
+    # Adjusted config for larger dataset
     dask.config.set({
-        'distributed.worker.memory.target': 0.75,
-        'distributed.worker.memory.spill': 0.85,
-        'distributed.worker.memory.terminate': 0.98,
+        'distributed.worker.memory.target': 0.5,  # Lower target due to larger data
+        'distributed.worker.memory.spill': 0.6,
+        'distributed.worker.memory.pause': 0.7,
+        'distributed.worker.memory.terminate': 0.8,
         'distributed.comm.compression': 'lz4',
+        'array.chunk-size': '256MiB'  # Larger chunks for bigger dataset
     })
 
 
@@ -64,11 +66,12 @@ if __name__ == '__main__':
         # create local Dask client
         print("Using local cluster")
         # Optimized cluster for 32 CPUs, 300GB RAM
+
         cluster = LocalCluster(
-            n_workers=8,                # 8 workers
-            threads_per_worker=4,       # 4 threads each = 32 total CPUs
-            memory_limit='35GB',        # ~280GB total for workers (leave buffer)
-            processes=True,             # Use processes for better memory isolation
+            n_workers=6,                # Fewer workers, more memory each
+            threads_per_worker=5,       # Still use all 32 CPUs (6×5=30, close enough)
+            memory_limit='46GB',        # More memory per worker (~280GB total)
+            processes=True,
             silence_logs=False
         )
 

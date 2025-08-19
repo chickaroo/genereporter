@@ -4,7 +4,7 @@
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=300G
-#SBATCH --time=4:00:00
+#SBATCH --time=5:00:00
 #SBATCH -o optimize_%j.log
 #SBATCH -e optimize_%j.err
 #SBATCH --partition=cpu_p
