@@ -33,13 +33,10 @@ if __name__ == '__main__':
 
     # Configure Dask for your specific hardware
     dask.config.set({
-        'distributed.worker.memory.target': 0.6,
-        'distributed.worker.memory.spill': 0.7,
-        'distributed.worker.memory.pause': 0.8,
-        'distributed.worker.memory.terminate': 0.9,
+        'distributed.worker.memory.target': 0.75,
+        'distributed.worker.memory.spill': 0.85,
+        'distributed.worker.memory.terminate': 0.98,
         'distributed.comm.compression': 'lz4',
-        'distributed.scheduler.bandwidth': '1000MB/s',
-        'array.chunk-size': '128MB'
     })
 
 
