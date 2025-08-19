@@ -1,10 +1,9 @@
 import os
 import numpy as np
-import pandas as pd
 import scanpy as sc
 from arboreto.algo import grnboost2
+import dask
 from distributed import Client, LocalCluster
-import dask.array as da
 from dask_jobqueue import SLURMCluster
 from argparse import ArgumentParser
 
@@ -31,11 +30,24 @@ if __name__ == '__main__':
     adata = sc.read_h5ad(data_file)
     print("\tAdata read in")
 
-    # alternative: create distributed dask client over multiple parallel jobs
+
+    # Configure Dask for your specific hardware
+    dask.config.set({
+        'distributed.worker.memory.target': 0.6,
+        'distributed.worker.memory.spill': 0.7,
+        'distributed.worker.memory.pause': 0.8,
+        'distributed.worker.memory.terminate': 0.9,
+        'distributed.comm.compression': 'lz4',
+        'distributed.scheduler.bandwidth': '1000MB/s',
+        'array.chunk-size': '128MB'
+    })
+
 
     if args.cluster == "distributed":
         print("Using distributed cluster")
         # create a SLURM cluster
+        # alternative: create distributed dask client over multiple parallel jobs
+
         cluster = SLURMCluster(
             queue='cpu_p',                    # --partition=cpu_p
             cores=32,                          # --cpus-per-task=8
@@ -54,12 +66,18 @@ if __name__ == '__main__':
     else:
         # create local Dask client
         print("Using local cluster")
-        cluster = LocalCluster(n_workers=30, # put in one less than the number of cores you gave the job
-                                    threads_per_worker=1) 
+        # Optimized cluster for 32 CPUs, 300GB RAM
+        cluster = LocalCluster(
+            n_workers=8,                # 8 workers
+            threads_per_worker=4,       # 4 threads each = 32 total CPUs
+            memory_limit='35GB',        # ~280GB total for workers (leave buffer)
+            processes=True,             # Use processes for better memory isolation
+            silence_logs=False
+        )
 
         
     custom_client = Client(cluster) # create distributed client
-
+    print(f"Cluster ready with {custom_client.ncores()} cores and {len(cluster.workers)} workers")
 
     # subset for a very broad cell type
     adata = adata[adata.obs['celltype_l1'] == celltype]
@@ -76,36 +94,15 @@ if __name__ == '__main__':
     # make expression matrix 
     ex_matrix = adata.to_df(layer='raw') # use raw layer here
     print(f"Expression matrix size: {ex_matrix.shape}")
-    
 
-    # Split TFs into smaller chunks
-    tf_list = list(ex_matrix.columns)  # All your TFs
-    chunk_size = 1000  # Process 1000 TFs at a time
 
     print("\tPreprocessing done")
 
-    networks = []
-    for i in range(0, len(tf_list), chunk_size):
-        tf_chunk = tf_list[i:i+chunk_size]
-        print(f"Processing TFs {i} to {min(i+chunk_size, len(tf_list))} (chunk {i//chunk_size + 1} of {(len(tf_list) + chunk_size - 1)//chunk_size})")        
-        network_chunk = grnboost2(
-            expression_data=ex_matrix,
-            tf_names=tf_chunk,  # Smaller TF list
-            client_or_address=custom_client,
-            verbose=True
-        )
-        networks.append(network_chunk)
-
-    # Combine results
-    network = pd.concat(networks, ignore_index=True)
-
- 
     # run GRNBoost2
-    #network = grnboost2(expression_data=ex_matrix_da,
-    #                    gene_names=ex_matrix.columns,
-    #                    tf_names='all', # gene-gene adjacencies
-    #                    client_or_address=custom_client, 
-    #                    verbose=True)
+    network = grnboost2(expression_data=ex_matrix,
+                        tf_names='all', # gene-gene adjacencies
+                        client_or_address=custom_client, 
+                        verbose=True)
 
     print("\tGRNBoost2 done")
     # filter for only importance >= 0.001 

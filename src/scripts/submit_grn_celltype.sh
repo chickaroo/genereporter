@@ -1,12 +1,12 @@
 #!/bin/bash
 
-#SBATCH --job-name=disttest
+#SBATCH --job-name=optimize
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=32
-#SBATCH --mem=200G
-#SBATCH --time=3:00:00
-#SBATCH -o disttest_%j.log
-#SBATCH -e disttest_%j.err
+#SBATCH --mem=300G
+#SBATCH --time=4:00:00
+#SBATCH -o optimize_%j.log
+#SBATCH -e optimize_%j.err
 #SBATCH --partition=cpu_p
 #SBATCH --qos=cpu_normal
 #SBATCH --nice=10000
@@ -26,7 +26,6 @@ python src/scripts/run_grn_celltype.py \
     --data veo_ibd_balanced.h5ad \
     --output src/SCENICfiles/tester \
     --cluster local \
-
 
 
 # Print elapsed time
