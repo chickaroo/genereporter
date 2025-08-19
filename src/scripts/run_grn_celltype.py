@@ -1,5 +1,6 @@
 import os
 import numpy as np
+import pandas as pd
 import scanpy as sc
 from arboreto.algo import grnboost2
 from distributed import Client, LocalCluster
@@ -75,19 +76,36 @@ if __name__ == '__main__':
     # make expression matrix 
     ex_matrix = adata.to_df(layer='raw') # use raw layer here
     print(f"Expression matrix size: {ex_matrix.shape}")
-    # try to convert to dask array
-    ex_matrix_da = da.from_array(ex_matrix.values, chunks=(2000, ex_matrix.shape[1]))
-    ex_matrix_da = ex_matrix_da.persist()  # Persist the array in memory
+    
+
+    # Split TFs into smaller chunks
+    tf_list = list(ex_matrix.columns)  # All your TFs
+    chunk_size = 1000  # Process 1000 TFs at a time
 
     print("\tPreprocessing done")
 
+    networks = []
+    for i in range(0, len(tf_list), chunk_size):
+        tf_chunk = tf_list[i:i+chunk_size]
+        print(f"Processing TFs {i} to {min(i+chunk_size, len(tf_list))} (chunk {i//chunk_size + 1} of {(len(tf_list) + chunk_size - 1)//chunk_size})")        
+        network_chunk = grnboost2(
+            expression_data=ex_matrix,
+            tf_names=tf_chunk,  # Smaller TF list
+            client_or_address=custom_client,
+            verbose=True
+        )
+        networks.append(network_chunk)
 
+    # Combine results
+    network = pd.concat(networks, ignore_index=True)
+
+ 
     # run GRNBoost2
-    network = grnboost2(expression_data=ex_matrix_da,
-                        gene_names=ex_matrix.columns,
-                        tf_names='all', # gene-gene adjacencies
-                        client_or_address=custom_client, 
-                        verbose=True)
+    #network = grnboost2(expression_data=ex_matrix_da,
+    #                    gene_names=ex_matrix.columns,
+    #                    tf_names='all', # gene-gene adjacencies
+    #                    client_or_address=custom_client, 
+    #                    verbose=True)
 
     print("\tGRNBoost2 done")
     # filter for only importance >= 0.001 
