@@ -81,13 +81,13 @@ if __name__ == '__main__':
     # filter for genes not expressed in e.g. 30 or more cells
     sc.pp.filter_genes(adata, min_cells=30)
     # randomly sample {subset_size} number of cells from this cell type (compute limit) 
-    # NOT for myeloid: only has total of 8k cells 
-    if celltype != 'Myeloid':
-        a = np.zeros(int(adata.obs['celltype_l1'].value_counts()[celltype]), dtype=int)
-        a[:subset_size] = 1
-        np.random.shuffle(a)
-        a = a.astype(bool)
-        adata = adata[a, :]
+    # NOT for myeloid: only has total of 13k cells 
+    #if celltype != 'Myeloid':
+    #    a = np.zeros(int(adata.obs['celltype_l1'].value_counts()[celltype]), dtype=int)
+    #    a[:subset_size] = 1
+    #    np.random.shuffle(a)
+    #    a = a.astype(bool)
+    #    adata = adata[a, :]
     # make expression matrix 
     ex_matrix = adata.to_df(layer='raw') # use raw layer here
     print(f"Expression matrix size: {ex_matrix.shape}")

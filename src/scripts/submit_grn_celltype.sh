@@ -22,7 +22,7 @@ cd /lustre/groups/ml01/workspace/christopher.lance/genereporter/
 echo "Environment activated, starting script..."
 
 python src/scripts/run_grn_celltype.py \
-    --celltype Myeloid \
+    --celltype Stroma \
     --data veo_ibd_balanced.h5ad \
     --output src/SCENICfiles/tester \
     --cluster local \
