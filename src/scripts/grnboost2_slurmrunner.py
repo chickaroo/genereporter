@@ -3,6 +3,7 @@
 import argparse
 import scanpy as sc
 import logging
+import os
 from dask_jobqueue.slurm import SLURMRunner
 from dask.distributed import Client, get_worker
 from arboreto.algo import grnboost2
@@ -27,6 +28,9 @@ if __name__ == "__main__":
     parser.add_argument("--celltype", required=True, default='Myeloid')
     parser.add_argument("--output", required=True, default='src/SCENICfiles/tester')
     args = parser.parse_args()
+
+    wdir = "/lustre/groups/ml01/workspace/christopher.lance/genereporter/"
+    os.chdir( wdir )
 
     # Launch all processes (scheduler, client, workers)
     runner = SLURMRunner(scheduler_file="scheduler-{job_id}.json")

@@ -22,7 +22,7 @@ cd /lustre/groups/ml01/workspace/christopher.lance/genereporter/
 
 echo "Environment activated, starting script..."
 
-srun python grnboost2_slurmrunner.py \
+srun python src/scripts/grnboost2_slurmrunner.py \
   --data_file data2/veo_ibd_balanced.h5ad \
   --celltype Myeloid \
   --output src/SCENICFiles/tester/ \
