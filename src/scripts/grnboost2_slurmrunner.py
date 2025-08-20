@@ -34,7 +34,6 @@ if __name__ == "__main__":
 
     # Launch all processes (scheduler, client, workers)
     runner = SLURMRunner(scheduler_file="scheduler-{job_id}.json")
-    print("SLURM job script:\n", runner.job_script())
 
     with runner:
         with Client(runner) as client:
