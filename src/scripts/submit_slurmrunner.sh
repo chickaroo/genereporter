@@ -1,11 +1,11 @@
 #!/bin/bash
 
 #SBATCH --job-name=SRunner
-#SBATCH --nodes=5
+#SBATCH --nodes=4
 #SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=20
-#SBATCH --mem=150G
-#SBATCH --time=3:00:00
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=75G
+#SBATCH --time=4:00:00
 #SBATCH -o SRunner_%j.log
 #SBATCH -e SRunner_%j.err
 #SBATCH --partition=cpu_p
