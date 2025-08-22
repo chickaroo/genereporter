@@ -49,10 +49,11 @@ if __name__ == '__main__':
 
         cluster = SLURMCluster(
             queue='cpu_p',                    # --partition=cpu_p
-            cores=32,                          # --cpus-per-task=8
-            memory="100GB",                    # --mem=20G
-            walltime="6:00:00",              # --time=12:00:00
+            cores=8,                          # --cpus-per-task=8
+            memory="75GB",                    # --mem=20G
+            walltime="3:00:00",              # --time=12:00:00
             job_name="scenicdist",            # --job-name=scenicplus
+            silence_logs="debug",            # do not silence logs
             job_extra_directives=[
                 "--nodes=1",                  # --nodes=1
                 "--qos=cpu_normal",           # --qos=cpu_normal
@@ -61,7 +62,7 @@ if __name__ == '__main__':
                 "-e scenicdist_%j.err"        # stderr log file (overrides default)
             ]
         )
-        cluster.scale(5)  # activate 10 workers
+        cluster.scale(jobs=4)  # activate 4 jobs
     else:
         # create local Dask client
         print("Using local cluster")
