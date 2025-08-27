@@ -22,7 +22,7 @@ if __name__ == '__main__':
 
     # read in expression matrix 
     # set a working directory
-    wdir = "cd"
+    wdir = "/lustre/groups/ml01/workspace/christopher.lance/genereporter/"
     os.chdir( wdir )
 
     adata = sc.read_h5ad(data_file)
