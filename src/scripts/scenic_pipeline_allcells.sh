@@ -1,12 +1,12 @@
 #!/bin/bash
 
-#SBATCH --job-name=sce_pipe
+#SBATCH --job-name=sce_all
 #SBATCH --nodes=1
-#SBATCH --cpus-per-task=30
-#SBATCH --mem=200GB
-#SBATCH --time=12:00:00
-#SBATCH -o sce_pipe_%j.log
-#SBATCH -e sce_pipe_%j.err
+#SBATCH --cpus-per-task=20
+#SBATCH --mem=400GB
+#SBATCH --time=72:00:00
+#SBATCH -o sce_all_TFTG_%j.log
+#SBATCH -e sce_all_TFTG_%j.err
 #SBATCH --partition=cpu_p
 #SBATCH --qos=cpu_normal
 #SBATCH --nice=10000
@@ -34,9 +34,9 @@ helpFunction()
    echo "Please format all paths or file names without leading or trailing slashes."
    echo "The working directory is always /lustre/groups/ml01/workspace/christopher.lance/genereporter"
    echo "You may set your input adata file and output directory within the working directory here: "
-   echo -e "\t-a Name of adata file in /lustre/groups/ml01/workspace/christopher.lance/data2 (e.g. veo_ibd_balanced.h5ad)"
+   echo -e "\t-a Name of adata file in /lustre/groups/ml01/workspace/christopher.lance/genereporter (e.g. data2/veo_ibd_balanced.h5ad)"
    echo -e "\t-o Path to existing output directory in /lustre/groups/ml01/workspace/christopher.lance/genereporter (e.g. src/SCENICfiles/new)"
-   echo -e "\t-s Number of cells in subset to calculate (e.g. 10000)"
+   echo -e "\t-s Number of cells in subset to calculate (e.g. 20000). Pass 0 to NOT subset and keep entire data. "
    exit 1 # Exit script after printing help
 }
 
@@ -70,9 +70,6 @@ python src/scripts/run_grn_tf.py --data $parameterA --output $parameterO --subse
 
 echo -e "1. DONE: GRN Inference\n\n"
 
-
-
-
 # 2. Make loom file 
 echo "2. Making loom file"
 
@@ -80,8 +77,8 @@ python src/scripts/make_loom.py --data $parameterA --output $parameterO
 
 echo -e "2. DONE: Made loom file\n\n"
 
-
-
+ELAPSED=$(($(date +%s) - START_TIME))
+printf "elapsed: %s\n\n" "$(date -d@$ELAPSED -u +%H\ hours\ %M\ min\ %S\ sec)"
 
 # 3. Run CisTarget
 
@@ -89,7 +86,6 @@ echo "3. Running cisTarget regulon inference"
 
 mamba deactivate
 mamba activate pyscenic_small
-
 
 pyscenic ctx "$parameterO"/TFtg_adj.csv \
     /lustre/groups/ml01/workspace/christopher.lance/genereporter/data/scenic_dbs/hg38_10kbp_up_10kbp_down_full_tx_v10_clust.genes_vs_motifs.rankings.feather /lustre/groups/ml01/workspace/christopher.lance/genereporter/data/scenic_dbs/hg38_500bp_up_100bp_down_full_tx_v10_clust.genes_vs_motifs.rankings.feather \
@@ -101,7 +97,8 @@ pyscenic ctx "$parameterO"/TFtg_adj.csv \
 
 echo -e "3. DONE: cisTarget regulon inference\n\n"
 
-
+ELAPSED=$(($(date +%s) - START_TIME))
+printf "elapsed: %s\n\n" "$(date -d@$ELAPSED -u +%H\ hours\ %M\ min\ %S\ sec)"
 
 # 4. Run AUCell
 
