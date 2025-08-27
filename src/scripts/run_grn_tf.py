@@ -33,7 +33,7 @@ if __name__ == '__main__':
                                 threads_per_worker=2, # threads for faster computation
                                 processes=True, 
                                 memory_limit="48GiB", # memory limit per worker (total 384GB on cluster of total 400GB)
-                                silence_logs="DEBUG") 
+                                silence_logs=False) 
     custom_client = Client(local_cluster)
 
     # filter for genes not expressed in e.g. 30 or more cells
