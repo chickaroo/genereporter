@@ -98,10 +98,10 @@ def get_genesets(reactome: pd.DataFrame, reg_geneset: pd.DataFrame) -> pd.DataFr
 if __name__ == '__main__':
 
     parser = ArgumentParser()
-    parser.add_argument("--data", type=str, default = 'veo_ibd_balanced.h5ad')
+    parser.add_argument("--data", type=str, default = 'data2/veo_ibd_balanced.h5ad')
     parser.add_argument("--output", type=str, default = 'src/SCENICfiles/new')
     args = parser.parse_args()
-    data_file = f'data2/{args.data}'
+    data_file = args.data
     output_dir = args.output
     print("\tArgs read in")
 

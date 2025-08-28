@@ -8,15 +8,15 @@ from argparse import ArgumentParser
 if __name__ == '__main__':
 
     parser = ArgumentParser()
-    parser.add_argument("--data", type=str, default = 'veo_ibd_balanced.h5ad')
+    parser.add_argument("--data", type=str, default = 'data2/veo_ibd_balanced.h5ad')
     parser.add_argument("--output", type=str, default = 'src/SCENICfiles/new')
     args = parser.parse_args()
-    data_file = f'data2/{args.data}'
+    data_file = args.data
     output_dir = args.output
     print("\tArgs read in")
 
     # set a working directory
-    wdir = "/lustre/groups/ml01/workspace/christopher.lance/genereporter"
+    wdir = "/lustre/groups/ml01/workspace/christopher.lance/genereporter/"
     os.chdir( wdir )
 
     # # path to loom file with basic filtering applied (this will be created in the "initial filtering" step below). Optional.
