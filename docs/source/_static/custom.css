@@ -1,1 +1,8 @@
-.purple { color: #7C4DFF; }
+.purple {
+    color: var(--color-purple-custom);
+}
+
+.purple-bold {
+    color: var(--color-purple-custom);
+    font-weight: bold;
+}

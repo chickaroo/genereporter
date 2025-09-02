@@ -4,7 +4,7 @@ import sys
 sys.path.insert(0, os.path.abspath('../../genereporter/'))
 
 project = 'genereporter'
-copyright = '2024, Samantha Bening'
+copyright = '2025, Samantha Bening'
 author = 'Samantha Bening'
 release = '0.1'
 
@@ -36,6 +36,11 @@ html_theme_options = {
         "color-problematic": "#7C4DFF",
         "color-api-background": "#efeff4",
         "color-api-background-hover": "#d4d4d9",
+        "color-link": "#7C4DFF",
+        "color-link--hover": "#7C4DFF",
+        "color-link--visited": "#7C4DFF",
+        # Add custom purple color for light mode
+        "color-purple-custom": "#2F1D61", # darker purple for genereporter text
 
     },
     "dark_css_variables": {
@@ -44,6 +49,11 @@ html_theme_options = {
         "color-problematic": "#7C4DFF",
         "color-api-background": "#1e2124",
         "color-api-background-hover": "#45454a",
+        "color-link": "#7C4DFF",
+        "color-link--hover": "#7C4DFF",
+        "color-link--visited": "#7C4DFF",
+        # Add custom purple color for dark mode
+        "color-purple-custom": "#8069BF",  # Lighter for dark mode
 
     },
 
@@ -53,4 +63,5 @@ html_css_files = ['custom.css']
 
 rst_prolog = """
 .. role:: purple
+.. role:: purple-bold
 """

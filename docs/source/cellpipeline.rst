@@ -1,4 +1,4 @@
-Cell Type Specific Analysis
+Cell Pipeline API
 ---------------------------
 
 CellPipeline is a pipeline focused on cell type specific analysis over all cells and specific cell types, with respect to the gene of interest.  
