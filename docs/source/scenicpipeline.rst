@@ -1,5 +1,5 @@
 SCENIC Pipeline
---------------------------------
+===============
 
 This is a detailed guide on how to use the provided scripts to run the SCENIC pipeline on a SLURM cluster.
 
@@ -7,24 +7,37 @@ The ``scenic_pipeline.sh`` bash script runs through the three step SCENIC pipeli
 
 Please note that currently, the working directory is hard-coded for our specific SLURM cluster and environment. You may need to modify this to fit your own cluster's specifications.
 
-**PARAMETERS:**
+Please format all paths or file names without leading or trailing slashes. 
 
-**-a (adata file)**
+**Usage**
+
+.. code-block:: console
+
+   $ sbatch scenic_pipeline.sh -a <adata file> -o <output directory> -s <subset size>
+
+.. program:: scenic_pipeline.sh
+
+.. option:: -a <adata_file>
+
    Name of adata file in the working directory. 
    
-   Example: ``data2/veo_ibd_balanced.h5ad``
+   Example: ``data/adata.h5ad``
 
-**-o (output directory)** 
-   Path to existing output directory in the working directory.
+.. option:: -o <output_directory>
+
+   Path to existing output directory in the working directory. 
    
-   Example: ``src/SCENICfiles/new``
+   Example: ``src/SCENICfiles``
 
-**-s (subset size)**
-   Number of cells in subset to calculate. 
+.. option:: -s <subset_size>
+
+   Number of cells in subset to calculate
    
    Example: ``20000``
    
-   **Note:** Pass ``0`` to NOT subset and keep entire data.
+   .. note::
+      Pass ``0`` to NOT subset and keep entire data.
+
 
 Output Files
 ------------
@@ -33,5 +46,5 @@ The output files are as follows:
 
 * ``TFtg_adj.csv.gz``: Adjacencies file
 * ``regulons_output.csv.gz``: Regulons file
-* ``veo_ibd_balanced_aucell_final.h5ad``: Adata file with AUCell values
+* ``adata_aucell_final.h5ad``: Adata file with AUCell values
 * ``metadata.txt``: Metadata file with details about run

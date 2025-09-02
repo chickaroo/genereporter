@@ -29,7 +29,7 @@ html_theme = 'furo'
 html_theme_options = {
     "source_repository": "https://github.com/chickaroo/genereporter",
     "source_branch": "main",
-    "source_directory": "docs/",
+    "source_directory": "docs/source/",
     "light_css_variables": {
         "color-brand-primary": "#7C4DFF",
         "color-brand-content": "#7C4DFF",
