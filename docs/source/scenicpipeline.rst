@@ -15,23 +15,25 @@ Please format all paths or file names without leading or trailing slashes.
 
    $ sbatch scenic_pipeline.sh -a <adata file> -o <output directory> -s <subset size>
 
+**Parameters**
+
 .. program:: scenic_pipeline.sh
 
-.. option:: -a <adata_file>
+.. option:: -a <adata file>
 
    Name of adata file in the working directory. 
    
    Example: ``data/adata.h5ad``
 
-.. option:: -o <output_directory>
+.. option:: -o <output directory>
 
    Path to existing output directory in the working directory. 
    
    Example: ``src/SCENICfiles``
 
-.. option:: -s <subset_size>
+.. option:: -s <subset size>
 
-   Number of cells in subset to calculate
+   Number of cells in subset to calculate for GRNBoost2 step.
    
    Example: ``20000``
    
