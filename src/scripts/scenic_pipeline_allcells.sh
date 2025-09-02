@@ -1,12 +1,12 @@
 #!/bin/bash
 
-#SBATCH --job-name=sce_post
+#SBATCH --job-name=sce_all
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=20
 #SBATCH --mem=400GB
-#SBATCH --time=24:00:00
-#SBATCH -o sce_all_post_TFTG_%j.log
-#SBATCH -e sce_all_post_TFTG_%j.err
+#SBATCH --time=72:00:00
+#SBATCH -o sce_all_TFTG_%j.log
+#SBATCH -e sce_all_TFTG_%j.err
 #SBATCH --partition=cpu_p
 #SBATCH --qos=cpu_normal
 #SBATCH --nice=10000
@@ -59,14 +59,14 @@ fi
 
 # Begin script in case all parameters are correct
 
-# 1. Run GRN inference
+ 1. Run GRN inference
 
-#echo "STARTING SCENIC PIPELINE"
-#echo "1. Running GRN inference"
+echo "STARTING SCENIC PIPELINE"
+echo "1. Running GRN inference"
 
-#python src/scripts/run_grn_tf.py --data $parameterA --output $parameterO --subset $parameterS
+python src/scripts/run_grn_tf.py --data $parameterA --output $parameterO --subset $parameterS
 
-#echo -e "1. DONE: GRN Inference\n\n"
+echo -e "1. DONE: GRN Inference\n\n"
 
 # 2. Make loom file 
 echo "2. Making loom file"

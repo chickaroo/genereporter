@@ -27,6 +27,9 @@ exclude_patterns = []
 
 html_theme = 'furo'
 html_theme_options = {
+    "source_repository": "https://github.com/chickaroo/genereporter",
+    "source_branch": "main",
+    "source_directory": "docs/",
     "light_css_variables": {
         "color-brand-primary": "#7C4DFF",
         "color-brand-content": "#7C4DFF",
@@ -46,3 +49,8 @@ html_theme_options = {
 
 }
 html_static_path = ['_static']
+html_css_files = ['custom.css']
+
+rst_prolog = """
+.. role:: purple
+"""
