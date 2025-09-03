@@ -16,6 +16,7 @@ source $HOME/.bashrc
 mamba activate pyscenic_pipeline
 
 cd /lustre/groups/ml01/workspace/christopher.lance/genereporter/src/scripts
+# hard coded to our HPC cluster set up in this branch (HPCCluster)
 
 #python run_grn_inference.py --celltype Stroma
 python run_grn_tf.py
